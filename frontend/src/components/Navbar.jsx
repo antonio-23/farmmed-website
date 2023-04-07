@@ -1,77 +1,87 @@
-import React, { useState } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { NavLink, Outlet } from 'react-router-dom';
+import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 
 const navigation = [
-	{ name: "O nas", path: "/about" },
-	{ name: "Lokalizacje", path: "/ourlocation" },
-	{ name: "Kontakt", path: "/contact" },
+	{ name: 'O nas', path: '/about' },
+	{ name: 'Lokalizacje', path: '/ourlocation' },
+	{ name: 'Kontakt', path: '/contact' },
 ];
 
 const btnNavigation = [
-	{ name: "Dołącz do nas", path: "/register" },
-	{ name: "Logowanie", path: "/login" },
+	{ name: 'Dołącz do nas', path: '/register' },
+	{ name: 'Logowanie', path: '/login' },
 ];
 
 const Navbar = () => {
-	const [menuOpen, setMenuOpen] = useState(false);
+	const [nav, setNav] = useState(false);
 
-	const toggleMenu = () => {
-		setMenuOpen(!menuOpen);
+	const handleNav = () => {
+		setNav(!nav);
 	};
+	useEffect(() => {
+		const handleResize = () => {
+			if (window.innerWidth > 1024) {
+				setNav(false);
+			}
+		};
+		window.addEventListener('resize', handleResize);
+		return () => {
+			window.removeEventListener('resize', handleResize);
+		};
+	}, []);
 
 	return (
-		<div className="navbar bg-[#eef2ff]">
-			<header className="py-5 px-20 grid grid-cols-3 justify-center text-md items-baseline">
-				<div className="flex justify-start">
-					<img className="h-6 flex " src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" />
-					<span>
-						<NavLink to="/">FarMMed</NavLink>
-					</span>
-				</div>
-				<div className="hidden lg:flex justify-center gap-x-10">
+		<header className='bg-gradient-to-tr from-blue-100 via-white-100 to-pink-100 h-screen'>
+			<div className='flex justify-between items-center h-24 max-w-7xl mx-auto px-4'>
+				<h1 className='w-full text-2xl'>
+					<NavLink to='/'>FarMMed</NavLink>
+				</h1>
+				<ul className='hidden lg:flex'>
 					{navigation.map((item) => (
-						<a className="text-md text-[#374151]" key={item.path}>
-							<NavLink to={item.path}>{item.name}</NavLink>
+						<li className='p-4' key={item.path}>
+							<NavLink className='whitespace-nowrap' to={item.path}>
+								{item.name}
+							</NavLink>
+						</li>
+					))}
+				</ul>
+				<div className='hidden lg:flex gap-4'>
+					{btnNavigation.map((item, index) => (
+						<a className={index === 0 ? 'text-purple-600 px-4 py-2 border rounded-md border-purple-600 flex flex-wrap' : ' bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-md flex flex-wrap'}>
+							<NavLink to={item.path} className='whitespace-nowrap'>
+								{item.name}
+							</NavLink>
 						</a>
 					))}
 				</div>
-				<div className="flex justify-end gap-3 items-center">
-					<a className="hidden text-violet-600 px-4 py-2 border-2 rounded-md border-violet-600 lg:inline-block">
-						<NavLink to="register">Dołącz do nas</NavLink>
-					</a>
-					<a className="hidden bg-violet-600 text-white px-6 py-2 rounded-md lg:inline-block">
-						<NavLink to="login">Logowanie</NavLink>
-					</a>
+				<div onClick={handleNav} className='block lg:hidden'>
+					{nav ? <AiOutlineClose size={20} /> : <AiOutlineMenu size={20} />}
 				</div>
-				<div class="flex justify-end">
-					<button class="lg:hidden" onClick={toggleMenu}>
-						<svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M4 6H20M4 12H20M4 18H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-						</svg>
-					</button>
+				<div className={nav ? 'fixed bg-white left-0 top-0 w-[60%] h-full ease-in-out duration-500' : 'fixed left-[-100%]'}>
+					<h1 className='w-full m-4 text-2xl'>
+						<NavLink to='/'>FarMMed</NavLink>
+					</h1>
+					<ul className='pt-4'>
+						{navigation.map((item) => (
+							<li className='p-4 border-b border-gray-200' key={item.path}>
+								<NavLink to={item.path}>{item.name}</NavLink>
+							</li>
+						))}
+					</ul>
+					<div className='flex items-start p-4 justify-center gap-5'>
+						{btnNavigation.map((item, index) => (
+							<a className={index === 0 ? 'text-purple-600 px-8 py-3 border rounded-md border-purple-600' : 'bg-purple-600 text-white px-8 py-3 rounded-md'}>
+								<NavLink to={item.path}>{item.name}</NavLink>
+							</a>
+						))}
+					</div>
 				</div>
-
-			</header>
-			<div className={`${menuOpen ? "block" : "hidden"} lg:hidden`}>
-				{navigation.map((item) => (
-					<a className="block px-4 py-2 text-[#374151]" key={item.path}>
-						<NavLink to={item.path} onClick={toggleMenu}>
-							{item.name}
-						</NavLink>
-					</a>
-				))}
-				{btnNavigation.map((item, index) => (
-                        <button key={index} className={index === 0 ? "text-violet-600 px-4 py-2 border-2 rounded-md border-violet-600 flex flex-wrap" : "bg-violet-600 text-white px-6 py-2 rounded-md flex flex-wrap"}>
-                            <NavLink to={item.path} onClick={toggleMenu}>{item.name}</NavLink>
-                        </button>
-                    ))}
 			</div>
-			<main>
-				<div className="bg-gradient-to-r from-blue-100 via-white-100 to-pink-100 h-screen">
-					<Outlet />
-				</div>
+			<main className='bg-gradient-to-tr from-blue-100 via-white-100 to-pink-100 h-screen'>
+				<Outlet />
 			</main>
-		</div>
+		</header>
 	);
 };
 

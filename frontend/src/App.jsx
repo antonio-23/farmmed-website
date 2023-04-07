@@ -8,7 +8,7 @@ import { Contact } from "./pages/Contact";
 import Register from "./pages/Register";
 import Log_in from "./pages/Login";
 import { OurLocation } from "./pages/OurLocation";
-import ForgotPassword from "./pages/Forgot_password";
+import ForgotPassword from "./pages/ForgotPassword";
 
 // Components
 import Navbar from "./components/Navbar";

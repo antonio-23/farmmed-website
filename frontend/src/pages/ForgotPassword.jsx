@@ -1,8 +1,8 @@
 import React, { useRef, useEffect} from "react";
 import Header from "../components/Header"
-import Login from "../components/Login"
+import Forgot from "../components/Forgot";
 
-export default function Log_in(){
+export default function Forgot_password(){
 	const refToElement = useRef(null);
 
 		useEffect(() => {
@@ -14,12 +14,12 @@ export default function Log_in(){
         	<div className="bg-ghostwithe bg-opacity-90 w-full max-w-2xl space-y-8 rounded-2xl" ref={refToElement}>
 				<>
 					<Header
-						heading="Zaloguj się"
-						paragraph="Nie masz konta? "
-						linkName="Zrejestruj się"
-						linkUrl="/register"
+						heading="Nie pamiętasz hasła?"
+						paragraph="Jeśli na ten e-mail jest założone konto, to wyślemy na niego wiadomość. "
+						linkName="Gmail"
+						linkUrl="https://mail.google.com"
 						/>
-					<Login/>
+					<Forgot/>
 				</>
 			</div>
 		</div>
