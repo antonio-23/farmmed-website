@@ -5,9 +5,10 @@ import { createBrowserRouter, createRoutesFromElements, Outlet, Route, RouterPro
 import { About } from "./pages/About";
 import { Home } from "./pages/Home";
 import { Contact } from "./pages/Contact";
-import { Register } from "./pages/Register";
-import { Login } from "./pages/Login";
+import Register from "./pages/Register";
+import Log_in from "./pages/Login";
 import { OurLocation } from "./pages/OurLocation";
+import ForgotPassword from "./pages/Forgot_password";
 
 // Components
 import Navbar from "./components/Navbar";
@@ -20,7 +21,8 @@ const router = createBrowserRouter(
 			<Route path="ourlocation" element={<OurLocation />} />
 			<Route path="contact" element={<Contact />} />
 			<Route path="register" element={<Register />} />
-			<Route path="login" element={<Login />} />
+			<Route path="login" element={<Log_in />} />
+			<Route path="forgot_password" element={<ForgotPassword/>}/>
 		</Route>
 
 	)
