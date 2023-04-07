@@ -32,26 +32,28 @@ const Navbar = () => {
 	}, []);
 
 	return (
-		<header className='bg-gradient-to-tr from-blue-100 via-white-100 to-pink-100 h-screen'>
+		<header className='bg-gradient-to-tr from-blue-100 via-white-100 to-pink-100 h-screen font-Montserrat'>
 			<div className='flex justify-between items-center h-24 max-w-7xl mx-auto px-4'>
-				<h1 className='w-full text-2xl'>
+				<h1 className='w-md text-2xl'>
 					<NavLink to='/'>FarMMed</NavLink>
 				</h1>
-				<ul className='hidden lg:flex'>
+				<ul className='hidden lg:flex whitespace-nowrap'>
 					{navigation.map((item) => (
-						<li className='p-4' key={item.path}>
-							<NavLink className='whitespace-nowrap' to={item.path}>
-								{item.name}
-							</NavLink>
+						<li className='p-4 hover:text-purple-600 text-lg' key={item.path}>
+							<NavLink to={item.path}>{item.name}</NavLink>
 						</li>
 					))}
 				</ul>
-				<div className='hidden lg:flex gap-4'>
+				<div className='hidden lg:flex gap-4 whitespace-nowrap'>
 					{btnNavigation.map((item, index) => (
-						<a className={index === 0 ? 'text-purple-600 px-4 py-2 border rounded-md border-purple-600 flex flex-wrap' : ' bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-md flex flex-wrap'}>
-							<NavLink to={item.path} className='whitespace-nowrap'>
-								{item.name}
-							</NavLink>
+						<a
+							className={
+								index === 0
+									? 'text-purple-600 px-4 py-2 border rounded-md border-purple-600 flex flex-wrap hover:bg-purple-200 hover:text-purple-700'
+									: ' bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-md flex flex-wrap'
+							}
+						>
+							<NavLink to={item.path}>{item.name}</NavLink>
 						</a>
 					))}
 				</div>
@@ -64,14 +66,18 @@ const Navbar = () => {
 					</h1>
 					<ul className='pt-4'>
 						{navigation.map((item) => (
-							<li className='p-4 border-b border-gray-200' key={item.path}>
+							<li className='p-4 border-b border-gray-200 hover:text-purple-600 text-lg' key={item.path}>
 								<NavLink to={item.path}>{item.name}</NavLink>
 							</li>
 						))}
 					</ul>
 					<div className='flex items-start p-4 justify-center gap-5'>
 						{btnNavigation.map((item, index) => (
-							<a className={index === 0 ? 'text-purple-600 px-8 py-3 border rounded-md border-purple-600' : 'bg-purple-600 text-white px-8 py-3 rounded-md'}>
+							<a
+								className={
+									index === 0 ? 'text-purple-600 px-8 py-3 border rounded-md border-purple-600 hover:bg-purple-200 hover:text-purple-700' : 'bg-purple-600 text-white px-8 py-3 rounded-md hover:bg-purple-700'
+								}
+							>
 								<NavLink to={item.path}>{item.name}</NavLink>
 							</a>
 						))}
