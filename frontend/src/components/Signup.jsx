@@ -3,6 +3,7 @@ import { signupFields } from "../constants/formFields"
 import FormAction from "./FormAction";
 import Input from "./Input";
 
+
 const fields=signupFields;
 let fieldsState={};
 
@@ -11,12 +12,18 @@ fields.forEach(field => fieldsState[field.id]='');
 export default function Signup(){
   const [signupState,setSignupState]=useState(fieldsState);
 
+  const [err, setErr] = useState(null);
+
   const handleChange=(e)=>setSignupState({...signupState,[e.target.id]:e.target.value});
 
-  const handleSubmit=(e)=>{
-    e.preventDefault();
-    console.log(signupState)
-    createAccount()
+  const handleSubmit= async(e)=>{
+    e.preventDefault()
+        try{
+            await axios.post("http://127.0.0.1:8800/api/auth/register", signupState)
+        }catch(err){
+            setErr(err.response.data);
+        }
+    console.log(err)
   }
 
   //handle Signup API Integration here
