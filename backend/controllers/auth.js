@@ -21,16 +21,17 @@ export const login = (req, res) => {
     const { password, ...others } = data[0];
 
     res
-      .cookie("accessToken", token, {
-        httpOnly: true,
-      })
-      .status(200)
-      .json(others);
+    .cookie("accessToken", token, {
+      httpOnly: true,
+    })
+    .status(200)
+    .json(others);
   });
 };
 
+
 export const register = (req, res) => {
-    // Check if user already exists
+    /*// Check if user already exists
     const q = "SELECT * FROM farmmed.user WHERE email = ?";
     db.query(q, [req.body.email], (err, data) => {
       if (err) return res.json(err);
@@ -58,8 +59,37 @@ export const register = (req, res) => {
           return res.status(200).json("Konto zostało utworzone");
         });
       }
+    });*/
+      //CHECK USER IF EXISTS
+
+  const q = "SELECT * FROM farmmed.user WHERE email = ?";
+
+  db.query(q, [req.body.username], (err, data) => {
+    if (err) return res.status(500).json(err);
+    if (data.length) return res.status(409).json("User already exists!");
+    //CREATE A NEW USER
+    //Hash the password
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync(req.body.password, salt);
+
+    const q =
+        "INSERT INTO farmmed.user (`first_name`, `last_name`, `date_of_birth`, `PESEL`, `email`, `password`) VALUE (?)";
+    const values = [
+      req.body.first_name,
+      req.body.last_name,
+      req.body.date_of_birth,
+      req.body.PESEL,
+      req.body.email,
+      hashedPassword,
+    ];
+
+    db.query(q, [values], (err, data) => {
+      if (err) return res.status(500).json(err);
+      return res.status(200).json("User has been created.");
     });
+  });
 };
+
 
 export const logout = (req, res)=>{
   res.clearCookie("accessToken",{
