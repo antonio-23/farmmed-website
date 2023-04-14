@@ -3,9 +3,9 @@ import { NavLink, Outlet } from 'react-router-dom';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 
 const navigation = [
-  { name: 'O nas', path: '/about' },
-  { name: 'Lokalizacje', path: '/ourlocation' },
-  { name: 'Opinie', path: '/contact' },
+  { name: 'O nas', path: '/about', id: 'about' },
+  { name: 'Lokalizacje', path: '/ourlocation', id: 'ourlocation' },
+  { name: 'Opinie', path: '/contact', id: 'contact' },
 ];
 
 const btnNavigation = [
@@ -33,16 +33,29 @@ const Navbar = () => {
     };
   }, []);
 
+  // opcja scroll do przewijania strony home (do poprawki)
+  const scrollToSection = (id) => {
+    const section = document.getElementById(id);
+    if (section) {
+      window.scrollTo({
+        top: section.offsetTop,
+        behavior: 'smooth',
+      });
+    }
+  };
+
   return (
-    <header className='bg-gradient-to-tr from-blue-100 via-white-100 to-pink-100 h-screen font-Montserrat'>
+    <div className='bg-gradient-to-tr from-blue-100 via-white-100 to-pink-100 h-screen font-Montserrat'>
       <div className='flex justify-between items-center h-24 max-w-7xl mx-auto px-4'>
         <h1 className='w-md text-2xl'>
           <NavLink to='/'>FarMMed</NavLink>
         </h1>
         <ul className='hidden lg:flex whitespace-nowrap'>
           {navigation.map((item) => (
-            <li className='p-4 hover:text-purple-600 text-lg' key={item.path}>
-              <NavLink to={item.path}>{item.name}</NavLink>
+            <li className='p-4 hover:text-violet-600 text-lg' key={item.path}>
+              <NavLink to={item.path} className={({ isActive }) => (isActive ? 'text-violet-600' : undefined)}>
+                {item.name}
+              </NavLink>
             </li>
           ))}
         </ul>
@@ -51,14 +64,15 @@ const Navbar = () => {
             <a
               className={
                 index === 0
-                  ? 'text-purple-600 px-4 py-2 border rounded-md border-purple-600 flex flex-wrap hover:bg-purple-200 hover:text-purple-700'
-                  : ' bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-md flex flex-wrap'
+                  ? 'text-violet-600 px-4 py-2 border rounded-md border-violet-600 flex flex-wrap hover:text-violet-700'
+                  : ' bg-violet-600 hover:bg-violet-700 text-white px-6 py-2 rounded-md flex flex-wrap'
               }
             >
               <NavLink to={item.path}>{item.name}</NavLink>
             </a>
           ))}
         </div>
+
         <div onClick={handleNav} className='block lg:hidden'>
           {nav ? <AiOutlineClose size={20} /> : <AiOutlineMenu size={20} />}
         </div>
@@ -68,7 +82,7 @@ const Navbar = () => {
           </h1>
           <ul className='pt-4'>
             {navigation.map((item) => (
-              <li className='p-4 border-b border-gray-200 hover:text-purple-600 text-lg' key={item.path}>
+              <li className='p-4 border-b border-gray-200 hover:text-violet-600 text-lg' key={item.path}>
                 <NavLink to={item.path} onClick={closeNav}>
                   {item.name}
                 </NavLink>
@@ -79,7 +93,7 @@ const Navbar = () => {
             {btnNavigation.map((item, index) => (
               <a
                 className={
-                  index === 0 ? 'text-purple-600 px-8 py-3 border rounded-md border-purple-600 hover:bg-purple-200 hover:text-purple-700' : 'bg-purple-600 text-white px-8 py-3 rounded-md hover:bg-purple-700'
+                  index === 0 ? 'text-violet-600 px-8 py-3 border rounded-md border-violet-600  hover:text-violet-700' : 'bg-violet-600 text-white px-8 py-3 rounded-md hover:bg-violet-700'
                 }
               >
                 <NavLink to={item.path} onClick={closeNav}>
@@ -90,10 +104,10 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      <main className='bg-gradient-to-tr from-blue-100 via-white-100 to-pink-100 h-screen'>
+      <main className='bg-gradient-to-tr from-blue-100 via-white-100 to-pink-100'>
         <Outlet />
       </main>
-    </header>
+    </div>
   );
 };
 

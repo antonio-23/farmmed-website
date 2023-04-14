@@ -9,12 +9,18 @@ import Register from "./pages/Register";
 import Log_in from "./pages/Login";
 import { OurLocation } from "./pages/OurLocation";
 import ForgotPassword from "./pages/ForgotPassword";
+import { Admin } from './pages/dashboard/Admin';
+import { Accounts } from './pages/dashboard/Accounts';
+import { Schedule } from './pages/dashboard/Schedule';
+import { Drugs } from './pages/dashboard/Drugs';
 
 // Components
 import Navbar from "./components/Navbar";
+import { NotFound } from './pages/NotFound';
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
+		<>
 		<Route path="/" element={<Navbar />}>
 			<Route index element={<Home />} />
 			<Route path="about" element={<About />} />
@@ -24,7 +30,14 @@ const router = createBrowserRouter(
 			<Route path="login" element={<Log_in />} />
 			<Route path="forgot_password" element={<ForgotPassword/>}/>
 		</Route>
-
+		<Route path='admin/*' element={<Admin/>}>
+			<Route path='accounts' element={<Accounts />}/>
+			<Route path='accounts' element={<Schedule />}/>
+			<Route path='accounts' element={<Drugs />}/>
+		</Route>
+		
+		<Route path='*' element={<NotFound />} />
+		</>
 	)
 );
 
