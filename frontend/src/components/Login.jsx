@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginFields } from "../constants/formFields";
 import FormAction from "./FormAction";
@@ -32,7 +32,7 @@ export default function Login() {
     localStorage.setItem("accessToken", data.token);
     if (response.status === 400 || response.status === 404) {
       setErr("Niepoprawny login lub hasło");
-    } else {
+    } else{
       navigate("/");
     }
   } catch (err) {
@@ -65,6 +65,7 @@ export default function Login() {
       </div>
 
       <FormExtra />
+      {err && <p className="text-red-500">{err}</p>}
       <FormAction handleSubmit={handleSubmit} text="Zaloguj się" />
     </form>
   );

@@ -43,16 +43,6 @@ const signupFields=[
         placeholder:"Nazwisko"   
     },
     {
-        labelText:"Date_of_birth",
-        labelFor:"date_of_birth",
-        id:"date_of_birth",
-        name:"date_of_birth",
-        type:"date",
-        autoComplete:"date_of_birth",
-        isRequired:true,
-        placeholder:"Data urodzenia"   
-    },
-    {
         labelText:"PESEL",
         labelFor:"PESEL",
         id:"PESEL",
@@ -61,6 +51,16 @@ const signupFields=[
         autoComplete:"PESEL",
         isRequired:true,
         placeholder:"PESEL"   
+    },
+    {
+        labelText:"Date_of_birth",
+        labelFor:"date_of_birth",
+        id:"date_of_birth",
+        name:"date_of_birth",
+        type:"date",
+        autoComplete:"date_of_birth",
+        isRequired:true,
+        placeholder:"Data urodzenia"   
     },
     {
         labelText:"Email address",
@@ -108,13 +108,13 @@ const ForgotFields=[
     {
         labelText:"Email address",
         labelFor:"email-address",
-        id:"email-address",
+        id:"email",
         name:"email",
         type:"email",
         autoComplete:"email",
         isRequired:true,
-        placeholder:"Email"   
-    },
+        placeholder:"Email"    
+    }
 ]
 
 export {loginFields,signupFields,ForgotFields}
