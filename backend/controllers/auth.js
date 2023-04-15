@@ -19,8 +19,7 @@ export const login = (req, res) => {
 
     const { password, ...others } = data[0];
 
-    res
-    .cookie("accessToken", token, {
+    res.cookie("accessToken", token, {
       httpOnly: true,
     })
     .status(200)
@@ -83,7 +82,7 @@ export const logout = (req, res)=>{
   res.clearCookie("accessToken",{
     secure:true,
     sameSite:"none"
-  }).status(200).json("Wylogowano")
+  }).status(200).send("Wylogowano")
 };
 
 export const forgot = (req, res)=>{

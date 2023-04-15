@@ -1,15 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginFields } from "../constants/formFields";
 import FormAction from "./FormAction";
 import FormExtra from "./FormExtra";
 import Input from "./Input";
+import axios from "axios";
 
 const fields = loginFields;
 let fieldsState = {};
 fields.forEach((field) => (fieldsState[field.id] = ""));
 
 export default function Login() {
+  const [currentUser, setCurrentUser] = useState(
+    JSON.parse(localStorage.getItem("user")) || null
+  );  
   const [loginState, setLoginState] = useState(fieldsState);
   const [err, setErr] = useState(null);
   const navigate = useNavigate();
@@ -18,27 +22,26 @@ export default function Login() {
     setLoginState({ ...loginState, [e.target.id]: e.target.value });
   };
 
- const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    const response = await fetch("http://127.0.0.1:8800/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(loginState),
-    });
-    const data = await response.json();
-    localStorage.setItem("accessToken", data.token);
-    if (response.status === 400 || response.status === 404) {
-      setErr("Niepoprawny login lub hasło");
-    } else{
-      navigate("/");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:8800/api/auth/login", loginState, {
+        withCredentials: true
+      });
+
+      if (response.status === 200) {
+        setCurrentUser(response.data);
+        localStorage.setItem("user", JSON.stringify(response.data));
+        //localStorage.setItem("accessToken", response.data.token);
+        navigate("/admin");
+        console.log('zalogowano')
+      } else if (response.status === 400 || response.status === 404) {
+        setErr("Niepoprawny login lub hasło");
+      }
+    } catch (err) {
+      setErr(err.message);
     }
-  } catch (err) {
-    setErr(err.message);
-  }
-};
+  };
 
   return (
     <form

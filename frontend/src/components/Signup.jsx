@@ -96,8 +96,6 @@ export default function Signup(){
       setErr('Nieprawidłowy numer PESEL');
       return;
     }
-    console.log(e.target.email);
-    console.log(e.target['confirm-email-address']);
     if (email !== email2) {
       setErr("Adresy email nie są identyczne");
       return;
