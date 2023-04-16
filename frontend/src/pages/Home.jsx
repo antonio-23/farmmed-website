@@ -6,7 +6,7 @@ import { OurLocation } from './OurLocation';
 import { Contact } from './Contact';
 import { Footer } from '../components/Footer';
 
-const propertis = [
+const properties = [
   { h1: '4k', p: 'Zadowolonych klientów' },
   { h1: '6k', p: 'Klientów miesięcznie' },
   { h1: '5', p: 'Miast' },
@@ -29,10 +29,10 @@ export const Home = () => {
             <img src={heroPicture} alt='hero picture' />
           </div>
           <div className='md:col-start-1 col-end-3 flex justify-evenly h-auto py-8 md:min-w-[760px] bg-white rounded-3xl items-center flex-col md:flex-row shadow-xl'>
-            {propertis.map((value) => (
-              <div className='flex flex-col items-center'>
-                <h1 className='text-5xl text-violet-600 font-bold pb-2'>{value.h1}</h1>
-                <p className='text-lg'>{value.p}</p>
+            {properties.map((value, index) => (
+              <div key={index} className='flex flex-col items-center'>
+                <h1 key={value.h1} className='text-5xl text-violet-600 font-bold pb-2'>{value.h1}</h1>
+                <p key={value.p} className='text-lg'>{value.p}</p>
               </div>
             ))}
           </div>

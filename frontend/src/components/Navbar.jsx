@@ -34,15 +34,15 @@ const Navbar = () => {
   }, []);
 
   // opcja scroll do przewijania strony home (do poprawki)
-  const scrollToSection = (id) => {
-    const section = document.getElementById(id);
-    if (section) {
-      window.scrollTo({
-        top: section.offsetTop,
-        behavior: 'smooth',
-      });
-    }
-  };
+  // const scrollToSection = (id) => {
+  //   const section = document.getElementById(id);
+  //   if (section) {
+  //     window.scrollTo({
+  //       top: section.offsetTop,
+  //       behavior: 'smooth',
+  //     });
+  //   }
+  // };
 
   return (
     <div className='bg-gradient-to-tr from-blue-100 via-white-100 to-pink-100 h-screen font-Montserrat'>
@@ -51,9 +51,9 @@ const Navbar = () => {
           <NavLink to='/'>FarMMed</NavLink>
         </h1>
         <ul className='hidden lg:flex whitespace-nowrap'>
-          {navigation.map((item) => (
+          {navigation.map((item, index) => (
             <li className='p-4 hover:text-violet-600 text-lg' key={item.path}>
-              <NavLink to={item.path} className={({ isActive }) => (isActive ? 'text-violet-600' : undefined)}>
+              <NavLink key={index} to={item.path} className={({ isActive }) => (isActive ? 'text-violet-600' : undefined)}>
                 {item.name}
               </NavLink>
             </li>
@@ -61,15 +61,18 @@ const Navbar = () => {
         </ul>
         <div className='hidden lg:flex gap-4 whitespace-nowrap'>
           {btnNavigation.map((item, index) => (
-            <a
+            <button
+              key={index}
               className={
                 index === 0
                   ? 'text-violet-600 px-4 py-2 border rounded-md border-violet-600 flex flex-wrap hover:text-violet-700'
                   : ' bg-violet-600 hover:bg-violet-700 text-white px-6 py-2 rounded-md flex flex-wrap'
               }
             >
-              <NavLink to={item.path}>{item.name}</NavLink>
-            </a>
+              <NavLink to={item.path} key={index}>
+                {item.name}
+              </NavLink>
+            </button>
           ))}
         </div>
 
@@ -81,9 +84,9 @@ const Navbar = () => {
             <NavLink to='/'>FarMMed</NavLink>
           </h1>
           <ul className='pt-4'>
-            {navigation.map((item) => (
+            {navigation.map((item, index) => (
               <li className='p-4 border-b border-gray-200 hover:text-violet-600 text-lg' key={item.path}>
-                <NavLink to={item.path} onClick={closeNav}>
+                <NavLink key={index} to={item.path} onClick={closeNav}>
                   {item.name}
                 </NavLink>
               </li>
@@ -91,15 +94,14 @@ const Navbar = () => {
           </ul>
           <div className='flex items-start p-4 justify-center gap-5'>
             {btnNavigation.map((item, index) => (
-              <a
-                className={
-                  index === 0 ? 'text-violet-600 px-8 py-3 border rounded-md border-violet-600  hover:text-violet-700' : 'bg-violet-600 text-white px-8 py-3 rounded-md hover:bg-violet-700'
-                }
+              <button
+                key={index}
+                className={index === 0 ? 'text-violet-600 px-8 py-3 border rounded-md border-violet-600  hover:text-violet-700' : 'bg-violet-600 text-white px-8 py-3 rounded-md hover:bg-violet-700'}
               >
-                <NavLink to={item.path} onClick={closeNav}>
+                <NavLink key={index} to={item.path} onClick={closeNav}>
                   {item.name}
                 </NavLink>
-              </a>
+              </button>
             ))}
           </div>
         </div>

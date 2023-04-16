@@ -46,7 +46,9 @@ export const Footer = () => {
             {contactInfo.map((value, index) => (
               <li className='flex my-6' key={index}>
                 {value.icon}
-                <p className='flex items-center px-8'>{value.text}</p>
+                <p key={index} className='flex items-center px-8'>
+                  {value.text}
+                </p>
               </li>
             ))}
           </ul>
