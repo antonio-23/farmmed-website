@@ -1,12 +1,13 @@
 import React from 'react';
 import { Sidebar } from '../../components/Sidebar';
-import { MainPage } from './MainPage';
+import { Outlet } from 'react-router-dom';
 
 export const Admin = () => {
   return (
     <div className='flex'>
       <Sidebar />
-      <MainPage />
+
+      <Outlet />
     </div>
   );
 };

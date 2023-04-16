@@ -30,10 +30,10 @@ const router = createBrowserRouter(
 			<Route path="login" element={<Log_in />} />
 			<Route path="forgot_password" element={<ForgotPassword/>}/>
 		</Route>
-		<Route path='admin/*' element={<Admin/>}>
+		<Route path='admin' element={<Admin/>}>
 			<Route path='accounts' element={<Accounts />}/>
-			<Route path='accounts' element={<Schedule />}/>
-			<Route path='accounts' element={<Drugs />}/>
+			<Route path='schedule' element={<Schedule />}/>
+			<Route path='drugs' element={<Drugs />}/>
 		</Route>
 		
 		<Route path='*' element={<NotFound />} />
