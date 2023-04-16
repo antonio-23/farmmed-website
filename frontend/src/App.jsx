@@ -23,17 +23,17 @@ const router = createBrowserRouter(
 		<>
 		<Route path="/" element={<Navbar />}>
 			<Route index element={<Home />} />
-			<Route path="about" element={<About />} />
+			{/* <Route path="about" element={<About />} />
 			<Route path="ourlocation" element={<OurLocation />} />
-			<Route path="contact" element={<Contact />} />
+			<Route path="contact" element={<Contact />} /> */}
 			<Route path="register" element={<Register />} />
 			<Route path="login" element={<Log_in />} />
 			<Route path="forgot_password" element={<ForgotPassword/>}/>
 		</Route>
 		<Route path='admin/:id/' element={<Admin/>}>
 			<Route path='accounts' element={<Accounts />}/>
-			<Route path='schedule' element={<Schedule />}/>
-			<Route path='drugs' element={<Drugs />}/>
+			<Route path='accounts' element={<Schedule />}/>
+			<Route path='accounts' element={<Drugs />}/>
 		</Route>
 		
 		<Route path='*' element={<NotFound />} />

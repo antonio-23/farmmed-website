@@ -16,7 +16,7 @@ const properties = [
 export const Home = () => {
   return (
     <>
-      <div className='w-full h-full flex flex-col justify-between 2xl:py-52'>
+      <div name='home' className='w-full h-full flex flex-col justify-between 2xl:py-52'>
         <div className='grid md:grid-cols-2 max-w-7xl m-auto'>
           <div className='flex flex-col justify-center md:items-start w-full px-2 py-8'>
             <h1 className='text-5xl md:text-7xl font-bold'>Jedyne takie miejsce</h1>

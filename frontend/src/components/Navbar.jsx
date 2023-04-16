@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
+import { Link, animateScroll as scroll } from 'react-scroll';
 
 const navigation = [
   { name: 'O nas', path: '/about', id: 'about' },
@@ -33,17 +34,6 @@ const Navbar = () => {
     };
   }, []);
 
-  // opcja scroll do przewijania strony home (do poprawki)
-  // const scrollToSection = (id) => {
-  //   const section = document.getElementById(id);
-  //   if (section) {
-  //     window.scrollTo({
-  //       top: section.offsetTop,
-  //       behavior: 'smooth',
-  //     });
-  //   }
-  // };
-
   return (
     <div className='bg-gradient-to-tr from-blue-100 via-white-100 to-pink-100 h-screen font-Montserrat'>
       <div className='flex justify-between items-center h-24 max-w-7xl mx-auto px-4'>
@@ -52,10 +42,10 @@ const Navbar = () => {
         </h1>
         <ul className='hidden lg:flex whitespace-nowrap'>
           {navigation.map((item, index) => (
-            <li className='p-4 hover:text-violet-600 text-lg' key={item.path}>
-              <NavLink key={index} to={item.path} className={({ isActive }) => (isActive ? 'text-violet-600' : undefined)}>
+            <li className='p-4 hover:text-violet-600 text-lg cursor-pointer' key={item.path}>
+              <Link key={index} to={item.id} smooth={true} offset={50} duration={800}>
                 {item.name}
-              </NavLink>
+              </Link>
             </li>
           ))}
         </ul>
@@ -79,16 +69,16 @@ const Navbar = () => {
         <div onClick={handleNav} className='block lg:hidden'>
           {nav ? <AiOutlineClose size={20} /> : <AiOutlineMenu size={20} />}
         </div>
-        <div className={nav ? 'fixed bg-white left-0 top-0 w-[60%] h-full ease-in-out duration-500 z-10' : 'fixed left-[-100%]'}>
+        <div className={nav ? 'fixed bg-white left-0 top-0 w-[60%] h-full ease-in-out duration-500' : 'fixed left-[-100%]'}>
           <h1 className='w-full m-4 text-2xl'>
             <NavLink to='/'>FarMMed</NavLink>
           </h1>
           <ul className='pt-4'>
             {navigation.map((item, index) => (
-              <li className='p-4 border-b border-gray-200 hover:text-violet-600 text-lg' key={item.path}>
-                <NavLink key={index} to={item.path} onClick={closeNav}>
+              <li className='p-4 border-b border-gray-200 hover:text-violet-600 text-lg cursor-pointer' key={item.path}>
+                <Link key={index} to={item.id} smooth={true} offset={50} duration={800} onClick={closeNav}>
                   {item.name}
-                </NavLink>
+                </Link>
               </li>
             ))}
           </ul>

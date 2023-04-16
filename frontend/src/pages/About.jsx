@@ -7,7 +7,7 @@ const properties = [
 
 export const About = () => {
   return (
-    <div className='w-full py-20'>
+    <div name='about' className='w-full py-20'>
       <div className='max-w-6xl mx-auto px-2'>
         <div className='text-start '>
           <h1 className='text-4xl font-bold'>O nas</h1>
