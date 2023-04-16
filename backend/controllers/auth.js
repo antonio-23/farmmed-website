@@ -15,23 +15,25 @@ export const login = (req, res) => {
     if (!checkPassword)
       return res.status(404).json("Niepoprawny email lub hasło");
 
-    const token = jwt.sign({ id: data[0].id }, "secretkey");
+    const token = jwt.sign({ id: data[0].id, id_role: data[0].id_role }, "secretKey");
 
     const { password, ...others } = data[0];
 
     res.cookie("accessToken", token, {
       httpOnly: true,
+      secure: true,
+      sameSite: "none",
     })
-    .status(200)
-    .json(others);
+      .status(200)
+      .json({ id: data[0].id, role: data[0].id_role });
   });
 };
 
 export const register = (req, res) => {
   //CHECK USER IF EXISTS
-  const q = "SELECT * FROM farmmed.user WHERE email = ? OR PESEL = ?";
+  const checkUserQuery = "SELECT * FROM farmmed.user WHERE email = ? OR PESEL = ?";
 
-  db.query(q, [req.body.email, req.body.PESEL], (err, data) => {
+  db.query(checkUserQuery, [req.body.email, req.body.PESEL], (err, data) => {
     if (err) return res.status(500).send(err);
     if (data.length) {
       const existingUser = data.find(user => user.email === req.body.email);
@@ -43,7 +45,7 @@ export const register = (req, res) => {
         return res.status(409).send("Użytkownik z podanym numerem PESEL już istnieje");
       }
   }
-  
+
   //VERIFY PESEL
   if (!validatePESEL(req.body.PESEL)) {
     return res.status(400).send("Nieprawidłowy numer PESEL");
@@ -59,22 +61,32 @@ export const register = (req, res) => {
     //Hash the password
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(req.body.password, salt);
+    const q = `
+      INSERT INTO farmmed.user (
+        first_name,
+        last_name,
+        PESEL,
+        date_of_birth,
+        email,
+        password,
+        id_role
+      ) VALUES (?, ?, ?, ?, ?, ?, ?);
+    `;
 
-    const q =
-        "INSERT INTO farmmed.user (`first_name`, `last_name`, `date_of_birth`, `PESEL`, `email`, `password`) VALUE (?)";
     const values = [
       req.body.first_name,
       req.body.last_name,
-      req.body.date_of_birth,
       req.body.PESEL,
+      req.body.date_of_birth,
       req.body.email,
       hashedPassword,
+      2
     ];
 
-    db.query(q, [values], (err, data) => {
-      if (err) return res.status(500).json(err);
-      return res.status(200).json("Utworzono konto");
-    });
+      db.query(q, values, (err, data) => {
+        if (err) return res.status(500).json(err);
+        return res.status(200).json("Utworzono konto");
+      });
   });
 };
 

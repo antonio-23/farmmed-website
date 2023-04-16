@@ -25,16 +25,23 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const xhr = new XMLHttpRequest();
+      xhr.withCredentials = true; // Add this line to set the withCredentials property
+      xhr.open('POST', 'http://localhost:8800/api/auth/login');
+      xhr.setRequestHeader('Content-Type', 'application/json');
       const response = await axios.post("http://localhost:8800/api/auth/login", loginState, {
         withCredentials: true
       });
 
       if (response.status === 200) {
         setCurrentUser(response.data);
-        localStorage.setItem("user", JSON.stringify(response.data));
+        const { accessToken, id, id_role } = response.data;
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("userId", id);
+        localStorage.setItem("role", id_role);
         //localStorage.setItem("accessToken", response.data.token);
-        navigate("/admin");
-        console.log('zalogowano')
+        console.log('zalogowano na ${id}')
+        navigate("/admin/${id}")
       } else if (response.status === 400 || response.status === 404) {
         setErr("Niepoprawny login lub hasło");
       }

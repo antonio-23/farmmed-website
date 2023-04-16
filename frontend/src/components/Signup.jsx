@@ -1,31 +1,30 @@
 import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import { signupFields } from "../constants/formFields"
 import FormAction from "./FormAction";
 import Input from "./Input";
-import axios from "axios"
-
+import axios from "axios";
 
 const fields=signupFields;
 let fieldsState={};
-
 fields.forEach(field => fieldsState[field.id]='');
 
 export default function Signup(){
   const [signupState,setSignupState]=useState(fieldsState);
-  const [dateOfBirth, setDateOfBirth] = useState("");
   const [email, setemail] = useState('');
   const [email2, setemail2] = useState('');
   const [password, setpaswword] = useState('');
   const [password2, setpaswword2] = useState('');
+  const navigate = useNavigate();
 
   const isValidPesel = (pesel) => {
     if (!/^[0-9]{11}$/.test(pesel)) return false;
-  
+
     const digits = pesel.split('').map(Number);
-  
+
     const checksum =
       (1 * digits[0] + 3 * digits[1] + 7 * digits[2] + 9 * digits[3] + 1 * digits[4] + 3 * digits[5] + 7 * digits[6] + 9 * digits[7] + 1 * digits[8] + 3 * digits[9]) % 10;
-  
+
     if (checksum === 0) {
       return digits[10] === 0;
     } else {
@@ -33,48 +32,48 @@ export default function Signup(){
     }
   }
 
+  // Funkcja autoDate
+const autoDate = (pesel) => {
+  let year = parseInt(pesel.substring(0,2));
+  let month = parseInt(pesel.substring(2,4));
+  let day = parseInt(pesel.substring(4,6));
+  if (month > 80) {
+    year += 1800;
+    month -= 80;
+  } else if (month > 60) {
+    year += 2200;
+    month -= 60;
+  } else if (month > 40) {
+    year += 2100;
+    month -= 40;
+  } else if (month > 20) {
+    year += 2000;
+    month -= 20;
+  } else {
+    year += 1900;
+  }
+  const dateOfBirth = new Date(year, month-1, day+1).toISOString().substring(0,10);
+  return dateOfBirth;
+};
+
+
   // Dodaj funkcję auto data
   const handlePeselChange = (e) => {
     const pesel = e.target.value;
     if (isValidPesel(pesel) && pesel.length === 11){
     setErr(null);
-    const year = pesel.substring(0, 2);
-    const month = pesel.substring(2, 4);
-    const day = pesel.substring(4, 6);
-    const century = pesel.charAt(2);
-    let birthyear;
-    let birthmonth;
-  
-    switch (century) {
-      case '0':
-        birthyear = '19' + year;
-        break;
-      case '1':
-        birthyear = '19' + year;
-        break;
-      case '2':
-        birthyear = '20' + year;
-        birthmonth = parseInt(month) - 20;
-        break;
-      case '3':
-        birthyear = '20' + year;
-        birthmonth = parseInt(month) - 20;
-        break;
-      default:
-        console.log('Nieprawidłowy numer PESEL.');
-        return;
-    }
-    const formattedDate = `${birthyear.toString()}-${birthmonth.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-    setDateOfBirth(formattedDate);
-    }
-    if (!isValidPesel(pesel) && pesel.length === 11){
+    const dateOfBirth = autoDate(pesel);
+    setSignupState({...signupState,[e.target.id]:e.target.value, date_of_birth: dateOfBirth});
+    }else if (!isValidPesel(pesel) && pesel.length === 11){
     setErr('Nieprawidłowy numer PESEL');
+    }else{
+    setSignupState({...signupState,[e.target.id]:e.target.value});
     }
-    setSignupState({...signupState,[e.target.id]:e.target.value}); 
-  };
+    };  
 
   const [err, setErr] = useState(null);
-  
+  fieldsState={...fieldsState, date_of_birth: ''};
+
   const handleChange=(e)=>{
     const { name, value } = e.target;
     if (name === 'email') {
@@ -87,7 +86,10 @@ export default function Signup(){
     } else if (name === 'confirm-password') {
       setpaswword2(value);
     }
-    setSignupState({...signupState,[e.target.id]:e.target.value})};  
+    setSignupState({...signupState,[e.target.id]:e.target.value})
+  };
+    
+
 
   const handleSubmit= async(e)=>{
     e.preventDefault()
@@ -96,6 +98,13 @@ export default function Signup(){
       setErr('Nieprawidłowy numer PESEL');
       return;
     }
+    console.log(e.target.first_name);
+    console.log(e.target.last_name);
+    console.log(e.target.PESEL);
+    console.log(e.target.date_of_birth);
+    console.log(e.target.email);
+    console.log(e.target['confirm-email-address']);
+    console.log(e.target.password);
     if (email !== email2) {
       setErr("Adresy email nie są identyczne");
       return;
@@ -105,9 +114,10 @@ export default function Signup(){
     } else {
       setErr(null);
     }
-    setSignupState({ ...signupState, date_of_birth: dateOfBirth });
+    setSignupState({ ...signupState,});
         try{
-            await axios.post("http://127.0.0.1:8800/api/auth/register", signupState)
+          await axios.post("http://127.0.0.1:8800/api/auth/register", {...signupState, date_of_birth: autoDate(signupState.PESEL)});
+          navigate("/login");
         }catch(err){
             setErr(err.response.data);
         }
@@ -122,7 +132,8 @@ export default function Signup(){
                         <Input
                             key={field.id}
                             handleChange={(field.id === 'PESEL') ? handlePeselChange : handleChange}
-                            value={(field.id === 'date_of_birth') ? dateOfBirth : signupState[field.id]}
+                            value={signupState[field.id]}
+                            //value={(signupState[field.id])}
                             labelText={field.labelText}
                             labelFor={field.labelFor}
                             id={field.id}
@@ -131,7 +142,7 @@ export default function Signup(){
                             isRequired={field.isRequired}
                             placeholder={field.placeholder}
                     />
-                
+
                 )
             }
           {err && <p className="text-red-500">{err}</p>}
