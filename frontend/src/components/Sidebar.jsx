@@ -1,5 +1,6 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const navigation = [
   { name: 'Zarządzanie kontami', path: 'accounts' },
@@ -8,6 +9,22 @@ const navigation = [
 ];
 
 export const Sidebar = () => {
+  const [err, setErr] = useState(null);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try{
+      await axios.post("http://127.0.0.1:8800/api/auth/logout",);
+      localStorage.removeItem('user');
+      navigate("/");
+    }catch(err){
+      setErr(err.response.data);
+    }
+    console.log(err);
+  }
+
   return (
     <div className='font-Montserrat w-[350px] bg-gradient-to-b from-indigo-500  to-violet-500 h-screen '>
       <div className='pt-10'>
@@ -24,7 +41,7 @@ export const Sidebar = () => {
         ))}
       </div>
       <div className='absolute bottom-14 left-0 pl-20'>
-        <button className='border rounded-xl border-white hover:shadow-xl p-4 text-white font-bold text-'>Wyloguj się</button>
+        <button className='border rounded-xl border-white hover:shadow-xl p-4 text-white font-bold text-' onClick={handleSubmit}>Wyloguj się</button>
       </div>
     </div>
   );
