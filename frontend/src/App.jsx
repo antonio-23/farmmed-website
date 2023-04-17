@@ -32,8 +32,8 @@ const router = createBrowserRouter(
 		</Route>
 		<Route path='admin/:id/' element={<Admin/>}>
 			<Route path='accounts' element={<Accounts />}/>
-			<Route path='accounts' element={<Schedule />}/>
-			<Route path='accounts' element={<Drugs />}/>
+			<Route path='schedule' element={<Schedule />}/>
+			<Route path='drugs' element={<Drugs />}/>
 		</Route>
 		
 		<Route path='*' element={<NotFound />} />

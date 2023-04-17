@@ -41,7 +41,7 @@ export default function Login() {
         localStorage.setItem("role", id_role);
         //localStorage.setItem("accessToken", response.data.token);
         console.log('zalogowano na ${id}')
-        navigate("/admin/${id}")
+        navigate("/admin/"+id)
       } else if (response.status === 400 || response.status === 404) {
         setErr("Niepoprawny login lub hasło");
       }
