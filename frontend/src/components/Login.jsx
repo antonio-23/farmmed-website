@@ -31,17 +31,34 @@ export default function Login() {
       xhr.setRequestHeader('Content-Type', 'application/json');
       const response = await axios.post("http://localhost:8800/api/auth/login", loginState, {
         withCredentials: true
-      });
+      }); 
 
       if (response.status === 200) {
         setCurrentUser(response.data);
-        const { accessToken, id, id_role } = response.data;
+        console.log(response.data);
+        const { accessToken, id, role } = response.data;
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("userId", id);
-        localStorage.setItem("role", id_role);
+        localStorage.setItem("role", role);
         //localStorage.setItem("accessToken", response.data.token);
-        console.log('zalogowano na ${id}')
-        navigate("/admin/"+id)
+        console.log('zalogowano na ' + id)
+        console.log(role);
+        try {
+          // przekieruj użytkownika na odpowiednią ścieżkę frontendową
+          if (role === 1) {
+            navigate('/admin/' + id);
+          } else if (role === 2) {
+            navigate('/user/' + id);
+          } else if (role === 3) {
+            navigate('/doctor/' + id);
+          } else if (role === 4) {
+            navigate('/doctor/' + id);
+          } else {
+            console.error('Nieprawidłowa rola użytkownika');
+          }
+        } catch (error) {
+          console.error(error);
+        }  
       } else if (response.status === 400 || response.status === 404) {
         setErr("Niepoprawny login lub hasło");
       }

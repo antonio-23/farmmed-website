@@ -17,7 +17,7 @@ export const Sidebar = () => {
 
     try{
       await axios.post("http://127.0.0.1:8800/api/auth/logout",);
-      localStorage.removeItem('user');
+      localStorage.clear();
       navigate("/");
     }catch(err){
       setErr(err.response.data);

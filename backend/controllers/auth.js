@@ -97,6 +97,25 @@ export const logout = (req, res)=>{
   }).status(200).send("Wylogowano")
 };
 
+export const auth = (req, res) =>{
+  return (req, res) => {
+    const token = req.cookies.accessToken;
+    if (!token) return res.status(401).send("Nieautoryzowany dostęp");
+    else{
+    try {
+      const decodedToken = jwt.verify(token, "secretKey");
+      if (decodedToken.role !== requiredRole) {
+        return res.status(403).send("Brak wymaganych uprawnień");
+      }
+      req.user = decodedToken;
+      res.status(200).send("Autoryzacja przebiegła pomyślnie");
+    } catch (error) {
+      res.status(400).send("Nieprawidłowy token");
+    }
+  }
+  };
+};
+
 export const forgot = (req, res)=>{
   const q = "SELECT * FROM farmmed.user WHERE email = ?";
   db.query(q, [req.body.email], (err, data) => {
