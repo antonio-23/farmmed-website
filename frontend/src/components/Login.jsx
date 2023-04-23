@@ -35,30 +35,10 @@ export default function Login() {
 
       if (response.status === 200) {
         setCurrentUser(response.data);
-        console.log(response.data);
-        const { accessToken, id, role } = response.data;
-        localStorage.setItem("accessToken", accessToken);
-        localStorage.setItem("userId", id);
-        localStorage.setItem("role", role);
+        const {token, redirectPath, accessToken, id, role } = response.data;
         //localStorage.setItem("accessToken", response.data.token);
-        console.log('zalogowano na ' + id)
-        console.log(role);
-        try {
-          // przekieruj użytkownika na odpowiednią ścieżkę frontendową
-          if (role === 1) {
-            navigate('/admin/' + id);
-          } else if (role === 2) {
-            navigate('/user/' + id);
-          } else if (role === 3) {
-            navigate('/doctor/' + id);
-          } else if (role === 4) {
-            navigate('/doctor/' + id);
-          } else {
-            console.error('Nieprawidłowa rola użytkownika');
-          }
-        } catch (error) {
-          console.error(error);
-        }  
+        console.log('zalogowano na ' + id);
+        navigate(redirectPath);
       } else if (response.status === 400 || response.status === 404) {
         setErr("Niepoprawny login lub hasło");
       }

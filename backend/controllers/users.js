@@ -1,4 +1,6 @@
 import { db } from "../connect.js";
+import jwt from "jsonwebtoken";
+import { config } from '../config.js';
 
 export const getUser = (req, res) => {
   const userId = req.params.userId;
@@ -12,18 +14,24 @@ export const getUser = (req, res) => {
 };
 
 export const getName = (req, res) => {
-  const q = "SELECT first_name FROM farmmed.user WHERE id=?";
-  console.log(req.body.userId);
-  db.query(q, [req.body.userId], (err, data) => {
-    if (err) {
-      return res.status(500).json(err);
-    }
-    if (data.length === 0) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    // Zwracamy wartość name z bazy danych w formacie JSON
-    console.log(data[0].first_name);
-    return res.json(data[0].first_name);
-  });
+  if (!config.token) {
+  return res.status(401).json({ message: "Authentication failed: no token provided" });
+  }
+  try {
+    const decodedToken = jwt.verify(config.token, "secretKey");
+    const id = decodedToken.id;
+    const q = "SELECT first_name FROM farmmed.user WHERE id=?";
+    db.query(q, [id], (err, data) => {
+      if (err) {
+        return res.status(500).json(err);
+      }
+      if (data.length === 0) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      return res.json(data[0].first_name );
+    });
+  } catch (err) {
+    
+    return res.status(401).json({ message: "Authentication failed: invalid token" });
+  }
 };
-

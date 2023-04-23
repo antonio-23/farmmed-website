@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 export const MainPage = () => {
   const [name, setName] = useState('');
   const [status, setStatus] = useState(0);
-  const userId = localStorage.getItem("userId");
   const navigate = useNavigate();
   useEffect(() => {
     const checkAuth = async () => {
@@ -19,7 +18,9 @@ export const MainPage = () => {
     };
     checkAuth();
     console.log (status);
-    axios.post('http://127.0.0.1:8800/api/users/name', { userId: userId })
+    axios.post('http://127.0.0.1:8800/api/users/name', {
+      withCredentials: true
+    })
       .then(res => setName(res.data))
       .catch(err => console.log(err));
   });

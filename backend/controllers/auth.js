@@ -1,33 +1,48 @@
-import { db } from "../connect.js"
+import { db } from "../connect.js";
 import bcrypt from 'bcryptjs';
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
+import { config } from '../config.js';
 
 export const login = (req, res) => {
   const q = "SELECT * FROM farmmed.user WHERE email = ?";
   db.query(q, [req.body.email], (err, data) => {
     if (err) return res.status(500).json(err);
+    const checkPassword = bcrypt.compareSync(req.body.password, data[0].password);
 
-    const checkPassword = bcrypt.compareSync(
-      req.body.password,
-      data[0].password
-    );
-
-    if (!checkPassword)
+    if (!checkPassword) {
       return res.status(404).json("Niepoprawny email lub hasło");
+    }
 
-    const token = jwt.sign({ id: data[0].id, id_role: data[0].id_role }, "secretKey");
+    const token = jwt.sign({ id: data[0].id, id_role: data[0].id_role }, "secretKey", { expiresIn: '1h' });
 
+    let redirectPath = "";
+    switch (data[0].id_role) {
+      case 1:
+        redirectPath = "/admin";
+        break;
+      case 2:
+        redirectPath = "/user";
+        break;
+      case 3:
+      case 4:
+        redirectPath = "/doctor";
+        break;
+      default:
+        console.error('Nieprawidłowa rola użytkownika');
+        break;
+    }
     const { password, ...others } = data[0];
-
-    res.cookie("accessToken", token, {
+    config.token = token;
+   res.cookie("accessToken", token, {
       httpOnly: true,
       secure: true,
       sameSite: "none",
     })
-      .status(200)
-      .json({ id: data[0].id, role: data[0].id_role });
+    .status(200)
+    .json({token: token, redirectPath: redirectPath, id: data[0].id, role: data[0].id_role });
   });
 };
+
 
 export const register = (req, res) => {
   //CHECK USER IF EXISTS
@@ -91,6 +106,7 @@ export const register = (req, res) => {
 };
 
 export const logout = (req, res)=>{
+  config.token = '';
   res.clearCookie("accessToken",{
     secure:true,
     sameSite:"none"
@@ -99,21 +115,20 @@ export const logout = (req, res)=>{
 
 export const auth = (req, res) =>{
   return (req, res) => {
-    const token = req.cookies.accessToken;
-    if (!token) return res.status(401).send("Nieautoryzowany dostęp");
-    else{
-    try {
-      const decodedToken = jwt.verify(token, "secretKey");
-      if (decodedToken.role !== requiredRole) {
-        return res.status(403).send("Brak wymaganych uprawnień");
-      }
-      req.user = decodedToken;
-      res.status(200).send("Autoryzacja przebiegła pomyślnie");
-    } catch (error) {
-      res.status(400).send("Nieprawidłowy token");
-    }
+    // pobieramy token z nagłówka żądania
+  const token = req.cookies.accessToken;
+  
+  try {
+    // weryfikujemy token
+    const decodedToken = jwt.verify(token, "secretKey");
+    
+    // jeśli token jest poprawny, przepuszczamy żądanie
+    res.status(200).json({ message: 'Dostęp do chronionego zasobu' });
+  } catch (error) {
+    // jeśli token jest nieprawidłowy, zwracamy błąd
+    res.status(401).json({ message: 'Nieprawidłowy lub wygasły token' });
   }
-  };
+}
 };
 
 export const forgot = (req, res)=>{
