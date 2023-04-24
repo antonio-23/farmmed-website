@@ -14,34 +14,28 @@ export const Sidebar = () => {
   const [err, setErr] = useState(null);
   const navigate = useNavigate();
 
-  function nav(){
-    const [role, setRole] = useState(null);
-    useEffect(() => {
-      async function fetchData() {
+  const [links, setLinks] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
       try {
         const response = await axios.post(
-        'http://localhost:8800/api/auth/authorize',
-        { user: localStorage.getItem('user') },
-        { withCredentials: true }
+          'http://localhost:8800/api/auth/authorize',
+          { user: localStorage.getItem('user') },
+          { withCredentials: true }
         );
         const data = response.data;
-        setRole(data.id_role);
+        if (data.id_role === 1) {
+          setLinks(adminLinks);
+        } else {
+          setLinks([]);
+        }
       } catch (error) {
         console.error(error);
       }
-  
-      }
-      console.log(adminLinks);
-      if(role===1){
-        return navAdmin;
-      }
-      fetchData();
-    }, []);
-  }
-  
-  let nazwa = nav();
-
-  
+    }
+    fetchData();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -56,12 +50,6 @@ export const Sidebar = () => {
     console.log(err);
   }
 
-
-
-
-
-
-
   return (
     <div className='font-Montserrat w-[350px] bg-gradient-to-b from-indigo-500  to-violet-500 h-screen '>
       <div className='pt-10'>
@@ -71,16 +59,31 @@ export const Sidebar = () => {
         <hr className='w-48 h-1 mx-14 my-5 bg-gray-100 rounded md:my-10' />
       </div>
       <div className='flex flex-col mr-12'>
-      {nazwa.map((item, index) => (
-      <button className='text-center p-4  rounded-xl text-white font-bold' key={index}>
-        <NavLink to={item.path} className={({ isActive }) => (isActive ? 'bg-white rounded-xl p-4 text-violet-900 font-bold' : undefined)}>
-          {item.name}
-        </NavLink>
-      </button>
-    ))}
+        {links.map((item, index) => (
+          <button
+            className='text-center p-4  rounded-xl text-white font-bold'
+            key={index}
+          >
+            <NavLink
+              to={item.path}
+              className={({ isActive }) =>
+                isActive
+                  ? 'bg-white rounded-xl p-4 text-violet-900 font-bold'
+                  : undefined
+              }
+            >
+              {item.name}
+            </NavLink>
+          </button>
+        ))}
       </div>
       <div className='absolute bottom-14 left-0 pl-20'>
-        <button className='border rounded-xl border-white hover:shadow-xl p-4 text-white font-bold text-' onClick={handleSubmit}>Wyloguj się</button>
+        <button
+          className='border rounded-xl border-white hover:shadow-xl p-4 text-white font-bold text-'
+          onClick={handleSubmit}
+        >
+          Wyloguj się
+        </button>
       </div>
     </div>
   );
