@@ -21,22 +21,29 @@ import { NotFound } from './pages/NotFound';
 
 function AuthAdmin() {
 	const [role, setRole] = useState(null);
-  
 	useEffect(() => {
-	  axios.get('http://localhost:8800/api/auth/authorize')
-		.then(response => {
+	  async function fetchData() {
+		try {
+		  const response = await axios.post(
+			'http://localhost:8800/api/auth/authorize',
+			{ user: localStorage.getItem('user') },
+			{ withCredentials: true }
+		  );
 		  const data = response.data;
 		  setRole(data.id_role);
-		  console.log(response);
-		});
-	});
+		} catch (error) {
+		  console.error(error);
+		}
+	  }
+	  fetchData();
+	}, []);
   
 	if (role === 1) {
 	  return <Admin />;
 	} else {
-	  return <NotFound/>;
+	  return <NotFound />;
 	}
-}
+  }
 
 const router = createBrowserRouter(
 	createRoutesFromElements(

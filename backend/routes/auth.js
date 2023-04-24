@@ -11,6 +11,6 @@ router.get("/auth", auth, );
 router.post("/logout", logout);
 router.post("/forgot", forgot);
 
-router.get("/authorize", authorize)
+router.post("/authorize", authorize)
 
 export default router;

@@ -18,12 +18,21 @@ export const MainPage = () => {
     };
     checkAuth();
     console.log (status);
-    axios.post('http://127.0.0.1:8800/api/users/name', {
-      withCredentials: true
-    })
-      .then(res => setName(res.data))
-      .catch(err => console.log(err));
-  });
+    async function fetchData() {
+      try {
+        const response = await axios.post(
+        'http://127.0.0.1:8800/api/users/name',
+        { user: localStorage.getItem('user') },
+        { withCredentials: true }
+        );
+        const data = response.data;
+        setName(data)
+      } catch (error) {
+        console.error(error);
+      }
+      }
+      fetchData();
+    }, []);
 
   return (
     <div className='relative right-12 rounded-l-[2.5rem] bg-white font-Montserrat'>

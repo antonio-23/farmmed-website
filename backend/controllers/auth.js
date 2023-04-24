@@ -1,20 +1,28 @@
-import { db } from "../connect.js";
 import bcrypt from 'bcryptjs';
 import jwt from "jsonwebtoken";
-import { config } from '../config.js';
+import { db } from '../connect.js';
 
 export const login = (req, res) => {
   const q = "SELECT * FROM farmmed.user WHERE email = ?";
   db.query(q, [req.body.email], (err, data) => {
-    if (err) return res.status(500).json(err);
+    if (err) {
+      return res.status(500).json(err);
+    }
+    if (!data[0]) {
+      return res.status(404).json("Niepoprawny email lub hasło");
+    }
     const checkPassword = bcrypt.compareSync(req.body.password, data[0].password);
-
     if (!checkPassword) {
       return res.status(404).json("Niepoprawny email lub hasło");
     }
 
     const token = jwt.sign({ id: data[0].id, id_role: data[0].id_role }, "secretKey", { expiresIn: '1h' });
-
+    const q2 = "UPDATE farmmed.user SET token = ? WHERE (id = ?)";
+    db.query(q2, [token, data[0].id], (error, result) => {
+      if (error) {
+        return res.status(500).json(error);
+      }
+    })
     let redirectPath = "";
     switch (data[0].id_role) {
       case 1:
@@ -32,8 +40,7 @@ export const login = (req, res) => {
         break;
     }
     const { password, ...others } = data[0];
-    config.token = token;
-   res.cookie("accessToken", token, {
+    res.cookie("accessToken", token, {
       httpOnly: true,
       secure: true,
       sameSite: "none",
@@ -42,6 +49,7 @@ export const login = (req, res) => {
     .json({token: token, redirectPath: redirectPath, id: data[0].id, role: data[0].id_role });
   });
 };
+
 
 
 export const register = (req, res) => {
@@ -106,7 +114,6 @@ export const register = (req, res) => {
 };
 
 export const logout = (req, res)=>{
-  config.token = '';
   res.clearCookie("accessToken",{
     secure:true,
     sameSite:"none"
@@ -134,7 +141,6 @@ export const auth = (req, res) =>{
 export const forgot = (req, res)=>{
   const q = "SELECT * FROM farmmed.user WHERE email = ?";
   db.query(q, [req.body.email], (err, data) => {
-    console.log(data);
     if (err) return res.status(400).json("Nieprawidłowy email");
     if (!data.length) return res.status(404).json("Użytkownik o podanym adresie email nie istnieje");
     return res.status(200).json("Poprawny email");

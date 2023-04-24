@@ -36,7 +36,7 @@ export default function Login() {
       if (response.status === 200) {
         setCurrentUser(response.data);
         const {token, redirectPath, accessToken, id, role } = response.data;
-        //localStorage.setItem("accessToken", response.data.token);
+        localStorage.setItem("user", id);
         console.log('zalogowano na ' + id);
         navigate(redirectPath);
       } else if (response.status === 400 || response.status === 404) {
