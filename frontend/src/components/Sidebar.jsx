@@ -1,16 +1,47 @@
-import { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { adminLinks } from '../constants/sidebarLinks';
 
-const navigation = [
-  { name: 'Zarządzanie kontami', path: 'accounts' },
-  { name: 'Edycja harmonogramów', path: 'schedule' },
-  { name: 'Baza leków', path: 'drugs' },
-];
+// const navigation = [
+//   { name: 'Zarządzanie kontami', path: 'accounts' },
+//   { name: 'Edycja harmonogramów', path: 'schedule' },
+//   { name: 'Baza leków', path: 'drugs' },
+// ];
+
 
 export const Sidebar = () => {
   const [err, setErr] = useState(null);
   const navigate = useNavigate();
+
+  function nav(){
+    const [role, setRole] = useState(null);
+    useEffect(() => {
+      async function fetchData() {
+      try {
+        const response = await axios.post(
+        'http://localhost:8800/api/auth/authorize',
+        { user: localStorage.getItem('user') },
+        { withCredentials: true }
+        );
+        const data = response.data;
+        setRole(data.id_role);
+      } catch (error) {
+        console.error(error);
+      }
+  
+      }
+      console.log(adminLinks);
+      if(role===1){
+        return navAdmin;
+      }
+      fetchData();
+    }, []);
+  }
+  
+  let nazwa = nav();
+
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,20 +56,28 @@ export const Sidebar = () => {
     console.log(err);
   }
 
+
+
+
+
+
+
   return (
     <div className='font-Montserrat w-[350px] bg-gradient-to-b from-indigo-500  to-violet-500 h-screen '>
       <div className='pt-10'>
-        <h1 className='w-md text-2xl text-white pl-24'>FarMMed</h1>
+        <h1 className='w-md text-2xl text-white pl-24'>
+          <Link to='/'>FarMMed</Link>
+        </h1>
         <hr className='w-48 h-1 mx-14 my-5 bg-gray-100 rounded md:my-10' />
       </div>
       <div className='flex flex-col mr-12'>
-        {navigation.map((item, index) => (
-          <button className='text-center p-4  rounded-xl text-white font-bold' key={index}>
-            <NavLink to={item.path} className={({ isActive }) => (isActive ? 'bg-white rounded-xl p-4 text-violet-900 font-bold' : undefined)}>
-              {item.name}
-            </NavLink>
-          </button>
-        ))}
+      {nazwa.map((item, index) => (
+      <button className='text-center p-4  rounded-xl text-white font-bold' key={index}>
+        <NavLink to={item.path} className={({ isActive }) => (isActive ? 'bg-white rounded-xl p-4 text-violet-900 font-bold' : undefined)}>
+          {item.name}
+        </NavLink>
+      </button>
+    ))}
       </div>
       <div className='absolute bottom-14 left-0 pl-20'>
         <button className='border rounded-xl border-white hover:shadow-xl p-4 text-white font-bold text-' onClick={handleSubmit}>Wyloguj się</button>
