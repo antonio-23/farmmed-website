@@ -11,28 +11,24 @@ export const MainPage = () => {
       try {
         const response = await axios.get('http://localhost:8800/api/auth/auth');
         console.log(response.data); // zaloguj informacje o stanie autoryzacji
-        setStatus(response.status)
+        setStatus(response.status);
       } catch (error) {
         console.error(error);
       }
     };
     checkAuth();
-    console.log (status);
+    console.log(status);
     async function fetchData() {
       try {
-        const response = await axios.post(
-        'http://127.0.0.1:8800/api/users/name',
-        { user: localStorage.getItem('user') },
-        { withCredentials: true }
-        );
+        const response = await axios.post('http://127.0.0.1:8800/api/users/name', { user: localStorage.getItem('user') }, { withCredentials: true });
         const data = response.data;
-        setName(data)
+        setName(data);
       } catch (error) {
         console.error(error);
       }
-      }
-      fetchData();
-    }, []);
+    }
+    fetchData();
+  }, []);
 
   return (
     <div className='relative right-12 rounded-l-[2.5rem] bg-white font-Montserrat'>

@@ -40,15 +40,15 @@ const Navbar = () => {
         <h1 className='w-md text-2xl'>
           <NavLink to='/'>FarMMed</NavLink>
         </h1>
-        <ul className='hidden lg:flex whitespace-nowrap'>
+        <div className='hidden lg:flex whitespace-nowrap'>
           {navigation.map((item, index) => (
-            <li className='p-4 hover:text-violet-600 text-lg cursor-pointer' key={item.path}>
+            <button className='p-4 hover:text-violet-600 text-lg cursor-pointer' key={item.path}>
               <Link key={index} to={item.id} smooth={true} offset={50} duration={800}>
                 {item.name}
               </Link>
-            </li>
+            </button>
           ))}
-        </ul>
+        </div>
         <div className='hidden lg:flex gap-4 whitespace-nowrap'>
           {btnNavigation.map((item, index) => (
             <button

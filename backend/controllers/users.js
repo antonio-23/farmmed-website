@@ -15,7 +15,7 @@ export const getUser = (req, res) => {
 export const getName = (req, res) => {
   let token = null;
   const id = req.body.user;
-  if (id.length){
+  if (id !== null){
   const q = "SELECT token FROM farmmed.user WHERE id = ?";
   db.query(q, [id], (error, data) => {
     if (error) {

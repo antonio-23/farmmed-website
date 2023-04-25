@@ -32,8 +32,10 @@ export const login = (req, res) => {
         redirectPath = "/user";
         break;
       case 3:
-      case 4:
         redirectPath = "/doctor";
+        break;
+      case 4:
+        redirectPath = "/chemist";
         break;
       default:
         console.error('Nieprawidłowa rola użytkownika');

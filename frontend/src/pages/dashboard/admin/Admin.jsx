@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { Sidebar } from '../../components/Sidebar';
+import { Sidebar } from '../../../components/Sidebar';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { MainPage } from '../dashboard/MainPage';
+import { MainPage } from './MainPage';
 import axios from 'axios';
 
 export const Admin = () => {
@@ -14,11 +14,11 @@ export const Admin = () => {
         console.log(response.data); // zaloguj informacje o stanie autoryzacji
       } catch (error) {
         console.error(error);
-        navigate("/");
-    }
-  };
-  checkAuth();
-}); // [] oznacza, że useEffect zostanie uruchomiony tylko raz po załadowaniu komponentu
+        navigate('/');
+      }
+    };
+    checkAuth();
+  }); // [] oznacza, że useEffect zostanie uruchomiony tylko raz po załadowaniu komponentu
 
   return (
     <div className='flex'>
