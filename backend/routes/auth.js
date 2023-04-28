@@ -7,7 +7,7 @@ const router = express.Router();
 router.post("/login", login);
 router.post("/register", register);
 // dodaj middleware validateCookies do wszystkich tras po wywołaniu funkcji login
-router.get("/auth", auth, );
+router.get("/auth", auth);
 router.post("/logout", logout);
 router.post("/forgot", forgot);
 

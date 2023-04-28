@@ -9,7 +9,7 @@ export const MainPage = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await axios.get('http://localhost:8800/api/auth/auth');
+        const response = await axios.get('http://localhost:8800/api/auth/auth', { user: localStorage.getItem('user') });
         console.log(response.data); // zaloguj informacje o stanie autoryzacji
         setStatus(response.status);
       } catch (error) {
@@ -20,7 +20,7 @@ export const MainPage = () => {
     console.log(status);
     async function fetchData() {
       try {
-        const response = await axios.post('http://127.0.0.1:8800/api/users/name', { user: localStorage.getItem('user') }, { withCredentials: true });
+        const response = await axios.post('http://127.0.0.1:8800/api/user/name', { user: localStorage.getItem('user') }, { withCredentials: true });
         const data = response.data;
         setName(data);
       } catch (error) {

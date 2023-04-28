@@ -1,12 +1,13 @@
 import express from 'express';
 const app = express()
-import userRoutes from './routes/users.js'
+import userRoutes from './routes/user.js'
 import orderRoutes from './routes/order.js'
 import order_drugRoutes from './routes/order_drug.js'
 import medical_fileRoutes from './routes/medical_file.js'
 import drugRoutes from './routes/drug.js'
 import authRoutes from './routes/auth.js'
 import cookieParser from "cookie-parser";
+import usersRoutes from './routes/users.js'
 import cors from 'cors';
 
 app.use(cors({
@@ -26,7 +27,8 @@ app.use((req, res, next) => {
 })
 
 
-app.use("/api/users", userRoutes)
+app.use("/api/users", usersRoutes)
+app.use("/api/user", userRoutes)
 app.use("/api/order", orderRoutes)
 app.use("/api/order_drug", order_drugRoutes)
 app.use("/api/medical_file", medical_fileRoutes)

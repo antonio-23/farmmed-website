@@ -10,16 +10,17 @@ export const Admin = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await axios.get('http://localhost:8800/api/auth/auth');
+        const response = await axios.get('http://localhost:8800/api/auth/auth', { user: localStorage.getItem('user') });
         console.log(response.data); // zaloguj informacje o stanie autoryzacji
+        return true;
       } catch (error) {
         console.error(error);
         navigate('/');
+        return false;
       }
     };
     checkAuth();
   }); // [] oznacza, że useEffect zostanie uruchomiony tylko raz po załadowaniu komponentu
-
   return (
     <div className='flex'>
       <Sidebar />
