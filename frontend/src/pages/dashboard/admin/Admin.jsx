@@ -25,7 +25,6 @@ export const Admin = () => {
     <div className='flex'>
       <Sidebar />
       <MainPage />
-      <Outlet />
     </div>
   );
 };

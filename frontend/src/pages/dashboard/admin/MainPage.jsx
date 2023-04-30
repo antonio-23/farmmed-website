@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 export const MainPage = () => {
   const [name, setName] = useState('');
@@ -31,10 +31,11 @@ export const MainPage = () => {
   }, []);
 
   return (
-    <div className='relative right-12 rounded-l-[2.5rem] bg-white font-Montserrat'>
+    <div className='w-full bg-ghostwithe font-Montserrat'>
       <div className='p-10'>
         <h1 className='text-4xl font-bold'>Witaj, {name} </h1>
       </div>
+      <Outlet />
     </div>
   );
 };

@@ -3,9 +3,7 @@ import { db } from "../connect.js";
 
 export const authorize = (req, res) => {
     let token = null;
-    console.log(req.body)
     const id = req.body.user;
-    console.log(id);
     if (id !== null){
     const q = "SELECT token FROM farmmed.user WHERE id = ?";
     db.query(q, [id], (error, data) => {

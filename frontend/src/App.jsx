@@ -1,32 +1,15 @@
 import './App.css';
-import { createBrowserRouter, createRoutesFromElements, Outlet, Route, RouterProvider } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 
 // Pages
-import { About } from './pages/About';
 import { Home } from './pages/Home';
-import { Contact } from './pages/Contact';
 import Register from './pages/Register';
 import Log_in from './pages/Login';
-import { OurLocation } from './pages/OurLocation';
 import ForgotPassword from './pages/ForgotPassword';
 
 // Components
 import Navbar from './components/Navbar';
 import { NotFound } from './pages/NotFound';
-import { ProfileUser } from './pages/dashboard/user/ProfileUser';
-import { FiguresUser } from './pages/dashboard/user/FiguresUser';
-import { PrescriptionUser } from './pages/dashboard/user/PrescriptionUser';
-import { VisitUser } from './pages/dashboard/user/VisitUser';
-import { ScheduleDoctor } from './pages/dashboard/doctor/ScheduleDoctor';
-import { ProfileDoctor } from './pages/dashboard/doctor/ProfileDoctor';
-import { FiguresDoctor } from './pages/dashboard/doctor/FiguresDoctor';
-import { PrescriptionDoctor } from './pages/dashboard/doctor/PrescriptionDoctor';
-import { ProfileChemist } from './pages/dashboard/chemist/ProfileChemist';
-import { OrderChemist } from './pages/dashboard/chemist/OrderChemist';
-import { DrugsChemist } from './pages/dashboard/chemist/DrugsChemist';
-import { PrescriptionChemist } from './pages/dashboard/chemist/PrescriptionChemist';
-import { User } from './pages/dashboard/user/User';
 
 //Auth
 import {AuthAdmin, AuthAccounts, AuthChemist, AuthDoctor, AuthDrugs, AuthDrugsChemist, AuthFiguresDoctor, AuthFiguresUser, AuthOrderChemist, AuthPrescriptionChemist, AuthPrescriptionDoctor, AuthPrescriptionUser, AuthProfileChemist, AuthProfileDoctor, AuthProfileUser, AuthSchedule, AuthScheduleDoctor, AuthUser, AuthVisitUser } from './Auth'
