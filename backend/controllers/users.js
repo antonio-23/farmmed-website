@@ -10,10 +10,10 @@ export const all_users = (req, res) => {
 };
 
 export const search_user = (req, res) => {
-  const q = "SELECT u.id, CONCAT(u.first_name, ' ', u.last_name) name, r.name role FROM farmmed.user u INNER JOIN farmmed.roles r USING(id_role) WHERE CONCAT(u.first_name, ' ', u.last_name) LIKE ?";
-  db.query(q, [req.body.name + '%'], (err, data) => {
+  const q = "SELECT u.id, CONCAT(u.first_name, ' ', u.last_name) name, r.name role FROM farmmed.user u INNER JOIN farmmed.roles r USING(id_role) WHERE CONCAT(u.first_name, ' ', u.last_name) LIKE ? LIMIT 100";
+  db.query(q, [req.body.searchQuery + '%'], (err, data) => {
     if (err) return res.status(500).send(err);
-    else return res.status(409).send(data);
+    else return res.status(200).send(data);
   });
 };
 
@@ -25,7 +25,7 @@ export const add_user = (req, res) => {
     if (data.length) {
       const existingUser = data.find((user) => user.email === req.body.email);
       if (existingUser) {
-        return res.status(409).send('Użytkownik z podanym Email już istnieje');
+        return res.status(200).send('Użytkownik z podanym Email już istnieje');
       }
     }
 
@@ -72,7 +72,7 @@ export const edit_user = (req, res) => {
       const values = [req.body.first_name, req.body.last_name, req.body.email, req.body.role, req.body.id];
       db.query(q, values, (err, data1) => {
         if (err) return res.status(500).send(err);
-        else return res.status(200).send('zmieniono dane\n' + data);
+        else return res.status(200).send('zmieniono dane');
       });
     }
   });

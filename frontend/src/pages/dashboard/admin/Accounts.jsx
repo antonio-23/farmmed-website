@@ -4,6 +4,7 @@ import axios from 'axios';
 export const Accounts = () => {
   const [status, setStatus] = useState(0);
   const [userList, setUserList] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   useEffect(() => {
     const checkAuth = async () => {
       try {
@@ -15,10 +16,12 @@ export const Accounts = () => {
       }
     };
     checkAuth();
-    console.log(status);
+  },[]);
+
+  useEffect (() => {
     async function fetchData() {
       try {
-        const response = await axios.post('http://127.0.0.1:8800/api/users/allusers', { withCredentials: true });
+        const response = await axios.post('http://127.0.0.1:8800/api/users/searchuser',{searchQuery}, { withCredentials: true });
         const data = response.data;
         console.log(data);
         setUserList(data);
@@ -27,12 +30,16 @@ export const Accounts = () => {
       }
     }
     fetchData();
-  }, []);
+  }, [searchQuery]);
+
+  const handleSearchInputChange = (event) => {
+    setSearchQuery(event.target.value);
+  }
 
   return (
     <div className='font-Montserrat'>
       <div className='p-10 flex flex-col items-center justify-center'>
-        <input type='search' name='searchField' id='searchField' className='border rounded-lg w-[50%] focus:outline-0 p-4' placeholder='Wyszukaj' />
+        <input type='search' name='searchField' id='searchField' className='border rounded-lg w-[50%] focus:outline-0 p-4' placeholder='Wyszukaj' value={searchQuery} onChange={handleSearchInputChange}/>
       </div>
 
       <div className='h-[30rem] 2xl:h-[60rem] overflow-auto'>

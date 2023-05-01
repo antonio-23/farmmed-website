@@ -41,7 +41,6 @@ function useAuth() {
           }
           const response = await axios.post('http://localhost:8800/api/auth/authorize', { user });
           const data = response.data;
-          console.log(response.data)
           setRole(data.id_role);         
         } catch (error) {
           console.error(error);
@@ -60,8 +59,8 @@ export const AuthAdmin = () => {
     const [role, loaded] = useAuth();
   
     if (!loaded) {
-      return <Loader />; // or a loading component
-    }
+      return <Loader />; 
+    } 
   
     if (role !== 1) {
           const navigate = useNavigate();
@@ -76,8 +75,8 @@ export const AuthAccounts = () => {
     const [role, loaded] = useAuth();
   
     if (!loaded) {
-      return <Loader /> // or a loading component
-    }
+      return <Loader /> 
+    } 
   
     if (role !== 1) {
           const navigate = useNavigate();
@@ -92,8 +91,8 @@ export const AuthSchedule = () => {
     const [role, loaded] = useAuth();
   
     if (!loaded) {
-      return <Loader /> // or a loading component
-    }
+      return <Loader /> 
+    } 
   
     if (role !== 1) {
           const navigate = useNavigate();
@@ -108,8 +107,8 @@ export const AuthDrugs = () => {
     const [role, loaded] = useAuth();
   
     if (!loaded) {
-      return <Loader /> // or a loading component
-    }
+      return <Loader /> 
+    } 
   
     if (role !== 1) {
           const navigate = useNavigate();
@@ -124,8 +123,8 @@ export const AuthUser = () => {
     const [role, loaded] = useAuth();
   
     if (!loaded) {
-      return <Loader /> // or a loading component
-    }
+      return <Loader /> 
+    } 
   
     if (role !== 2) {
           const navigate = useNavigate();
@@ -140,8 +139,8 @@ export const AuthProfileUser = () => {
     const [role, loaded] = useAuth();
   
     if (!loaded) {
-      return <Loader /> // or a loading component
-    }
+      return <Loader /> 
+    } 
   
     if (role !== 2) {
           const navigate = useNavigate();
@@ -156,8 +155,8 @@ export const AuthFiguresUser = () => {
     const [role, loaded] = useAuth();
   
     if (!loaded) {
-      return <Loader /> // or a loading component
-    }
+      return <Loader /> 
+    } 
   
     if (role !== 2) {
           const navigate = useNavigate();
@@ -172,8 +171,8 @@ export const AuthPrescriptionUser = () => {
     const [role, loaded] = useAuth();
   
     if (!loaded) {
-      return <Loader /> // or a loading component
-    }
+      return <Loader /> 
+    } 
   
     if (role !== 2) {
           const navigate = useNavigate();
@@ -188,8 +187,8 @@ export const AuthVisitUser = () => {
     const [role, loaded] = useAuth();
   
     if (!loaded) {
-      return <Loader /> // or a loading component
-    }
+      return <Loader /> 
+    } 
   
     if (role !== 2) {
           const navigate = useNavigate();
@@ -204,8 +203,8 @@ export const AuthDoctor = () => {
     const [role, loaded] = useAuth();
   
     if (!loaded) {
-      return <Loader /> // or a loading component
-    }
+      return <Loader /> 
+    } 
   
     if (role !== 3) {
           const navigate = useNavigate();
@@ -220,8 +219,8 @@ export const AuthProfileDoctor = () => {
     const [role, loaded] = useAuth();
   
     if (!loaded) {
-      return <Loader /> // or a loading component
-    }
+      return <Loader /> 
+    } 
   
     if (role !== 3) {
           const navigate = useNavigate();
@@ -236,9 +235,8 @@ export const AuthFiguresDoctor = () => {
     const [role, loaded] = useAuth();
   
     if (!loaded) {
-      return <Loader /> // or a loading component
-    }
-  
+      return <Loader />
+    }  
     if (role !== 3) {
           const navigate = useNavigate();
     navigate("/login")
@@ -252,8 +250,8 @@ export const AuthPrescriptionDoctor = () => {
     const [role, loaded] = useAuth();
   
     if (!loaded) {
-      return <Loader /> // or a loading component
-    }
+      return <Loader /> 
+    } 
   
     if (role !== 3) {
           const navigate = useNavigate();
@@ -268,8 +266,8 @@ export const AuthScheduleDoctor = () => {
     const [role, loaded] = useAuth();
   
     if (!loaded) {
-      return <Loader /> // or a loading component
-    }
+      return <Loader /> 
+    } 
   
     if (role !== 3) {
           const navigate = useNavigate();
@@ -284,8 +282,8 @@ export const AuthChemist = () => {
     const [role, loaded] = useAuth();
   
     if (!loaded) {
-      return <Loader /> // or a loading component
-    }
+      return <Loader /> 
+    } 
   
     if (role !== 4) {
           const navigate = useNavigate();
@@ -300,8 +298,8 @@ export const AuthProfileChemist = () => {
     const [role, loaded] = useAuth();
   
     if (!loaded) {
-      return <Loader /> // or a loading component
-    }
+      return <Loader /> 
+    } 
   
     if (role !== 4) {
           const navigate = useNavigate();
@@ -316,8 +314,8 @@ export const AuthOrderChemist = () => {
     const [role, loaded] = useAuth();
   
     if (!loaded) {
-      return <Loader /> // or a loading component
-    }
+      return <Loader /> 
+    } 
   
     if (role !== 4) {
           const navigate = useNavigate();
@@ -332,8 +330,8 @@ export const AuthDrugsChemist = () => {
     const [role, loaded] = useAuth();
   
     if (!loaded) {
-      return <Loader /> // or a loading component
-    }
+      return <Loader /> 
+    } 
   
     if (role !== 4) {
           const navigate = useNavigate();
@@ -348,8 +346,8 @@ export const AuthPrescriptionChemist = () => {
     const [role, loaded] = useAuth();
   
     if (!loaded) {
-      return <Loader /> // or a loading component
-    }
+      return <Loader /> 
+    } 
   
     if (role !== 4) {
           const navigate = useNavigate();
