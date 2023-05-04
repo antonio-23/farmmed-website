@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
+import { HelloName } from '../../../components/HelloName';
 
 export const MainPage = () => {
   const [name, setName] = useState('');
@@ -32,9 +33,7 @@ export const MainPage = () => {
 
   return (
     <div className='w-full bg-ghostwithe font-Montserrat'>
-      <div className='p-10'>
-        <h1 className='text-4xl font-bold'>Witaj, {name} </h1>
-      </div>
+      <HelloName name={name} />
       <Outlet />
     </div>
   );
