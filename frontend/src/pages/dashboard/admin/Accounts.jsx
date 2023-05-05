@@ -8,63 +8,75 @@ const fields = editProfile;
 let fieldsState = {};
 fields.forEach((field) => (fieldsState[field.id] = ''));
 
-
-
 export const Accounts = () => {
-  const [status, setStatus] = useState(0);
   const [userList, setUserList] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [editRow, setEditRow] = useState({});
-  const [editProfileData, setEditProfileData] = useState({});
+  const [editProfileData, setEditProfileData] = useState(fieldsState);
   const [editProfile, setEditProfile] = useState(fieldsState);
   const [err, setErr] = useState(null);
+  const [deleteRow, setDeleteRow] = useState({});
+  const [showBtn, setShowBtn] = useState();
 
-  fieldsState = { ...fieldsState };
+  async function fetchData() {
+    try {
+      const response = await axios.post('http://127.0.0.1:8800/api/users/searchuser', { searchQuery }, { withCredentials: true });
+      const data = response.data;
+      console.log(data);
+      setEditProfile(data)
+      setUserList(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const handleClick = async (e, id) =>{
+    e.preventDefault();
+    console.log(id)
+    console.log(editProfileData);
+    const valid = editRow[id]; 
+    if (valid){
+        try {
+          const res = await axios.post('http://127.0.0.1:8800/api/users/edituser', {id: id, first_name: editProfileData.first_name, last_name: editProfileData.last_name, email: editProfileData.email, role: editProfileData.role}, { withCredentials: true });
+          console.log(res.data)
+        } catch (error) {
+          console.error(error);
+        }
+    setShowBtn(!showBtn);
+    setEditRow({ ...editRow, [id]: false }); 
+    fetchData();
+    }
+    else {
+      try{
+      const res = await axios.post('http://127.0.0.1:8800/api/users/user',{id: id}, { withCredentials: true })
+      setEditProfileData(res.data)
+      console.log(res.data)
+      } catch(error) {console.log(error);}
+      setEditRow({ ...editRow, [id]: true });
+    }
+  };
+
+  const handleClickDelete = async (e, id) =>{
+    e.preventDefault();
+    try {
+    const res = await axios.post('http://127.0.0.1:8800/api/users/deleteuser', {id: id}, {withCredentials: true })
+    console.log(res.data)
+    fetchData();
+    }
+  catch (error) {
+    console.error(error);
+    }
+  };
 
   const handleChange = (e) => {
-    setEditProfile({ ...editProfile, [e.target.id]: e.target.value });
+    setEditProfileData({ ...editProfileData, [e.target.id]: e.target.value});
   };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setEditProfile({ ...editProfile });
-    try {
-      await axios.post('http://127.0.0.1:8800/api/auth/register', { ...editProfile });
-    } catch (err) {
-      setErr(err.response.data);
-    }
-    console.log(err);
-  };
-
-  const handleClick = (e, id) => {
-    e.preventDefault();
-    setEditRow({ ...editRow, [id]: true });
-  };
-
-  useEffect(() => {
-    const profileData = {};
-    userList.forEach((user) => {
-      profileData[user.id] = user.first_name;
-    });
-    setEditProfileData(profileData);
-    setEditProfile(profileData);
-  }, [userList]);
-
-  // useEffect(()=>{
-  //   const profileData = {};
-  //   userList.forEach((user)=>{
-  //     profileData[user.id] = user.first_name;
-  //   });
-  //   setEditProfile(profileData);
-  //   setEditProfileData(profileData);
-  // }, [userList]);
 
   useEffect(() => {
     const checkAuth = async () => {
       try {
         const response = await axios.get('http://localhost:8800/api/auth/auth', { user: localStorage.getItem('user') });
         console.log(response.data); // zaloguj informacje o stanie autoryzacji
-        setStatus(response.status);
       } catch (error) {
         console.error(error);
       }
@@ -73,45 +85,13 @@ export const Accounts = () => {
   }, []);
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await axios.post('http://127.0.0.1:8800/api/users/searchuser', { searchQuery }, { withCredentials: true });
-        const data = response.data;
-        console.log(data);
-        setUserList(data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
     fetchData();
   }, [searchQuery]);
 
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value);
   };
-  const EditForm = () => {
-    return (
-      <form className='mt-10 ml-20 mr-20 mb-10 space-y-6' action='#' method='POST' onSubmit={handleSubmit}>
-        <div className=''>
-          {fields.map((field) => (
-            <Input
-              key={field.id}
-              handleChange={handleChange}
-              value={editProfile[field.id]}
-              labelText={field.labelText}
-              labelFor={field.labelFor}
-              id={field.id}
-              name={field.name}
-              type={field.type}
-              isRequired={field.isRequired}
-              placeholder={field.placeholder}
-            />
-          ))}
-          {err && <p className='text-red-500'>{err}</p>}
-        </div>
-      </form>
-    );
-  };
+
   return (
     <div className='font-Montserrat'>
       <div className='p-10 flex flex-col items-center justify-center'>
@@ -131,11 +111,36 @@ export const Accounts = () => {
                 <p>{value.id}</p>
                 <p>{value.name}</p>
                 <p>{value.role}</p>
-                <button onClick={(e) => handleClick(e, value.id)} id={value.id} className='text-violet-600'>
-                  {editRow[value.id] ? 'Zapisz' : 'Edycja'}
-                </button>
+                <div className='flex gap-x-8'>
+                  <button onClick={(e) => handleClick(e, value.id)} id={value.id} className='text-violet-600'>
+                    {editRow[value.id] ? 'Zapisz' : 'Edycja'}
+                  </button>
+                  <button onClick={(e) => handleClickDelete(e, value.id)} id={value.id} className='text-red-500'>
+                    {deleteRow[value.id] ? 'Tak!' : 'Usuń'}
+                  </button>
+                </div>
                 <div className='grid col-span-4' style={{ display: editRow[value.id] ? 'block' : 'none' }}>
-                  <EditForm />
+                <form className='mt-10 ml-20 mr-20 mb-10 space-y-6' action="#"
+                method="POST"
+                onSubmit={(e) => handleClick(e, value.id)}>
+                  <div className=''>
+                    {fields.map((field) => (
+                      <Input
+                        key={field.id}
+                        handleChange={handleChange}
+                        value={editProfileData[field.id]}
+                        labelText={field.labelText}
+                        labelFor={field.labelFor}
+                        id={field.id}
+                        name={field.name}
+                        type={field.type}
+                        isRequired={field.isRequired}
+                        placeholder={field.placeholder}
+                      />
+                    ))}
+                    {err && <p className='text-red-500'>{err}</p>}
+                  </div>
+                </form>
                 </div>
               </div>
             );

@@ -17,10 +17,11 @@ export const search_drug = (req, res) => {
 };
 
 export const edit_drugs = (req, res) => {
-    const q = "Update farmmed.drugs ilość = ? WHERE Identyfikator_Produktu_Leczniczego = ?";
+    const q = "Update farmmed.drugs SET Ilosc = ? WHERE Identyfikator_Produktu_Leczniczego = ?";
     db.query(q, [req.body.Ilosc, req.body.Identyfikator_Produktu_Leczniczego], (err,data) =>{
+        console.log(q, [req.body.Ilosc, req.body.Identyfikator_Produktu_Leczniczego]);
         if(err) return res.status(500).send(err);
-        else return res.status(200).send("Zmieniono ilość!")
+        else return res.status(200).send('Zmieniono ilość')
     })
 }
 

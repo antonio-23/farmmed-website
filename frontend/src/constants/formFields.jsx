@@ -151,7 +151,7 @@ const editProfile = [
   {
     labelText: 'Rola',
     labelFor: 'rola',
-    id: 'rola',
+    id: 'role',
     name: 'rola',
     type: 'text',
     autoComplete: 'rola',

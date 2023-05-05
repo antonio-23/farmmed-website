@@ -2,56 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-function InputEdit(props) {
-  return (
-    <div>
-      <input className='p-2 text-center w-16 rounded-lg' type='number' min={0} defaultValue={props.defaultValue} />
-    </div>
-  );
-}
-
 export const Drugs = () => {
   const navigate = useNavigate();
   const [drugsList, setDrugList] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [editRow, setEditRow] = useState({});
   const [showBtn, setShowBtn] = useState();
-  const [drugCountEdit, setDrugCountEdit] = useState({});
-  const [editDrugs, setEditDrugs] = useState();
-
-  const handleClick = (e, id) => {
-    e.preventDefault();
-    setEditRow({ ...editRow, [id]: true });
-
-    setShowBtn(!showBtn);
-  };
-
-  useEffect(() => {
-    const drugData = {};
-    drugsList.forEach((drug) => {
-      drugData[drug.Identyfikator_Produktu_Leczniczego] = drug.Ilosc;
-    });
-    setDrugCountEdit(drugData);
-    setEditDrugs(drugData);
-  }, [drugsList]);
-
-  // const handleQtyInputChange = (e, id) => {
-  //   const newQty = { ...drugQty };
-  //   newQty[id] = e.target.value;
-  //   setDrugQty(newQty);
-  // };
-
-  // const handleSaveClick = async (e, id) => {
-  //   e.preventDefault();
-  //   const editDrug = drugsList.find((drug) => drug.Identyfikator_Produktu_Leczniczego === id);
-  //   try {
-  //     const response = await axios.put(`http://127.0.0.1:8800/api/drug/${id}`, editDrug, { withCredentials: true });
-  //     console.log(response.data);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  //   setEditRow({ ...editRow, [id]: false });
-  // };
+  const [editDrug, setEditDrugs] = useState(0);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -66,31 +23,41 @@ export const Drugs = () => {
     checkAuth();
   }, []);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await axios.post('http://127.0.0.1:8800/api/drug/searchdrugs', { searchQuery }, { withCredentials: true });
-        const data = response.data;
-        setDrugList(data);
-      } catch (error) {
-        console.error(error);
-      }
+  async function fetchData() {
+    try {
+      const response = await axios.post('http://127.0.0.1:8800/api/drug/searchdrugs', { searchQuery }, { withCredentials: true });
+      const data = response.data;
+      setDrugList(data);
+    } catch (error) {
+      console.error(error);
     }
+  }
+
+  useEffect(() => {
     fetchData();
   }, [searchQuery]); // zmiana searchQuery spowoduje ponowne wykonanie useEffect()
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await axios.post('http://127.0.0.1:8800/api/drug/editdrugs', { editDrugs }, { withCredentials: true });
-        const data = response.data;
-        drugCountEdit(data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
+  const handleClick = async (e, id, Ilosc) => {
+    e.preventDefault();
+    setEditDrugs(Ilosc);
+    const valid = editRow[id]; 
+    if (valid){
+        try {
+          const res = await axios.post('http://127.0.0.1:8800/api/drug/editdrugs', { Ilosc: editDrug, Identyfikator_Produktu_Leczniczego: id }, { withCredentials: true });
+          console.log(res.data)
+        } catch (error) {
+          console.error(error);
+        }
+    setShowBtn(!showBtn);
+    setEditRow({ ...editRow, [id]: false });
     fetchData();
-  }, [editDrugs]);
+    }
+    else setEditRow({ ...editRow, [id]: true });
+  };
+
+  const handleEditInputChange = (event) => {
+    setEditDrugs(event.target.value);
+  }
 
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value);
@@ -123,9 +90,9 @@ export const Drugs = () => {
                 <p>{value.Podmiot_odpowiedzialny}</p>
                 <p>{value.Opakowanie}</p>
 
-                {editRow[value.Identyfikator_Produktu_Leczniczego] ? <InputEdit defaultValue={value.Ilosc} /> : <p>{value.Ilosc}</p>}
+                {editRow[value.Identyfikator_Produktu_Leczniczego] ? <input className='p-2 text-center w-16 rounded-lg' type='number' min={0} value={editDrug} onChange={handleEditInputChange}/> : <p>{value.Ilosc}</p>}
 
-                <button onClick={(e) => handleClick(e, value.Identyfikator_Produktu_Leczniczego)} id={value.Identyfikator_Produktu_Leczniczego} className='text-violet-600'>
+                <button onClick={(e) => handleClick(e, value.Identyfikator_Produktu_Leczniczego, value.Ilosc)} id={value.Identyfikator_Produktu_Leczniczego} className='text-violet-600'>
                   {editRow[value.Identyfikator_Produktu_Leczniczego] ? 'Zapisz' : 'Edycja'}
                 </button>
               </div>

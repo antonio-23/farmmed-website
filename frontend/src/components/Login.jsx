@@ -24,6 +24,7 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(loginState);
     try {
       const xhr = new XMLHttpRequest();
       xhr.withCredentials = true; // Add this line to set the withCredentials property
