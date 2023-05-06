@@ -19,7 +19,6 @@ export const search_user = (req, res) => {
 
 export const add_user = (req, res) => {
   const checkUserQuery = 'SELECT * FROM farmmed.user WHERE email = ?';
-
   db.query(checkUserQuery, [req.body.email], (err, data) => {
     if (err) return res.status(500).send(err);
     if (data.length) {
@@ -33,13 +32,10 @@ export const add_user = (req, res) => {
     if (!passwordRegex.test(req.body.password)) {
       return res.status(400).send('Hasło musi mieć co najmniej 8 znaków, jedną małą i jedną dużą literę, cyfrę oraz znak specjalny ! @ # $ % ^ & * ( ) _ + - = { } [ ] |  : ; " < > , . ? /');
     }
-
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(req.body.password, salt);
     const q = 'INSERT INTO farmmed.user (`first_name`, `last_name`, `email`, `password`, `id_role`) SELECT ?, ?, ?, ?, `id_role` FROM farmmed.roles WHERE `name` = ?';
-
     const values = [req.body.first_name, req.body.last_name, req.body.email, hashedPassword, req.body.role];
-
     db.query(q, values, (err, data) => {
       if (err) return res.status(500).json(err);
       return res.status(200).json('Utworzono konto');
@@ -73,8 +69,8 @@ export const edit_user = (req, res) => {
     if (data.length) {
       return res.status(409).send('Użytkownik z podanym Email już istnieje');
     } else {
-      const q = 'UPDATE farmmed.user SET first_name = ?, last_name = ?, email = ?, id_role = (SELECT id_role FROM farmmed.roles WHERE name = ?) WHERE id = ?';
-      const values = [req.body.first_name, req.body.last_name, req.body.email, req.body.role, req.body.id];
+      const q = 'UPDATE farmmed.user SET first_name = ?, last_name = ?, email = ?, id_role = (SELECT id_role FROM farmmed.roles WHERE name = ?), id_spec = (SELECT id_spec FROM farmmed.specjalizacja WHERE name = ?) WHERE id = ?';
+      const values = [req.body.first_name, req.body.last_name, req.body.email, req.body.role, req.body.id_spec, req.body.id];
       db.query(q, values, (err, data1) => {
         if (err) return res.status(500).send(err);
         else return res.status(200).send('zmieniono dane');

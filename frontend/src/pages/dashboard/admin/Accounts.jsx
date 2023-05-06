@@ -15,8 +15,7 @@ export const Accounts = () => {
   const [userList, setUserList] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [editRow, setEditRow] = useState({});
-  const [editProfileData, setEditProfileData] = useState({});
-  const [editProfile, setEditProfile] = useState(fieldsState);
+  const [editProfileData, setEditProfileData] = useState([]);
   const [err, setErr] = useState(null);
   const [deleteRow, setDeleteRow] = useState({});
   const [showBtn, setShowBtn] = useState();
@@ -26,7 +25,6 @@ export const Accounts = () => {
       const response = await axios.post('http://127.0.0.1:8800/api/users/searchuser', { searchQuery }, { withCredentials: true });
       const data = response.data;
       console.log(data);
-      setEditProfile(data);
       setUserList(data);
     } catch (error) {
       console.error(error);
@@ -37,6 +35,11 @@ export const Accounts = () => {
     e.preventDefault();
     console.log(id);
     console.log(editProfileData);
+    console.log(editProfileData.first_name);
+    console.log(editProfileData.last_name);
+    console.log(editProfileData.role);
+    console.log(editProfileData.email);
+
     const valid = editRow[id];
     if (valid) {
       try {
@@ -45,6 +48,7 @@ export const Accounts = () => {
           { id: id, first_name: editProfileData.first_name, last_name: editProfileData.last_name, email: editProfileData.email, role: editProfileData.role },
           { withCredentials: true }
         );
+        setEditProfileData([]);
         console.log(res.data);
       } catch (error) {
         console.error(error);
@@ -55,8 +59,8 @@ export const Accounts = () => {
     } else {
       try {
         const res = await axios.post('http://127.0.0.1:8800/api/users/user', { id: id }, { withCredentials: true });
-        setEditProfileData(res.data);
-        console.log(res.data);
+        setEditProfileData(res.data[0]);
+        console.log(editProfileData);
       } catch (error) {
         console.log(error);
       }
@@ -76,7 +80,8 @@ export const Accounts = () => {
   };
 
   const handleChange = (e) => {
-    setEditProfileData({ ...editProfileData, [e.target.id]: e.target.value });
+    setEditProfileData({...editProfileData, [e.target.id]: e.target.value,
+    });
   };
 
   useEffect(() => {
@@ -129,24 +134,9 @@ export const Accounts = () => {
                 <div className='grid col-span-4' style={{ display: editRow[value.id] ? 'block' : 'none' }}>
                   <form className='mx-20 my-10 space-y-6 flex justify-center items-center' action='#' method='POST' onSubmit={(e) => handleClick(e, value.id)}>
                     <div className='flex flex-col w-full max-w-md space-y-6 rounded-2xl'>
-                      {/* {fields.map((field) => (
-                        <Input
-                          key={field.id}
-                          handleChange={handleChange}
-                          value={editProfileData[field.id]}
-                          labelText={field.labelText}
-                          labelFor={field.labelFor}
-                          id={field.id}
-                          name={field.name}
-                          type={field.type}
-                          isRequired={field.isRequired}
-                          placeholder={field.placeholder}
-                        />
-                      ))} */}
-                      {console.log(editProfileData[0])}
                       <input
-                        value={editRow[editProfileData]}
-                        handleChange={handleChange}
+                        value={editProfileData.first_name}
+                        onChange={handleChange}
                         labelText='Name'
                         labelFor='name'
                         id='first_name'
@@ -155,22 +145,23 @@ export const Accounts = () => {
                         isRequired={true}
                         type='name'
                         className={fixedInputClass}
-                        placeholder='Imię'
+                        placeholder={editProfileData.first_name}
                       />
                       <input
-                        value={editRow[editProfileData]}
-                        handleChange={handleChange}
+                        value={editProfileData.last_name}
+                        onChange={handleChange}
                         labelText='Last_name'
                         labelFor='last_name'
                         name='last_name'
+                        id='last_name'
                         isRequired={true}
                         type='name'
                         className={fixedInputClass}
-                        placeholder='Nazwisko'
+                        placeholder={editProfileData.last_name}
                       />
                       <input
-                        value={editRow[editProfileData]}
-                        handleChange={handleChange}
+                        value={editProfileData.email}
+                        onChange={handleChange}
                         labelText='Email address'
                         labelFor='email-addres'
                         id='email'
@@ -178,11 +169,11 @@ export const Accounts = () => {
                         isRequired={true}
                         type='email'
                         className={fixedInputClass}
-                        placeholder='Email'
+                        placeholder={editProfileData.last_name}
                       />
                       <input
-                        value={editRow[editProfileData]}
-                        handleChange={handleChange}
+                        value={editProfileData.spec}
+                        onChange={handleChange}
                         labelText='Spec'
                         labelFor='spec'
                         autoComplete='spec'
@@ -190,9 +181,9 @@ export const Accounts = () => {
                         name='spec'
                         type='name'
                         className={fixedInputClass}
-                        placeholder='Specjalizacja'
+                        placeholder={editProfileData.spec}
                       />
-                      <select value={editRow[editProfileData]} handleChange={handleChange} name='rola' id='role' isRequired={true} className={fixedInputClass}>
+                      <select value={editProfileData.role} onChange={handleChange} name='rola' id='role' isRequired={true} className={fixedInputClass}>
                         <option value='Admin'>Admin</option>
                         <option value='Doktor'>Doktor</option>
                         <option value='Aptekarz'>Aptekarz</option>
