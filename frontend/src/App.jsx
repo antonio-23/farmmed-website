@@ -6,10 +6,11 @@ import { Home } from './pages/Home';
 import Register from './pages/Register';
 import Log_in from './pages/Login';
 import ForgotPassword from './pages/ForgotPassword';
+import { NotFound } from './pages/NotFound';
+import { AddUser } from './pages/dashboard/admin/AddUser';
 
 // Components
 import Navbar from './components/Navbar';
-import { NotFound } from './pages/NotFound';
 
 //Auth
 import {AuthAdmin, AuthAccounts, AuthChemist, AuthDoctor, AuthDrugs, AuthDrugsChemist, AuthFiguresDoctor, AuthFiguresUser, AuthOrderChemist, AuthPrescriptionChemist, AuthPrescriptionDoctor, AuthPrescriptionUser, AuthProfileChemist, AuthProfileDoctor, AuthProfileUser, AuthSchedule, AuthScheduleDoctor, AuthUser, AuthVisitUser } from './Auth'
@@ -30,6 +31,7 @@ const router = createBrowserRouter(
         <Route path='accounts' element={<AuthAccounts />} />
         <Route path='schedule' element={<AuthSchedule />} />
         <Route path='drugs' element={<AuthDrugs />} />
+        <Route path='addUser' element={<AddUser />} />
       </Route>
       <Route path='user' element={<AuthUser />}>
         <Route path='profileUser' element={<AuthProfileUser />} />

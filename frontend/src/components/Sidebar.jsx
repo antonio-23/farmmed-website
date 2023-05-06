@@ -69,7 +69,7 @@ export const Sidebar = () => {
         ))}
       </div>
       <div className='absolute bottom-14 left-0 pl-20'>
-        <button className='border rounded-xl border-white hover:shadow-xl p-4 text-white font-bold text-' onClick={handleSubmit}>
+        <button className='border rounded-xl border-white hover:shadow-xl p-4 text-white font-bold' onClick={handleSubmit}>
           Wyloguj się
         </button>
       </div>
