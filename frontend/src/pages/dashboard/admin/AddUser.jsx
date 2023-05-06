@@ -14,7 +14,6 @@ export const AddUser = () => {
           <option value='Admin'>Admin</option>
           <option value='Doktor'>Doktor</option>
           <option value='Aptekarz'>Aptekarz</option>
-          <option value='Pacjent'>Pacjent</option>
         </select>
         <button className='bg-violet-600 text-white px-8 py-3 rounded-md hover:bg-violet-700'>Dodaj</button>
       </form>

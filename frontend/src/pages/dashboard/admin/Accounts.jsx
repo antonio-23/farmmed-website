@@ -8,11 +8,14 @@ const fields = editProfile;
 let fieldsState = {};
 fields.forEach((field) => (fieldsState[field.id] = ''));
 
+const fixedInputClass =
+  'rounded-md appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-purple-500 focus:border-purple-500 focus:z-10 sm:text-sm';
+
 export const Accounts = () => {
   const [userList, setUserList] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [editRow, setEditRow] = useState({});
-  const [editProfileData, setEditProfileData] = useState(fieldsState);
+  const [editProfileData, setEditProfileData] = useState({});
   const [editProfile, setEditProfile] = useState(fieldsState);
   const [err, setErr] = useState(null);
   const [deleteRow, setDeleteRow] = useState({});
@@ -124,9 +127,9 @@ export const Accounts = () => {
                   </button>
                 </div>
                 <div className='grid col-span-4' style={{ display: editRow[value.id] ? 'block' : 'none' }}>
-                  <form className='mt-10 ml-20 mr-20 mb-10 space-y-6' action='#' method='POST' onSubmit={(e) => handleClick(e, value.id)}>
-                    <div className=''>
-                      {fields.map((field) => (
+                  <form className='mx-20 my-10 space-y-6 flex justify-center items-center' action='#' method='POST' onSubmit={(e) => handleClick(e, value.id)}>
+                    <div className='flex flex-col w-full max-w-md space-y-6 rounded-2xl'>
+                      {/* {fields.map((field) => (
                         <Input
                           key={field.id}
                           handleChange={handleChange}
@@ -139,7 +142,61 @@ export const Accounts = () => {
                           isRequired={field.isRequired}
                           placeholder={field.placeholder}
                         />
-                      ))}
+                      ))} */}
+                      {console.log(editProfileData[0])}
+                      <input
+                        value={editRow[editProfileData]}
+                        handleChange={handleChange}
+                        labelText='Name'
+                        labelFor='name'
+                        id='first_name'
+                        name='first_name'
+                        autoComplete='name'
+                        isRequired={true}
+                        type='name'
+                        className={fixedInputClass}
+                        placeholder='Imię'
+                      />
+                      <input
+                        value={editRow[editProfileData]}
+                        handleChange={handleChange}
+                        labelText='Last_name'
+                        labelFor='last_name'
+                        name='last_name'
+                        isRequired={true}
+                        type='name'
+                        className={fixedInputClass}
+                        placeholder='Nazwisko'
+                      />
+                      <input
+                        value={editRow[editProfileData]}
+                        handleChange={handleChange}
+                        labelText='Email address'
+                        labelFor='email-addres'
+                        id='email'
+                        autoComplete='email'
+                        isRequired={true}
+                        type='email'
+                        className={fixedInputClass}
+                        placeholder='Email'
+                      />
+                      <input
+                        value={editRow[editProfileData]}
+                        handleChange={handleChange}
+                        labelText='Spec'
+                        labelFor='spec'
+                        autoComplete='spec'
+                        isRequired={true}
+                        name='spec'
+                        type='name'
+                        className={fixedInputClass}
+                        placeholder='Specjalizacja'
+                      />
+                      <select value={editRow[editProfileData]} handleChange={handleChange} name='rola' id='role' isRequired={true} className={fixedInputClass}>
+                        <option value='Admin'>Admin</option>
+                        <option value='Doktor'>Doktor</option>
+                        <option value='Aptekarz'>Aptekarz</option>
+                      </select>
                       {err && <p className='text-red-500'>{err}</p>}
                     </div>
                   </form>
