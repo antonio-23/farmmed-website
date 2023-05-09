@@ -6,7 +6,7 @@ import { Admin } from './pages/dashboard/admin/Admin';
 import { Accounts } from './pages/dashboard/admin/Accounts';
 import { Schedule } from './pages/dashboard/admin/Schedule';
 import { Drugs } from './pages/dashboard/admin/Drugs';
-
+import { AddUser } from './pages/dashboard/admin/AddUser';
 import { ProfileUser } from './pages/dashboard/user/ProfileUser';
 import { FiguresUser } from './pages/dashboard/user/FiguresUser';
 import { PrescriptionUser } from './pages/dashboard/user/PrescriptionUser';
@@ -70,6 +70,22 @@ export const AuthAdmin = () => {
   
     return <Admin />;
   }
+
+export const AuthAddUser = () => {
+    const [role, loaded] = useAuth();
+  
+    if (!loaded) {
+      return <Loader /> 
+    } 
+  
+    if (role !== 1) {
+          const navigate = useNavigate();
+    navigate("/login")
+      return null;
+    }
+  
+    return <AddUser />;
+}
 
 export const AuthAccounts = () => {
     const [role, loaded] = useAuth();

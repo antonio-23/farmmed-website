@@ -2,10 +2,17 @@ import { db } from '../connect.js';
 import bcrypt from 'bcryptjs';
 
 export const user = (req, res) => {
-  const q = "SELECT u.first_name, u.last_name, u.email, r.name role FROM farmmed.user u INNER JOIN farmmed.roles r USING(id_role) WHERE id = ?";
+  const q = `SELECT u.first_name, u.last_name, u.email, r.name role, s.name spec 
+  FROM farmmed.user u 
+  JOIN farmmed.roles r USING(id_role) 
+  JOIN farmmed.specjalizacja s ON s.id_spec = u.id_spec 
+  WHERE id = ?`;
   db.query(q,[req.body.id], (err, data) => {
     if (err) return res.status(500).send(err);
-    else return res.status(200).send(data);
+    else {
+    console.log(data);
+    return res.status(200).send(data);
+    }
   });
 };
 
@@ -34,8 +41,8 @@ export const add_user = (req, res) => {
     }
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(req.body.password, salt);
-    const q = 'INSERT INTO farmmed.user (`first_name`, `last_name`, `email`, `password`, `id_role`) SELECT ?, ?, ?, ?, `id_role` FROM farmmed.roles WHERE `name` = ?';
-    const values = [req.body.first_name, req.body.last_name, req.body.email, hashedPassword, req.body.role];
+    const q = 'INSERT INTO farmmed.user (`first_name`, `last_name`, `email`, `password`, `id_role`, `id_spec`) SELECT ?, ?, ?, ?, (SELECT `id_role` FROM farmmed.roles WHERE `name` = ?), (SELECT `id_spec` FROM farmmed.specjalizacja WHERE `name` = ?)';
+    const values = [req.body.first_name, req.body.last_name, req.body.email, hashedPassword, req.body.role, req.body.id_spec];
     db.query(q, values, (err, data) => {
       if (err) return res.status(500).json(err);
       return res.status(200).json('Utworzono konto');

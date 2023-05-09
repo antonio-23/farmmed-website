@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { editProfile } from '../../../constants/formFields';
-import Input from '../../../components/Input';
 import { Link } from 'react-router-dom';
 
 const fields = editProfile;
@@ -33,19 +32,12 @@ export const Accounts = () => {
 
   const handleClick = async (e, id) => {
     e.preventDefault();
-    console.log(id);
-    console.log(editProfileData);
-    console.log(editProfileData.first_name);
-    console.log(editProfileData.last_name);
-    console.log(editProfileData.role);
-    console.log(editProfileData.email);
-
     const valid = editRow[id];
     if (valid) {
       try {
         const res = await axios.post(
           'http://127.0.0.1:8800/api/users/edituser',
-          { id: id, first_name: editProfileData.first_name, last_name: editProfileData.last_name, email: editProfileData.email, role: editProfileData.role },
+          { id: id, first_name: editProfileData.first_name, last_name: editProfileData.last_name, email: editProfileData.email, role: editProfileData.role, id_spec: editProfileData.spec },
           { withCredentials: true }
         );
         setEditProfileData([]);
@@ -169,7 +161,7 @@ export const Accounts = () => {
                         isRequired={true}
                         type='email'
                         className={fixedInputClass}
-                        placeholder={editProfileData.last_name}
+                        placeholder={editProfileData.email}
                       />
                       <input
                         value={editProfileData.spec}
