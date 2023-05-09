@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import heroPicture from '../assets/hero-picture.png';
 import { About } from './About';
@@ -14,6 +14,10 @@ const properties = [
 ];
 
 export const Home = () => {
+  useEffect(() =>{
+    localStorage.clear();
+  }, []);
+  
   return (
     <>
       <div name='home' className='w-full h-full flex flex-col justify-between 2xl:py-52'>

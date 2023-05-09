@@ -6,6 +6,7 @@ export default function Register(){
 	const refToElement = useRef(null);
 
 		useEffect(() => {
+		localStorage.clear();
 	 	refToElement.current.scrollIntoView({ behavior: 'smooth' });
 		}, []);
     return(

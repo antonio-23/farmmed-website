@@ -4,8 +4,8 @@ import Login from "../components/Login"
 
 export default function Log_in(){
 	const refToElement = useRef(null);
-
 		useEffect(() => {
+		localStorage.clear();
 	 	refToElement.current.scrollIntoView({ behavior: 'smooth' });
 		}, []);
     return(

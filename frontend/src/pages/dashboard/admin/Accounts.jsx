@@ -169,6 +169,7 @@ export const Accounts = () => {
                         labelText='Spec'
                         labelFor='spec'
                         autoComplete='spec'
+                        id='spec'
                         isRequired={true}
                         name='spec'
                         type='name'

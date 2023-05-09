@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 // import notFoundPicture from '../assets/notFoundPicture.png';
 import doctor from '../assets/doctor.svg';
 import { Link } from 'react-router-dom';
 
 export const NotFound = () => {
+  useEffect(()=>{
+    localStorage.clear();
+  }, []);
   return (
     <div className='flex items-center flex-col font-Montserrat'>
       <div className='lg:w-[450px] 2xl:w-[750px] 2xl:pt-32 pt-20'>
