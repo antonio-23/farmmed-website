@@ -1,7 +1,7 @@
 import { db } from "../connect.js";
 
 export const all_file = (req, res) => {
-    const q ='SELECT DATE_FORMAT(m.Date, "%Y-%m-%d") AS data_wizyty,  m.cel_wizyty, m.objawy, m.wynik_badania, m.Zalecenia, m.Termin_kolejnej_wizyty, (SELECT CONCAT(u1.first_name, " ", u1.last_name) FROM farmmed.user u1 INNER JOIN farmmed.medical_file m1 ON u1.id = m1.id_doctor WHERE m1.id = m.id) AS doctor_name FROM farmmed.medical_file m INNER JOIN farmmed.user u ON m.id_user = u.id WHERE u.id = ? ORDER BY m.id DESC';
+    const q ='SELECT m.id, DATE_FORMAT(m.Date, "%Y-%m-%d") AS data_wizyty,  m.cel_wizyty, m.objawy, m.wynik_badania, m.Zalecenia, m.Termin_kolejnej_wizyty, (SELECT CONCAT(u1.first_name, " ", u1.last_name) FROM farmmed.user u1 INNER JOIN farmmed.medical_file m1 ON u1.id = m1.id_doctor WHERE m1.id = m.id) AS doctor_name FROM farmmed.medical_file m INNER JOIN farmmed.user u ON m.id_user = u.id WHERE u.id = ? ORDER BY m.id DESC';
     db.query(q, [req.body.user], (err, data) =>{
         if(err) return res.status(500).send(err);
         else return res.status(200).send(data);
