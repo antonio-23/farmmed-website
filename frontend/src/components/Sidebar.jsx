@@ -59,9 +59,9 @@ export const Sidebar = () => {
         </h1>
         <hr className='w-48 h-1 mx-14 my-5 bg-gray-100 rounded md:my-10' />
       </div>
-      <div className='flex flex-col mr-auto'>
+      <div className='flex flex-col gap-y-2'>
         {links.map((item, index) => (
-          <button className='text-center p-4  rounded-xl text-white font-bold' key={index}>
+          <button className='text-center p-4 rounded-xl text-white font-bold' key={index}>
             <NavLink to={item.path} className={({ isActive }) => (isActive ? 'bg-white rounded-xl p-4 text-violet-900 font-bold' : undefined)}>
               {item.name}
             </NavLink>

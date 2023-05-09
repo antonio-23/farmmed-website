@@ -42,7 +42,7 @@ export const AddUser = () => {
       <input onChange={handleChange} labelText='Name' labelFor='name' id='first_name' name='first_name' autoComplete='name' isRequired={true} type='name' className={fixedInputClass} placeholder='Imię' />
         <input onChange={handleChange} labelText='Last_name' labelFor='last_name' name='last_name' isRequired={true} type='name' autoComplete='last_name' className={fixedInputClass} placeholder='Nazwisko' />
         <input onChange={handleChange} labelText='Email address' labelFor='email-addres' id='email' autoComplete='email' isRequired={true} type='email' className={fixedInputClass} placeholder='Email' />
-        {/*~~~~ DOPISZ TU JESZE INPUTA NA HASŁO ~~~~*/}
+        <input onChange={handleChange} labelText='Password' labelFor='password' id='password' isRequired={true} type='password' className={fixedInputClass} placeholder='Hasło' />
         <input onChange={handleChange} labelText='Spec' labelFor='spec' id='id_spec' autoComplete='spec' isRequired={true} name='spec' type='name' className={fixedInputClass} placeholder='Specjalizacja' />
         <select name='' id='' className={fixedInputClass}>
           <option value='Admin'>Admin</option>
