@@ -41,7 +41,6 @@ export const Accounts = () => {
           { withCredentials: true }
         );
         setEditProfileData([]);
-        console.log(res.data);
       } catch (error) {
         console.error(error);
       }

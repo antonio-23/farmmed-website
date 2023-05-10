@@ -63,10 +63,35 @@ export const Drugs = () => {
     setSearchQuery(event.target.value);
   };
 
+  const handlefile = (e) => {
+    const file = e.target.files[0];
+    console.log(file);
+    const formData = new FormData();
+    formData.append('file', file);
+    console.log(formData.get('file'));
+    axios
+      .post('http://127.0.0.1:8800/api/drug/update', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then((response) => {
+        console.log('Plik został przesłany na backend', response);
+        // Dodaj tutaj kod obsługujący odpowiedź z backendu        
+        setTimeout(fetchData(), 10000);
+      })
+      .catch((error) => {
+        console.error('Błąd podczas przesyłania pliku', error);
+        // Dodaj tutaj kod obsługujący błąd
+      });
+  };
+  
+
   return (
     <div className='font-Montserrat'>
       <div className='p-10 flex flex-col items-center justify-center'>
         <input type='search' name='searchField' id='searchField' className='border rounded-lg w-[50%] focus:outline-0 p-4' placeholder='Wyszukaj' value={searchQuery} onChange={handleSearchInputChange} />
+        <input type="file" id="file" name="file" multiple onChange={handlefile} />
       </div>
 
       <div className='lg:h-[30rem] 2xl:h-[60rem] overflow-auto'>
