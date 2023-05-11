@@ -64,8 +64,8 @@ export const AuthAdmin = () => {
   
     if (role !== 1) {
           const navigate = useNavigate();
-    navigate("/login")
-      return null;
+          navigate("/login")
+          return;
     }
   
     return <Admin />;
@@ -81,7 +81,7 @@ export const AuthAddUser = () => {
     if (role !== 1) {
           const navigate = useNavigate();
     navigate("/login")
-      return null;
+      return;
     }
   
     return <AddUser />;
@@ -97,7 +97,7 @@ export const AuthAccounts = () => {
     if (role !== 1) {
           const navigate = useNavigate();
     navigate("/login")
-      return null;
+      return;
     }
   
     return <Accounts />;
@@ -113,7 +113,7 @@ export const AuthSchedule = () => {
     if (role !== 1) {
           const navigate = useNavigate();
     navigate("/login")
-      return null;
+      return;
     }
   
     return <Schedule />;
@@ -129,7 +129,7 @@ export const AuthDrugs = () => {
     if (role !== 1) {
           const navigate = useNavigate();
     navigate("/login")
-      return null;
+      return;
     }
   
     return <Drugs />;
@@ -145,7 +145,7 @@ export const AuthUser = () => {
     if (role !== 2) {
           const navigate = useNavigate();
     navigate("/login")
-      return null;
+      return;
     }
   
     return <User />;
@@ -161,7 +161,7 @@ export const AuthProfileUser = () => {
     if (role !== 2) {
           const navigate = useNavigate();
     navigate("/login")
-      return null;
+      return;
     }
   
     return <ProfileUser />;
@@ -177,7 +177,7 @@ export const AuthFiguresUser = () => {
     if (role !== 2) {
           const navigate = useNavigate();
     navigate("/login")
-      return null;
+      return;
     }
   
     return <FiguresUser />;
@@ -193,7 +193,7 @@ export const AuthPrescriptionUser = () => {
     if (role !== 2) {
           const navigate = useNavigate();
     navigate("/login")
-      return null;
+      return;
     }
   
     return <PrescriptionUser />;
@@ -209,7 +209,7 @@ export const AuthVisitUser = () => {
     if (role !== 2) {
           const navigate = useNavigate();
     navigate("/login")
-      return null;
+      return;
     }
   
     return <VisitUser />;
@@ -225,7 +225,7 @@ export const AuthDoctor = () => {
     if (role !== 3) {
           const navigate = useNavigate();
     navigate("/login")
-      return null;
+      return;
     }
   
     return <Doctor />;
@@ -241,7 +241,7 @@ export const AuthProfileDoctor = () => {
     if (role !== 3) {
           const navigate = useNavigate();
     navigate("/login")
-      return null;
+      return;
     }
   
     return <ProfileDoctor />;
@@ -256,7 +256,7 @@ export const AuthFiguresDoctor = () => {
     if (role !== 3) {
           const navigate = useNavigate();
     navigate("/login")
-      return null;
+      return;
     }
   
     return <FiguresDoctor />;
@@ -272,7 +272,7 @@ export const AuthPrescriptionDoctor = () => {
     if (role !== 3) {
           const navigate = useNavigate();
     navigate("/login")
-      return null;
+      return;
     }
   
     return <PrescriptionDoctor />;
@@ -288,7 +288,7 @@ export const AuthScheduleDoctor = () => {
     if (role !== 3) {
           const navigate = useNavigate();
     navigate("/login")
-      return null;
+      return;
     }
   
     return <ScheduleDoctor />;
@@ -304,7 +304,7 @@ export const AuthChemist = () => {
     if (role !== 4) {
           const navigate = useNavigate();
     navigate("/login")
-      return null;
+      return;
     }
   
     return <Chemist />;
@@ -320,7 +320,7 @@ export const AuthProfileChemist = () => {
     if (role !== 4) {
           const navigate = useNavigate();
     navigate("/login")
-      return null;
+      return;
     }
   
     return <ProfileChemist />;
@@ -336,7 +336,7 @@ export const AuthOrderChemist = () => {
     if (role !== 4) {
           const navigate = useNavigate();
     navigate("/login")
-      return null;
+      return;
     }
   
     return <OrderChemist />;
@@ -352,7 +352,7 @@ export const AuthDrugsChemist = () => {
     if (role !== 4) {
           const navigate = useNavigate();
     navigate("/login")
-      return null;
+      return;
     }
   
     return <DrugsChemist />;
@@ -368,13 +368,8 @@ export const AuthPrescriptionChemist = () => {
     if (role !== 4) {
           const navigate = useNavigate();
     navigate("/login")
-      return null;
+      return;
     }
   
     return <PrescriptionChemist />;
-}
-
-function not_auth() {
-    const navigate = useNavigate();
-    navigate("/login")
 }

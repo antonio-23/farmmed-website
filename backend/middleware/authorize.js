@@ -1,12 +1,16 @@
 import jwt from "jsonwebtoken";
 import { db } from "../connect.js";
+import { decrypt } from "./hash.js";
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~ AUTORYZACJA ~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 export const authorize = (req, res) => {
     let token = null;
-    const id = req.body.user;
+    const id = req.body;
+    const user = decrypt(id.user)
     if (id !== null){
-    const q = "SELECT token FROM farmmed.user WHERE id = ?";
-    db.query(q, [id], (error, data) => {
+      const q = "SELECT token FROM farmmed.user WHERE id = ?";
+      db.query(q, [user], (error, data) => {
       if (error) {
         return res.status(500).json(error);
       }
@@ -24,7 +28,7 @@ export const authorize = (req, res) => {
       res.status(200).json({id_role: decodedToken.id_role});
       // dodajemy zdekodowany token do obiektu żądania
       req.user = decodedToken;
-
+      
     } catch (error) {
             res.status(402).json("Nieprtawidłowy token");
     }

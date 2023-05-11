@@ -12,7 +12,7 @@ fields.forEach((field) => (fieldsState[field.id] = ""));
 
 export default function Login() {
   const [currentUser, setCurrentUser] = useState(
-    JSON.parse(localStorage.getItem("user")) || null
+    localStorage.getItem("user") || null
   );  
   const [loginState, setLoginState] = useState(fieldsState);
   const [err, setErr] = useState(null);
@@ -37,7 +37,7 @@ export default function Login() {
         setCurrentUser(response.data);
         const {token, redirectPath, accessToken, id, role } = response.data;
         localStorage.setItem("user", id);
-        console.log('zalogowano na ' + id);
+        console.log('zalogowano');
         navigate(redirectPath);
       } else if (response.status === 400 || response.status === 404) {
         setErr("Niepoprawny login lub hasło");

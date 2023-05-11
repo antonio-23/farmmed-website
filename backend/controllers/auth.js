@@ -1,9 +1,12 @@
 import bcrypt from 'bcryptjs';
 import jwt from "jsonwebtoken";
 import { db } from '../connect.js';
+import { encrypt } from '../middleware/hash.js';
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~ LOGOWANIE ~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 export const login = (req, res) => {
-  const q = "SELECT * FROM farmmed.user WHERE email = ?";
+  const q = "SELECT id , id_role, password FROM farmmed.user WHERE email = ?";
   db.query(q, [req.body.email], (err, data) => {
     if (err) {
       return res.status(500).json(err);
@@ -15,7 +18,7 @@ export const login = (req, res) => {
     if (!checkPassword) {
       return res.status(404).json("Niepoprawny email lub hasło");
     }
-
+    const id = encrypt(data[0].id)
     const token = jwt.sign({ id: data[0].id, id_role: data[0].id_role }, "secretKey", { expiresIn: '1h' });
     const q2 = "UPDATE farmmed.user SET token = ? WHERE (id = ?)";
     db.query(q2, [token, data[0].id], (error, result) => {
@@ -41,18 +44,19 @@ export const login = (req, res) => {
         console.error('Nieprawidłowa rola użytkownika');
         break;
     }
+
     const { password, ...others } = data[0];
-    res.cookie("accessToken", token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
-    })
-    .status(200)
-    .json({token: token, redirectPath: redirectPath, id: data[0].id, role: data[0].id_role });
+    res.status(200)
+      .cookie("accessToken", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+      })
+      .json({token: token, redirectPath: redirectPath, id: id, role: data[0].id_role });
   });
 };
 
-
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~ REJESTRACJA ~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 export const register = (req, res) => {
   //CHECK USER IF EXISTS
@@ -95,25 +99,45 @@ export const register = (req, res) => {
         email,
         password,
         id_role
-      ) VALUES (?, ?, ?, ?, ?, ?, ?);
-    `;
-
-    const values = [
-      req.body.first_name,
-      req.body.last_name,
-      req.body.PESEL,
-      req.body.date_of_birth,
-      req.body.email,
-      hashedPassword,
-      2
-    ];
-
-      db.query(q, values, (err, data) => {
-        if (err) return res.status(500).json(err);
+        ) VALUES (?, ?, ?, ?, ?, ?, ?);
+        `;
+        
+        const values = [
+          req.body.first_name,
+          req.body.last_name,
+          req.body.PESEL,
+          req.body.date_of_birth,
+          req.body.email,
+          hashedPassword,
+          2
+        ];
+        
+        db.query(q, values, (err, data) => {
+          if (err) return res.status(500).json(err);
         return res.status(200).json("Utworzono konto");
       });
-  });
-};
+    });
+  };
+  
+  function validatePESEL(pesel) {
+    const weights = [1, 3, 7, 9, 1, 3, 7, 9, 1, 3];
+    const length = pesel.length;
+    
+    if (length !== 11) {
+      return false;
+    }
+    
+    let sum = 0;
+    for (let i = 0; i < length - 1; i++) {
+      sum += parseInt(pesel.charAt(i)) * weights[i];
+    }
+    
+    const checksum = (10 - (sum % 10)) % 10;
+    
+    return checksum === parseInt(pesel.charAt(length - 1));
+  }
+  
+  /*~~~~~~~~~~~~~~~~~~~~~~~~~~ WYLOGOWANIE ~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 export const logout = (req, res)=>{
   res.clearCookie("accessToken",{
@@ -121,6 +145,18 @@ export const logout = (req, res)=>{
     sameSite:"none"
   }).status(200).send("Wylogowano")
 };
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~ PRZYPOMNIENIE HASŁA ~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+export const forgot = (req, res)=>{
+  const q = "SELECT * FROM farmmed.user WHERE email = ?";
+  db.query(q, [req.body.email], (err, data) => {
+    if (err) return res.status(400).json("Nieprawidłowy email");
+    if (!data.length) return res.status(404).json("Użytkownik o podanym adresie email nie istnieje");
+    return res.status(200).json("Poprawny email");
+  });
+};
+
 
 export const auth = (req, res) =>{
   return (req, res) => {
@@ -139,30 +175,3 @@ export const auth = (req, res) =>{
   }
 }
 };
-
-export const forgot = (req, res)=>{
-  const q = "SELECT * FROM farmmed.user WHERE email = ?";
-  db.query(q, [req.body.email], (err, data) => {
-    if (err) return res.status(400).json("Nieprawidłowy email");
-    if (!data.length) return res.status(404).json("Użytkownik o podanym adresie email nie istnieje");
-    return res.status(200).json("Poprawny email");
-  });
-};
-
-function validatePESEL(pesel) {
-  const weights = [1, 3, 7, 9, 1, 3, 7, 9, 1, 3];
-  const length = pesel.length;
-
-  if (length !== 11) {
-    return false;
-  }
-
-  let sum = 0;
-  for (let i = 0; i < length - 1; i++) {
-    sum += parseInt(pesel.charAt(i)) * weights[i];
-  }
-
-  const checksum = (10 - (sum % 10)) % 10;
-
-  return checksum === parseInt(pesel.charAt(length - 1));
-}

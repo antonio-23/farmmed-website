@@ -1,6 +1,8 @@
 import { db } from '../connect.js';
 import bcrypt from 'bcryptjs';
 
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~ ZARZĄDZANIE UŻYTKOWNIKAMI ~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
 export const user = (req, res) => {
   const q = `SELECT u.first_name, u.last_name, u.email, r.name role, s.name spec 
   FROM farmmed.user u 
@@ -10,7 +12,6 @@ export const user = (req, res) => {
   db.query(q,[req.body.id], (err, data) => {
     if (err) return res.status(500).send(err);
     else {
-    console.log(data);
     return res.status(200).send(data);
     }
   });
@@ -65,11 +66,6 @@ export const delete_user = (req, res) => {
 };
 
 export const edit_user = (req, res) => {
-  console.log(req.body.email);
-  console.log(req.body.id);
-  console.log(req.body.first_name);
-  console.log(req.body.last_name);
-  console.log(req.body.role);
   const q = 'SELECT * FROM farmmed.user WHERE email = ? AND id != ?';
   db.query(q, [req.body.email, req.body.id], (err, data) => {
     if (err) return res.status(500).send(err);

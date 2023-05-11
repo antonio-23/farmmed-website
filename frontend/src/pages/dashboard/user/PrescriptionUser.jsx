@@ -11,6 +11,7 @@ export const PrescriptionUser = () => {
     try {
       const response = await axios.post('http://127.0.0.1:8800/api/medical_file/allprescription', { user: localStorage.getItem('user') }, { withCredentials: true });
       const data = response.data;
+      console.log(data);
       setPrescriptionList(data);
     } catch (error) {
       console.log(error);

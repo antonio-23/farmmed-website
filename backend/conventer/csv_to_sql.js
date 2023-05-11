@@ -1,8 +1,8 @@
-// npm install csv-parser fs multer
-
 import csv from 'csv-parser';
 import fs from 'fs';
 import { db } from '../connect.js';
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~ KONWERSJA PLIKU CSV ~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 export const convertCsvToSql = (filePath) => {
     const tableName = 'farmmed.drugs';

@@ -1,5 +1,6 @@
 import { db } from "../connect.js";
 
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~ BAZA LEKÓW - ADMIN ~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 export const all_drugs = (req, res) => {
     const q = "SELECT Identyfikator_Produktu_Leczniczego, Nazwa_Produktu_Leczniczego, Moc, Postać_farmaceutyczna, Podmiot_odpowiedzialny, Opakowanie, Substancja_czynna FROM farmmed.drugs WHERE Rodzaj_preparatu = 'Ludzki'";
@@ -19,9 +20,8 @@ export const search_drug = (req, res) => {
 
 
 export const edit_drugs = (req, res) => {
-    const q = "Update farmmed.drugs SET Ilosc = ? WHERE Identyfikator_Produktu_Leczniczego = ?";
+    const q = "Update farmmed.drugs_ilosc SET Ilosc = ? WHERE Identyfikator_Produktu_Leczniczego = ?";
     db.query(q, [req.body.Ilosc, req.body.Identyfikator_Produktu_Leczniczego], (err,data) =>{
-        console.log(q, [req.body.Ilosc, req.body.Identyfikator_Produktu_Leczniczego]);
         if(err) return res.status(500).send(err);
         else return res.status(200).send('Zmieniono ilość')
     })
