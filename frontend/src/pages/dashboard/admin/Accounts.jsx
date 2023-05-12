@@ -98,7 +98,7 @@ export const Accounts = () => {
   return (
     <div className='font-Montserrat'>
       <div className='p-10 flex flex-col items-center justify-center'>
-        <input type='search' name='searchField' id='searchField' className='border rounded-lg w-[50%] focus:outline-0 p-4' placeholder='Wyszukaj' value={searchQuery} onChange={handleSearchInputChange} />
+        <input type='search' name='searchField' id='searchField' className='border rounded-lg border-gray-300 w-[50%] focus:outline-0 p-4 shadow-inner shadow-gray-200' placeholder='Wyszukaj' value={searchQuery} onChange={handleSearchInputChange} />
       </div>
 
       <div className='lg:h-[26rem] 2xl:h-[40rem] overflow-auto'>
@@ -110,7 +110,7 @@ export const Accounts = () => {
           </div>
           {userList.map((value) => {
             return (
-              <div key={value.id} className='grid grid-cols-4 grid-flow-cols gap-x-4 py-4 items-center border rounded-xl bg-white hover:bg-violet-100'>
+              <div key={value.id} className='grid grid-cols-4 grid-flow-cols gap-x-4 py-4 items-center border rounded-xl border-gray-300 shadow-md shadow-gray-200 bg-white hover:bg-violet-100'>
                 <p>{value.id}</p>
                 <p>{value.name}</p>
                 <p>{value.role}</p>

@@ -1,11 +1,12 @@
-import React from 'react';
-const properties = [
-  { p1: 'Szybka diagnoza', p2: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam molestias non nesciunt ipsa, obcaecati mollitia unde neque dicta.' },
-  { p1: 'Wizyta online', p2: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam molestias non nesciunt ipsa, obcaecati mollitia unde neque dicta.' },
-  { p1: 'Apteka online', p2: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam molestias non nesciunt ipsa, obcaecati mollitia unde neque dicta.' },
-];
+import React, { useState } from 'react';
 
 export const About = () => {
+  const [properties, setProperties] = useState([
+    { p1: 'Szybka diagnoza', p2: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam molestias non nesciunt ipsa, obcaecati mollitia unde neque dicta.' },
+    { p1: 'Wizyta online', p2: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam molestias non nesciunt ipsa, obcaecati mollitia unde neque dicta.' },
+    { p1: 'Apteka online', p2: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam molestias non nesciunt ipsa, obcaecati mollitia unde neque dicta.' },
+  ]);
+
   return (
     <div name='about' className='w-full py-20'>
       <div className='max-w-6xl mx-auto px-2'>

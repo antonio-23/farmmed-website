@@ -40,24 +40,23 @@ export const Drugs = () => {
   const handleClick = async (e, id, Ilosc) => {
     e.preventDefault();
     setEditDrugs(Ilosc);
-    const valid = editRow[id]; 
-    if (valid){
-        try {
-          const res = await axios.post('http://127.0.0.1:8800/api/drug/editdrugs', { Ilosc: editDrug, Identyfikator_Produktu_Leczniczego: id }, { withCredentials: true });
-          console.log(res.data)
-        } catch (error) {
-          console.error(error);
-        }
-    setShowBtn(!showBtn);
-    setEditRow({ ...editRow, [id]: false });
-    fetchData();
-    }
-    else setEditRow({ ...editRow, [id]: true });
+    const valid = editRow[id];
+    if (valid) {
+      try {
+        const res = await axios.post('http://127.0.0.1:8800/api/drug/editdrugs', { Ilosc: editDrug, Identyfikator_Produktu_Leczniczego: id }, { withCredentials: true });
+        console.log(res.data);
+      } catch (error) {
+        console.error(error);
+      }
+      setShowBtn(!showBtn);
+      setEditRow({ ...editRow, [id]: false });
+      fetchData();
+    } else setEditRow({ ...editRow, [id]: true });
   };
 
   const handleEditInputChange = (event) => {
     setEditDrugs(event.target.value);
-  }
+  };
 
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value);
@@ -77,7 +76,7 @@ export const Drugs = () => {
       })
       .then((response) => {
         console.log('Plik został przesłany na backend', response);
-        // Dodaj tutaj kod obsługujący odpowiedź z backendu        
+        // Dodaj tutaj kod obsługujący odpowiedź z backendu
         setTimeout(fetchData(), 10000);
       })
       .catch((error) => {
@@ -85,29 +84,44 @@ export const Drugs = () => {
         // Dodaj tutaj kod obsługujący błąd
       });
   };
-  
 
   return (
     <div className='font-Montserrat'>
       <div className='p-10 flex flex-col items-center justify-center'>
-        <input type='search' name='searchField' id='searchField' className='border rounded-lg w-[50%] focus:outline-0 p-4' placeholder='Wyszukaj' value={searchQuery} onChange={handleSearchInputChange} />
-        <input type="file" id="file" name="file" multiple onChange={handlefile} />
+        <input
+          type='search'
+          name='searchField'
+          id='searchField'
+          className='border rounded-lg w-[50%] focus:outline-0 p-4 border-gray-300 shadow-inner shadow-gray-200'
+          placeholder='Wyszukaj'
+          value={searchQuery}
+          onChange={handleSearchInputChange}
+        />
+        <label className='block my-3 text-sm font-medium text-gray-800'>Dodaj plik</label>
+        <input
+          type='file'
+          id='file'
+          name='file'
+          multiple
+          onChange={handlefile}
+          className='block text-sm text-gray-900 border file:border-none file:bg-violet-500 file:hover:bg-violet-600 file:text-white file:p-2 file:mr-4 border-gray-300 rounded-lg cursor-pointer focus:outline-none hover:outline-none'
+        />
       </div>
 
-      <div className='lg:h-[30rem] 2xl:h-[60rem] overflow-auto'>
+      <div className='grid grid-cols-8 grid-flow-cols gap-x-6 py-2 items-center text-center mx-20 lg:mx-10 text-lg font-bold'>
+        <p>Id</p>
+        <p>Nazwa</p>
+        <p>Moc</p>
+        <p>Postać</p>
+        <p>Podmiot</p>
+        <p>Opakowanie</p>
+        <p>Ilość</p>
+      </div>
+      <div className='lg:h-[28rem] 2xl:h-[60rem] overflow-auto'>
         <div className='text-center space-y-4 mx-20 lg:mx-10'>
-          <div className='grid grid-cols-8 grid-flow-cols gap-x-7 py-2 items-center text-lg font-bold'>
-            <p>Id</p>
-            <p>Nazwa</p>
-            <p>Moc</p>
-            <p>Postać</p>
-            <p>Podmiot</p>
-            <p>Opakowanie</p>
-            <p>Ilość</p>
-          </div>
           {drugsList.map((value) => {
             return (
-              <div key={value.Identyfikator_Produktu_Leczniczego} className='grid grid-cols-8 grid-flow-cols gap-x-7 py-4 items-center border rounded-xl bg-white hover:bg-violet-100'>
+              <div key={value.Identyfikator_Produktu_Leczniczego} className='grid grid-cols-8 grid-flow-cols gap-x-7 py-4 items-center border rounded-xl border-gray-300 bg-white hover:bg-violet-100 shadow-md shadow-gray-200'>
                 <p>{value.Identyfikator_Produktu_Leczniczego}</p>
                 <p>{value.Nazwa_Produktu_Leczniczego}</p>
                 <p>{value.Moc}</p>
@@ -115,7 +129,11 @@ export const Drugs = () => {
                 <p>{value.Podmiot_odpowiedzialny}</p>
                 <p>{value.Opakowanie}</p>
 
-                {editRow[value.Identyfikator_Produktu_Leczniczego] ? <input className='p-2 text-center w-16 rounded-lg' type='number' min={0} value={editDrug} onChange={handleEditInputChange}/> : <p>{value.Ilosc}</p>}
+                {editRow[value.Identyfikator_Produktu_Leczniczego] ? (
+                  <input className='p-2 text-center w-16 rounded-lg' type='number' min={0} value={editDrug} onChange={handleEditInputChange} />
+                ) : (
+                  <p>{value.Ilosc}</p>
+                )}
 
                 <button onClick={(e) => handleClick(e, value.Identyfikator_Produktu_Leczniczego, value.Ilosc)} id={value.Identyfikator_Produktu_Leczniczego} className='text-violet-600'>
                   {editRow[value.Identyfikator_Produktu_Leczniczego] ? 'Zapisz' : 'Edycja'}
