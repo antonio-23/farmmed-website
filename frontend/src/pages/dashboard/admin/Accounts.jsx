@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { editProfile } from '../../../constants/formFields';
 import { Link } from 'react-router-dom';
+import { Button } from '../../../components/Button';
 
 const fields = editProfile;
 let fieldsState = {};
@@ -71,8 +72,7 @@ export const Accounts = () => {
   };
 
   const handleChange = (e) => {
-    setEditProfileData({...editProfileData, [e.target.id]: e.target.value,
-    });
+    setEditProfileData({ ...editProfileData, [e.target.id]: e.target.value });
   };
 
   useEffect(() => {
@@ -98,7 +98,15 @@ export const Accounts = () => {
   return (
     <div className='font-Montserrat'>
       <div className='p-10 flex flex-col items-center justify-center'>
-        <input type='search' name='searchField' id='searchField' className='border rounded-lg border-gray-300 w-[50%] focus:outline-0 p-4 shadow-inner shadow-gray-200' placeholder='Wyszukaj' value={searchQuery} onChange={handleSearchInputChange} />
+        <input
+          type='search'
+          name='searchField'
+          id='searchField'
+          className='border rounded-lg border-gray-300 w-[50%] focus:outline-0 p-4 shadow-inner shadow-gray-200'
+          placeholder='Wyszukaj'
+          value={searchQuery}
+          onChange={handleSearchInputChange}
+        />
       </div>
 
       <div className='lg:h-[26rem] 2xl:h-[40rem] overflow-auto'>
@@ -192,7 +200,7 @@ export const Accounts = () => {
 
       <div className='flex flex-col items-center pt-6'>
         <Link to='/admin/addUser'>
-          <button className='bg-violet-600 text-white px-8 py-3 rounded-md hover:bg-violet-700 font-semibold'>Dodaj użytkownika</button>
+          <Button>Dodaj użytkownika</Button>
         </Link>
       </div>
     </div>

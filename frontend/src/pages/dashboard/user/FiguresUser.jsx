@@ -44,12 +44,12 @@ export const FiguresUser = () => {
         <p>Data</p>
         <p>Doktor</p>
       </div>
-      <div className='lg:h-[32rem] 2xl:h-[60rem] w-full overflow-auto'>
+      <div className='lg:h-[35rem] 2xl:h-[60rem] w-full overflow-auto'>
         <div className='text-center py-4 mx-10'>
           {figuresList.map((value) => {
             console.log(value);
             return (
-              <div key={value.id} className='grid grid-cols-2 grid-flow-cols py-4 my-2 items-center border rounded-xl bg-white hover:bg-violet-100 shadow-md shadow-gray-200'>
+              <div key={value.id} className='grid grid-cols-2 grid-flow-cols py-4 my-4 items-center border rounded-xl bg-white hover:bg-violet-100 shadow-md shadow-gray-200'>
                 <p>{value.data_wizyty}</p>
                 <p>{value.doctor_name}</p>
 
