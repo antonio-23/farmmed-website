@@ -60,8 +60,8 @@ export const Footer = () => {
         </div>
         <div className='flex justify-between'>
           {footerInfo.map((value) => (
-            <div className='px-10'>
-              <div key={value.name}>
+            <div key={value.name} className='px-10'>
+              <div>
                 <h6 className='text-lg py-2'>{value.name}</h6>
                 <ul>
                   {value.options.map((option) => (

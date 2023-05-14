@@ -50,7 +50,7 @@ export const PrescriptionUser = () => {
       <div className='lg:h-[35rem] 2xl:h-[60rem] overflow-auto text-center py-4 mx-10'>
         {prescriptionList.map((value) => {
           return (
-            <div key={value.id} className='grid grid-cols-2 grid-flow-cols py-4 items-center border rounded-xl bg-white hover:bg-violet-100 shadow-md shadow-gray-200'>
+            <div key={value.id} className='grid grid-cols-2 grid-flow-cols py-4 items-center border rounded-xl bg-white hover:bg-violet-100 shadow-md shadow-gray-200 border-gray-300'>
               <p>{value.data_wystawienia}</p>
               <p>{value.doctor_name}</p>
 

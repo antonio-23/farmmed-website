@@ -12,7 +12,29 @@ import { NotFound } from './pages/NotFound';
 import Navbar from './components/Navbar';
 
 //Auth
-import {AuthAdmin, AuthAddUser, AuthAccounts, AuthChemist, AuthDoctor, AuthDrugs, AuthDrugsChemist, AuthFiguresDoctor, AuthFiguresUser, AuthOrderChemist, AuthPrescriptionChemist, AuthPrescriptionDoctor, AuthPrescriptionUser, AuthProfileChemist, AuthProfileDoctor, AuthProfileUser, AuthSchedule, AuthScheduleDoctor, AuthUser, AuthVisitUser } from './Auth'
+import {
+  AuthAdmin,
+  AuthAddUser,
+  AuthAccounts,
+  AuthChemist,
+  AuthDoctor,
+  AuthDrugs,
+  AuthDrugsChemist,
+  AuthFiguresDoctor,
+  AuthFiguresUser,
+  AuthOrderChemist,
+  AuthPrescriptionChemist,
+  AuthPrescriptionDoctor,
+  AuthPrescriptionUser,
+  AuthProfileChemist,
+  AuthProfileDoctor,
+  AuthProfileUser,
+  AuthSchedule,
+  AuthScheduleDoctor,
+  AuthUser,
+  AuthVisitUser,
+  AuthEditDataDoctor,
+} from './Auth';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -43,6 +65,7 @@ const router = createBrowserRouter(
         <Route path='figuresDoctor' element={<AuthFiguresDoctor />} />
         <Route path='prescriptionDoctor' element={<AuthPrescriptionDoctor />} />
         <Route path='scheduleDoctor' element={<AuthScheduleDoctor />} />
+        <Route path='editDataDoctor' element={<AuthEditDataDoctor />} />
       </Route>
       <Route path='chemist' element={<AuthChemist />}>
         <Route path='profileChemist' element={<AuthProfileChemist />} />

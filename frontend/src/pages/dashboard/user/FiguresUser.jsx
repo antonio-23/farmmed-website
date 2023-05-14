@@ -49,7 +49,7 @@ export const FiguresUser = () => {
           {figuresList.map((value) => {
             console.log(value);
             return (
-              <div key={value.id} className='grid grid-cols-2 grid-flow-cols py-4 my-4 items-center border rounded-xl bg-white hover:bg-violet-100 shadow-md shadow-gray-200'>
+              <div key={value.id} className='grid grid-cols-2 grid-flow-cols py-4 my-4 items-center border rounded-xl bg-white hover:bg-violet-100 shadow-md shadow-gray-200 border-gray-300'>
                 <p>{value.data_wizyty}</p>
                 <p>{value.doctor_name}</p>
 
