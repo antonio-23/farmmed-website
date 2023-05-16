@@ -50,6 +50,15 @@ export const getName = (req, res) => {
 
 export const show_data = (req, res) =>{
   const id = decrypt(req.body.user);
+  const q = "SELECT first_name, last_name, date_of_birth, PESEL, email, password FROM farmmed.user WHERE id = ?";
+  db.query(q, [id], (err, data) =>{
+    if (err) return res.status(500).json(err);
+    return res.json(data);
+  })
+}
+
+export const show_data2 = (req, res) =>{
+  const id = decrypt(req.body.user);
   const q = "SELECT id AS user, first_name, last_name, email FROM farmmed.user WHERE id = ?";
   db.query(q, [id], (err, data) =>{
     if (err) return res.status(500).json(err);

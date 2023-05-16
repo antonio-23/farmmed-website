@@ -13,9 +13,8 @@ export const EditData = ({ link }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.post('http://127.0.0.1:8800/api/user/show', { user: localStorage.getItem('user') }, { withCredentials: true });
+        const res = await axios.post('http://127.0.0.1:8800/api/user/show2', { user: localStorage.getItem('user') }, { withCredentials: true });
         setEditState(res.data[0]);
-        console.log(editProfileData);
       } catch (error) {
         console.error(error);
       }
