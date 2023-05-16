@@ -1,5 +1,6 @@
 import { db } from '../connect.js';
 import { decrypt } from '../middleware/hash.js';
+import bcrypt from 'bcryptjs';
 
 export const getUser = (req, res) => {
   const userId = req.params.userId;
@@ -58,17 +59,7 @@ export const show_data = (req, res) =>{
 
 export const edit_data = (req, res) =>{
   const id = decrypt(req.body.user);
-  const q = "SELECT password FROM farmmed.user WHERE id = ?";
-  db.query(q, [id], (err, data) => {
-    if (err) {
-      return res.status(500).json(err);
-    }
-  const checkPassword = bcrypt.compareSync(req.body.password, data[0].password);
-    if (!checkPassword) {
-      return res.status(404).json("Niepoprawny email lub hasło");
-    }
-    const checkUserQuery = "SELECT * FROM farmmed.user WHERE email = ? AND id != ?";
-
+  const checkUserQuery = "SELECT * FROM farmmed.user WHERE email = ? AND id != ?";
   db.query(checkUserQuery, [req.body.email,id], (err, data) => {
     if (err) return res.status(500).send(err);
     if (data.length) {
@@ -76,13 +67,39 @@ export const edit_data = (req, res) =>{
       if (existingUser) {
         return res.status(409).send("Użytkownik z podanym Email już istnieje");
       }
-      const salt = bcrypt.genSaltSync(10);
-      const hashedPassword = bcrypt.hashSync(req.body.new_password, salt);
-      const q1 = "UPDATE farmmed.user SET first_name = ?, last_name = ?, email = ?, password = ? WHERE id = ?"
-      db.query(q1, [req.body.first_name, req.body.last_name, req.body.email, hashedPassword, id], (err, data)=>{
+
+    }      
+    const q1 = "UPDATE farmmed.user SET first_name = ?, last_name = ?, email = ? WHERE id = ?"
+    db.query(q1, [req.body.first_name, req.body.last_name, req.body.email, id], (err, data)=>{
+      if (err) return res.status(500).json(err);
+      else return res.status(200).send("Zmieniono dane");
+  })})
+}
+
+export const edit_password = (req, res) =>{
+  const id = decrypt(req.body.user);
+  console.log(id);
+  const q = "SELECT password FROM farmmed.user WHERE id = ?";
+  db.query(q, [id], (err, data) => {
+    if (err) return res.status(500).json(err);
+    console.log("1");
+    console.log(data[0].password);
+    bcrypt.compare(req.body.password, data[0].password, (err, isMatch) => {
+      if (err) {
+        return res.status(500).send(err);
+      }
+      console.log("2")
+      if (isMatch) {
+        const salt = bcrypt.genSaltSync(10);
+        const hashedPassword = bcrypt.hashSync(req.body.new_password, salt);
+        const q1 = "UPDATE farmmed.user SET password = ? WHERE id = ?"
+        db.query(q1, [hashedPassword , id], (err, data)=>{
         if (err) return res.status(500).json(err);
         else return res.status(200).send("Zmieniono dane");
     })
-  }})
+      } else {
+        return res.status(400).send("Hasło niepoprawne");
+      }
+    }); 
   })
 }

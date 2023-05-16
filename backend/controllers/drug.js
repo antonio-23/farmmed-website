@@ -27,6 +27,14 @@ export const edit_drugs = (req, res) => {
     })
 }
 
+export const add_to_prescription = (req, res) => {
+    const q = "INSERT INTO recepta_leki (id_recepty, id_leku, opakowanie, dawkowanie) VALUES (?,?,?,?)"
+    db.query(q, [req.body.id_recepty, req.body.id_leku, req.body.opakowanie, req.body.dawkowanie], (err, data) =>{
+        if(err) return res.status(500).send(err);
+        else return res.status(200).send('Dodano lek do recepty o id '+ req.body.id_recepty);
+    })
+}
+
 
 
 /*UPDATE farmmed.drugs SET Ilosc =  

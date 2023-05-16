@@ -105,9 +105,15 @@ export const all_prescription = (req, res) => {
 }
 
 export const add_prescription = (req, res) => {
-    const q = '';
-    db.query(q, [], (err, data) =>{
-        if(err) return res.status(500).send(err);
-        else return res.status(200).send("Wystawiono recepte");
-    })
-}
+    const user = decrypt(req.body.user);
+    const q = 'INSERT INTO farmmed.recepty (id_user, id_doctor) VALUES (?, ?)';
+    db.query(q, [req.body.pacjent, user], (err, data) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send(err);
+      }
+      const insertedId = data.insertId;
+      return res.status(200).send({ id: insertedId });
+    });
+  };
+  
