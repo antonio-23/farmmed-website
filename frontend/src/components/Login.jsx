@@ -33,11 +33,10 @@ export default function Login() {
         localStorage.setItem('user', id);
         console.log('zalogowano');
         navigate(redirectPath);
-      } else if (response.status === 400 || response.status === 404) {
-        setErr('Niepoprawny login lub hasło');
       }
+      setErr('Niepoprawny login lub hasło');
     } catch (err) {
-      setErr(err.message);
+      setErr('Niepoprawny login lub hasło');
     }
   };
 

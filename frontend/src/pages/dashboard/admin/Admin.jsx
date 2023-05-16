@@ -20,7 +20,7 @@ export const Admin = () => {
       }
     };
     checkAuth();
-  }); // [] oznacza, że useEffect zostanie uruchomiony tylko raz po załadowaniu komponentu
+  }); 
   return (
     <div className='flex'>
       <Sidebar />
