@@ -51,7 +51,7 @@ export const all_prescription = (req, res) => {
      INNER JOIN farmmed.user u ON r.id_user = u.id
      INNER JOIN farmmed.recepta_leki rl ON r.id = rl.id_recepty
      INNER JOIN farmmed.drugs d ON rl.id_leku = d.Identyfikator_Produktu_Leczniczego
-     WHERE u.id = 1 AND (r.validity_date > (SELECT CURDATE()))
+     WHERE u.id = ? AND (r.validity_date > (SELECT CURDATE()))
      ORDER BY r.id DESC`;
     db.query(q, [user], (err, data) =>{
         if(err) return res.status(500).send(err);
