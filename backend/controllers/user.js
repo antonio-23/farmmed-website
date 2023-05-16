@@ -67,9 +67,8 @@ export const show_data2 = (req, res) =>{
 }
 
 export const edit_data = (req, res) =>{
-  const id = decrypt(req.body.user);
   const checkUserQuery = "SELECT * FROM farmmed.user WHERE email = ? AND id != ?";
-  db.query(checkUserQuery, [req.body.email,id], (err, data) => {
+  db.query(checkUserQuery, [req.body.email,req.body.user], (err, data) => {
     if (err) return res.status(500).send(err);
     if (data.length) {
       const existingUser = data.find(user => user.email === req.body.email);
@@ -79,7 +78,7 @@ export const edit_data = (req, res) =>{
 
     }      
     const q1 = "UPDATE farmmed.user SET first_name = ?, last_name = ?, email = ? WHERE id = ?"
-    db.query(q1, [req.body.first_name, req.body.last_name, req.body.email, id], (err, data)=>{
+    db.query(q1, [req.body.first_name, req.body.last_name, req.body.email, req.body.user], (err, data)=>{
       if (err) return res.status(500).json(err);
       else return res.status(200).send("Zmieniono dane");
   })})
