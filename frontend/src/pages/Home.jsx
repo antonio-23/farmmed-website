@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import heroPicture from '../assets/hero-picture.png';
 import { About } from './About';
@@ -6,18 +6,18 @@ import { OurLocation } from './OurLocation';
 import { Contact } from './Contact';
 import { Footer } from '../components/Footer';
 
-const properties = [
-  { h1: '4k', p: 'Zadowolonych klientów' },
-  { h1: '6k', p: 'Klientów miesięcznie' },
-  { h1: '5', p: 'Miast' },
-  { h1: '30+', p: 'Partnetów' },
-];
-
 export const Home = () => {
-  useEffect(() =>{
+  const [properties, setProperties] = useState([
+    { h1: '4k', p: 'Zadowolonych klientów' },
+    { h1: '6k', p: 'Klientów miesięcznie' },
+    { h1: '5', p: 'Miast' },
+    { h1: '30+', p: 'Partnetów' },
+  ]);
+
+  useEffect(() => {
     localStorage.clear();
   }, []);
-  
+
   return (
     <>
       <div name='home' className='w-full h-full flex flex-col justify-between 2xl:py-52'>
@@ -35,8 +35,12 @@ export const Home = () => {
           <div className='md:col-start-1 col-end-3 flex justify-evenly h-auto py-8 md:min-w-[760px] bg-white rounded-3xl items-center flex-col md:flex-row shadow-xl'>
             {properties.map((value, index) => (
               <div key={index} className='flex flex-col items-center'>
-                <h1 key={value.h1} className='text-5xl text-violet-600 font-bold pb-2'>{value.h1}</h1>
-                <p key={value.p} className='text-lg'>{value.p}</p>
+                <h1 key={value.h1} className='text-5xl text-violet-600 font-bold pb-2'>
+                  {value.h1}
+                </h1>
+                <p key={value.p} className='text-lg'>
+                  {value.p}
+                </p>
               </div>
             ))}
           </div>

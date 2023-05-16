@@ -3,18 +3,18 @@ import { NavLink, Outlet } from 'react-router-dom';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 import { Link, animateScroll as scroll } from 'react-scroll';
 
-const navigation = [
-  { name: 'O nas', path: '/about', id: 'about' },
-  { name: 'Lokalizacje', path: '/ourlocation', id: 'ourlocation' },
-  { name: 'Opinie', path: '/contact', id: 'contact' },
-];
-
-const btnNavigation = [
-  { name: 'Dołącz do nas', path: '/register' },
-  { name: 'Logowanie', path: '/login' },
-];
-
 const Navbar = () => {
+  const [navigation, setNavigation] = useState([
+    { name: 'O nas', path: '/about', id: 'about' },
+    { name: 'Lokalizacje', path: '/ourlocation', id: 'ourlocation' },
+    { name: 'Opinie', path: '/contact', id: 'contact' },
+  ]);
+
+  const [btnNavigation, setBtnNavigation] = useState([
+    { name: 'Dołącz do nas', path: '/register' },
+    { name: 'Logowanie', path: '/login' },
+  ]);
+
   const [nav, setNav] = useState(false);
 
   const closeNav = () => setNav(false);
@@ -42,7 +42,7 @@ const Navbar = () => {
         </h1>
         <div className='hidden lg:flex whitespace-nowrap'>
           {navigation.map((item, index) => (
-            <button className='p-4 hover:text-violet-600 text-lg cursor-pointer' key={item.path}>
+            <button className='p-4 hover:text-violet-600 text-lg font-medium cursor-pointer' key={item.path}>
               <Link key={index} to={item.id} smooth={true} offset={50} duration={800}>
                 {item.name}
               </Link>
