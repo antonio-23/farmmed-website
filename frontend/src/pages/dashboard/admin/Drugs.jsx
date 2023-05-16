@@ -62,7 +62,7 @@ export const Drugs = () => {
     setSearchQuery(event.target.value);
   };
 
-  const handlefile = (e) => {
+  const handleFile = (e) => {
     const file = e.target.files[0];
     console.log(file);
     const formData = new FormData();
@@ -77,7 +77,9 @@ export const Drugs = () => {
       .then((response) => {
         console.log('Plik został przesłany na backend', response);
         // Dodaj tutaj kod obsługujący odpowiedź z backendu
-        setTimeout(fetchData(), 10000);
+        setTimeout(() => {
+          window.location.reload();
+        }, 4000);
       })
       .catch((error) => {
         console.error('Błąd podczas przesyłania pliku', error);
@@ -103,7 +105,7 @@ export const Drugs = () => {
           id='file'
           name='file'
           multiple
-          onChange={handlefile}
+          onChange={handleFile}
           className='block text-sm text-gray-900 border file:border-none file:bg-violet-500 file:hover:bg-violet-600 file:text-white file:p-2 file:mr-4 border-gray-300 rounded-lg cursor-pointer focus:outline-none hover:outline-none'
         />
       </div>
