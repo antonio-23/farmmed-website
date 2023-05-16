@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { db } from "../connect.js";
-import { decrypt } from "./hash.js";
+import { decrypt, encrypt } from "./hash.js";
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~ AUTORYZACJA ~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
@@ -25,7 +25,8 @@ export const authorize = (req, res) => {
     try {
       // weryfikujemy token
       const decodedToken = jwt.verify(token, "secretKey");
-      res.status(200).json({id_role: decodedToken.id_role});
+      const id = encrypt(decodedToken.id)
+      res.status(200).json({user: id, id_role: decodedToken.id_role});
       // dodajemy zdekodowany token do obiektu żądania
       req.user = decodedToken;
       

@@ -32,7 +32,10 @@ import { Chemist } from './pages/dashboard/chemist/Chemist';
 import Loader from './components/Loader';
 import { EditPassword } from './components/EditPassword';
 
+
+
 function useAuth() {
+  const [id, setID] = useState(null);
   const [role, setRole] = useState(null);
   const [loaded, setLoaded] = useState(false);
   const navigate = useNavigate();
@@ -47,6 +50,9 @@ function useAuth() {
         }
         const response = await axios.post('http://localhost:8800/api/auth/authorize', { user });
         const data = response.data;
+        console.log(data);
+        localStorage.clear();
+        setID(data.user)
         setRole(data.id_role);
       } catch (error) {
         console.error(error);
@@ -58,11 +64,11 @@ function useAuth() {
     fetchData();
   }, [navigate]);
 
-  return [role, loaded];
+  return [id, role, loaded];
 }
 
 export const AuthAdmin = () => {
-  const [role, loaded] = useAuth();
+  const [id, role, loaded] = useAuth();
 
   if (!loaded) {
     return <Loader />;
@@ -73,12 +79,12 @@ export const AuthAdmin = () => {
     navigate('/login');
     return;
   }
-
+  localStorage.setItem('user', id);
   return <Admin />;
 };
 
 export const AuthAddUser = () => {
-  const [role, loaded] = useAuth();
+  const [id, role, loaded] = useAuth();
 
   if (!loaded) {
     return <Loader />;
@@ -89,12 +95,12 @@ export const AuthAddUser = () => {
     navigate('/login');
     return;
   }
-
+localStorage.setItem('user', id);
   return <AddUser />;
 };
 
 export const AuthAccounts = () => {
-  const [role, loaded] = useAuth();
+  const [id, role, loaded] = useAuth();
 
   if (!loaded) {
     return <Loader />;
@@ -105,12 +111,12 @@ export const AuthAccounts = () => {
     navigate('/login');
     return;
   }
-
+localStorage.setItem('user', id);
   return <Accounts />;
 };
 
 export const AuthSchedule = () => {
-  const [role, loaded] = useAuth();
+  const [id, role, loaded] = useAuth();
 
   if (!loaded) {
     return <Loader />;
@@ -121,12 +127,12 @@ export const AuthSchedule = () => {
     navigate('/login');
     return;
   }
-
+localStorage.setItem('user', id);
   return <Schedule />;
 };
 
 export const AuthDrugs = () => {
-  const [role, loaded] = useAuth();
+  const [id, role, loaded] = useAuth();
 
   if (!loaded) {
     return <Loader />;
@@ -137,12 +143,12 @@ export const AuthDrugs = () => {
     navigate('/login');
     return;
   }
-
+localStorage.setItem('user', id);
   return <Drugs />;
 };
 
 export const AuthUser = () => {
-  const [role, loaded] = useAuth();
+  const [id, role, loaded] = useAuth();
 
   if (!loaded) {
     return <Loader />;
@@ -153,12 +159,12 @@ export const AuthUser = () => {
     navigate('/login');
     return;
   }
-
+localStorage.setItem('user', id);
   return <User />;
 };
 
 export const AuthProfileUser = () => {
-  const [role, loaded] = useAuth();
+  const [id, role, loaded] = useAuth();
 
   if (!loaded) {
     return <Loader />;
@@ -174,7 +180,7 @@ export const AuthProfileUser = () => {
 };
 
 export const AuthFiguresUser = () => {
-  const [role, loaded] = useAuth();
+  const [id, role, loaded] = useAuth();
 
   if (!loaded) {
     return <Loader />;
@@ -190,7 +196,7 @@ export const AuthFiguresUser = () => {
 };
 
 export const AuthPrescriptionUser = () => {
-  const [role, loaded] = useAuth();
+  const [id, role, loaded] = useAuth();
 
   if (!loaded) {
     return <Loader />;
@@ -201,12 +207,12 @@ export const AuthPrescriptionUser = () => {
     navigate('/login');
     return;
   }
-
+localStorage.setItem('user', id);
   return <PrescriptionUser />;
 };
 
 export const AuthVisitUser = () => {
-  const [role, loaded] = useAuth();
+  const [id, role, loaded] = useAuth();
 
   if (!loaded) {
     return <Loader />;
@@ -217,12 +223,12 @@ export const AuthVisitUser = () => {
     navigate('/login');
     return;
   }
-
+localStorage.setItem('user', id);
   return <VisitUser />;
 };
 
 export const AuthEditDataUser = () => {
-  const [role, loaded] = useAuth();
+  const [id, role, loaded] = useAuth();
 
   if (!loaded) return <Loader />;
 
@@ -231,12 +237,12 @@ export const AuthEditDataUser = () => {
     navigate('/login');
     return;
   }
-
+localStorage.setItem('user', id);
   return <EditDataUser />;
 };
 
 export const AuthDoctor = () => {
-  const [role, loaded] = useAuth();
+  const [id, role, loaded] = useAuth();
 
   if (!loaded) {
     return <Loader />;
@@ -247,12 +253,12 @@ export const AuthDoctor = () => {
     navigate('/login');
     return;
   }
-
+localStorage.setItem('user', id);
   return <Doctor />;
 };
 
 export const AuthProfileDoctor = () => {
-  const [role, loaded] = useAuth();
+  const [id, role, loaded] = useAuth();
 
   if (!loaded) {
     return <Loader />;
@@ -263,12 +269,12 @@ export const AuthProfileDoctor = () => {
     navigate('/login');
     return;
   }
-
+localStorage.setItem('user', id);
   return <ProfileDoctor />;
 };
 
 export const AuthFiguresDoctor = () => {
-  const [role, loaded] = useAuth();
+  const [id, role, loaded] = useAuth();
 
   if (!loaded) {
     return <Loader />;
@@ -278,12 +284,12 @@ export const AuthFiguresDoctor = () => {
     navigate('/login');
     return;
   }
-
+localStorage.setItem('user', id);
   return <FiguresDoctor />;
 };
 
 export const AuthPrescriptionDoctor = () => {
-  const [role, loaded] = useAuth();
+  const [id, role, loaded] = useAuth();
 
   if (!loaded) {
     return <Loader />;
@@ -294,12 +300,12 @@ export const AuthPrescriptionDoctor = () => {
     navigate('/login');
     return;
   }
-
+localStorage.setItem('user', id);
   return <PrescriptionDoctor />;
 };
 
 export const AuthScheduleDoctor = () => {
-  const [role, loaded] = useAuth();
+  const [id, role, loaded] = useAuth();
 
   if (!loaded) {
     return <Loader />;
@@ -310,12 +316,12 @@ export const AuthScheduleDoctor = () => {
     navigate('/login');
     return;
   }
-
+localStorage.setItem('user', id);
   return <ScheduleDoctor />;
 };
 
 export const AuthEditDataDoctor = () => {
-  const [role, loaded] = useAuth();
+  const [id, role, loaded] = useAuth();
 
   if (!loaded) return <Loader />;
 
@@ -324,12 +330,12 @@ export const AuthEditDataDoctor = () => {
     navigate('/login');
     return;
   }
-
+localStorage.setItem('user', id);
   return <EditDataDoctor />;
 };
 
 export const AuthChemist = () => {
-  const [role, loaded] = useAuth();
+  const [id, role, loaded] = useAuth();
 
   if (!loaded) {
     return <Loader />;
@@ -340,12 +346,12 @@ export const AuthChemist = () => {
     navigate('/login');
     return;
   }
-
+localStorage.setItem('user', id);
   return <Chemist />;
 };
 
 export const AuthProfileChemist = () => {
-  const [role, loaded] = useAuth();
+  const [id, role, loaded] = useAuth();
 
   if (!loaded) {
     return <Loader />;
@@ -356,12 +362,12 @@ export const AuthProfileChemist = () => {
     navigate('/login');
     return;
   }
-
+localStorage.setItem('user', id);
   return <ProfileChemist />;
 };
 
 export const AuthOrderChemist = () => {
-  const [role, loaded] = useAuth();
+  const [id, role, loaded] = useAuth();
 
   if (!loaded) {
     return <Loader />;
@@ -372,12 +378,12 @@ export const AuthOrderChemist = () => {
     navigate('/login');
     return;
   }
-
+localStorage.setItem('user', id);
   return <OrderChemist />;
 };
 
 export const AuthDrugsChemist = () => {
-  const [role, loaded] = useAuth();
+  const [id, role, loaded] = useAuth();
 
   if (!loaded) {
     return <Loader />;
@@ -388,12 +394,12 @@ export const AuthDrugsChemist = () => {
     navigate('/login');
     return;
   }
-
+localStorage.setItem('user', id);
   return <DrugsChemist />;
 };
 
 export const AuthPrescriptionChemist = () => {
-  const [role, loaded] = useAuth();
+  const [id, role, loaded] = useAuth();
 
   if (!loaded) {
     return <Loader />;
@@ -404,12 +410,12 @@ export const AuthPrescriptionChemist = () => {
     navigate('/login');
     return;
   }
-
+localStorage.setItem('user', id);
   return <PrescriptionChemist />;
 };
 
 export const AuthEditPassword = () => {
-  const [role, loaded] = useAuth();
+  const [id, role, loaded] = useAuth();
 
   if (!loaded) {
     return <Loader />;
@@ -420,6 +426,6 @@ export const AuthEditPassword = () => {
     navigate('/login');
     return;
   }
-
+localStorage.setItem('user', id);
   return <EditPassword />;
 };
