@@ -14,6 +14,7 @@ import { FiguresUser } from './pages/dashboard/user/FiguresUser';
 import { PrescriptionUser } from './pages/dashboard/user/PrescriptionUser';
 import { VisitUser } from './pages/dashboard/user/VisitUser';
 import { User } from './pages/dashboard/user/User';
+import { EditDataUser } from './pages/dashboard/user/EditDataUser';
 // Doctor
 import { ScheduleDoctor } from './pages/dashboard/doctor/ScheduleDoctor';
 import { ProfileDoctor } from './pages/dashboard/doctor/ProfileDoctor';
@@ -29,6 +30,7 @@ import { PrescriptionChemist } from './pages/dashboard/chemist/PrescriptionChemi
 import { Chemist } from './pages/dashboard/chemist/Chemist';
 // Components
 import Loader from './components/Loader';
+import { EditPassword } from './components/EditPassword';
 
 function useAuth() {
   const [role, setRole] = useState(null);
@@ -219,6 +221,20 @@ export const AuthVisitUser = () => {
   return <VisitUser />;
 };
 
+export const AuthEditDataUser = () => {
+  const [role, loaded] = useAuth();
+
+  if (!loaded) return <Loader />;
+
+  if (role !== 2) {
+    const navigate = useNavigate();
+    navigate('/login');
+    return;
+  }
+
+  return <EditDataUser />;
+};
+
 export const AuthDoctor = () => {
   const [role, loaded] = useAuth();
 
@@ -390,4 +406,20 @@ export const AuthPrescriptionChemist = () => {
   }
 
   return <PrescriptionChemist />;
+};
+
+export const AuthEditPassword = () => {
+  const [role, loaded] = useAuth();
+
+  if (!loaded) {
+    return <Loader />;
+  }
+
+  if (role === null) {
+    const navigate = useNavigate();
+    navigate('/login');
+    return;
+  }
+
+  return <EditPassword />;
 };
