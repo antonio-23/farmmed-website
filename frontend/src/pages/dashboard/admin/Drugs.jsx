@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { SearchField } from '../../../components/SearchField';
 
 export const Drugs = () => {
   const navigate = useNavigate();
@@ -9,6 +10,7 @@ export const Drugs = () => {
   const [editRow, setEditRow] = useState({});
   const [showBtn, setShowBtn] = useState();
   const [editDrug, setEditDrugs] = useState(0);
+  const [err, setErr] = useState();
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -76,7 +78,7 @@ export const Drugs = () => {
       })
       .then((response) => {
         console.log('Plik został przesłany na backend', response);
-        // Dodaj tutaj kod obsługujący odpowiedź z backendu
+        setErr(`Dodano, strona za chwilę się odświeży`);
         setTimeout(() => {
           window.location.reload();
         }, 4000);
@@ -89,8 +91,7 @@ export const Drugs = () => {
 
   return (
     <div className='font-Montserrat'>
-      <div className='p-10 flex flex-col items-center justify-center'>
-        <input
+      {/* <input
           type='search'
           name='searchField'
           id='searchField'
@@ -98,16 +99,22 @@ export const Drugs = () => {
           placeholder='Wyszukaj'
           value={searchQuery}
           onChange={handleSearchInputChange}
-        />
-        <label className='block my-3 text-sm font-medium text-gray-800'>Dodaj plik</label>
+        /> */}
+      <div className='p-8'>
+        <SearchField value={searchQuery} onChange={handleSearchInputChange} />
+      </div>
+
+      <div className='flex flex-col items-center justify-center mb-2'>
+        <label className='block my-2 text-sm font-medium text-gray-800'>Dodaj plik</label>
         <input
           type='file'
           id='file'
           name='file'
           multiple
           onChange={handleFile}
-          className='block text-sm text-gray-900 border file:border-none file:bg-violet-500 file:hover:bg-violet-600 file:text-white file:p-2 file:mr-4 border-gray-300 rounded-lg cursor-pointer focus:outline-none hover:outline-none'
+          className='block text-sm text-gray-900 border file:border-none file:bg-violet-500 file:hover:bg-violet-600 file:text-white file:p-2 file:mr-4 border-gray-300 rounded-lg cursor-pointer focus:outline-none hover:outline-none mb-2'
         />
+        {err && <p className='text-lime-500 font-semibold'>{err}</p>}
       </div>
 
       <div className='grid grid-cols-8 grid-flow-cols gap-x-6 py-2 items-center text-center mx-20 lg:mx-10 text-lg font-bold'>
@@ -123,7 +130,10 @@ export const Drugs = () => {
         <div className='text-center space-y-4 mx-20 lg:mx-10'>
           {drugsList.map((value) => {
             return (
-              <div key={value.Identyfikator_Produktu_Leczniczego} className='grid grid-cols-8 grid-flow-cols gap-x-7 py-4 items-center border rounded-xl border-gray-300 bg-white hover:bg-violet-100 shadow-md shadow-gray-200'>
+              <div
+                key={value.Identyfikator_Produktu_Leczniczego}
+                className='grid grid-cols-8 grid-flow-cols gap-x-7 py-4 items-center border rounded-xl border-gray-300 bg-white hover:bg-violet-100 shadow-md shadow-gray-200'
+              >
                 <p>{value.Identyfikator_Produktu_Leczniczego}</p>
                 <p>{value.Nazwa_Produktu_Leczniczego}</p>
                 <p>{value.Moc}</p>

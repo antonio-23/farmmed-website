@@ -22,6 +22,7 @@ import { FiguresDoctor } from './pages/dashboard/doctor/FiguresDoctor';
 import { PrescriptionDoctor } from './pages/dashboard/doctor/PrescriptionDoctor';
 import { Doctor } from './pages/dashboard/doctor/Doctor';
 import { EditDataDoctor } from './pages/dashboard/doctor/EditDataDoctor';
+import { PrescriptionForm } from './pages/dashboard/doctor/PrescriptionForm';
 // Chemist
 import { ProfileChemist } from './pages/dashboard/chemist/ProfileChemist';
 import { OrderChemist } from './pages/dashboard/chemist/OrderChemist';
@@ -326,6 +327,19 @@ export const AuthEditDataDoctor = () => {
   }
 
   return <EditDataDoctor />;
+};
+export const AuthPrescriptionForm = () => {
+  const [role, loaded] = useAuth();
+
+  if (!loaded) return <Loader />;
+
+  if (role !== 3) {
+    const navigate = useNavigate();
+    navigate('/login');
+    return;
+  }
+
+  return <PrescriptionForm />;
 };
 
 export const AuthChemist = () => {

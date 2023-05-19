@@ -36,6 +36,7 @@ import {
   AuthEditDataDoctor,
   AuthEditDataUser,
   AuthEditPassword,
+  AuthPrescriptionForm,
 } from './Auth';
 
 const router = createBrowserRouter(
@@ -47,6 +48,7 @@ const router = createBrowserRouter(
         <Route path='login' element={<Log_in />} />
         <Route path='forgot_password' element={<ForgotPassword />} />
       </Route>
+
       <Route path='admin' element={<AuthAdmin />}>
         <Route path='accounts' element={<AuthAccounts />} />
         <Route path='schedule' element={<AuthSchedule />} />
@@ -54,25 +56,27 @@ const router = createBrowserRouter(
         <Route path='addUser' element={<AuthAddUser />} />
         <Route path='editPassword' element={<AuthEditPassword />} />
       </Route>
+
       <Route path='user' element={<AuthUser />}>
         <Route path='profileUser' element={<AuthProfileUser />} />
         <Route path='figuresUser' element={<AuthFiguresUser />} />
         <Route path='prescriptionUser' element={<AuthPrescriptionUser />} />
         <Route path='visitUser' element={<AuthVisitUser />} />
-        <Route path='editDataUser' element={<AuthEditDataUser />}>
-          <Route path='editPassword' element={<AuthEditPassword />} />
-        </Route>
+        <Route path='editDataUser' element={<AuthEditDataUser />} />
+        <Route path='editDataUser/editPassword' element={<AuthEditPassword />} />
       </Route>
+
       <Route path='doctor' element={<AuthDoctor />}>
         <Route path='profileDoctor' element={<AuthProfileDoctor />} />
         <Route path='figuresDoctor' element={<AuthFiguresDoctor />} />
         <Route path='prescriptionDoctor' element={<AuthPrescriptionDoctor />} />
         <Route path='scheduleDoctor' element={<AuthScheduleDoctor />} />
         <Route path='editDataDoctor' element={<AuthEditDataDoctor />} />
-        <Route path='editDataDoctor' element={<AuthEditDataDoctor />}>
-          <Route path='editPassword' element={<AuthEditPassword />} />
-        </Route>
+        <Route path='editDataDoctor' element={<AuthEditDataDoctor />} />
+        <Route path='editDataDoctor/editPassword' element={<AuthEditPassword />} />
+        <Route path='prescriptionDoctor/prescriptionForm' element={<AuthPrescriptionForm />} />
       </Route>
+
       <Route path='chemist' element={<AuthChemist />}>
         <Route path='profileChemist' element={<AuthProfileChemist />} />
         <Route path='orderChemist' element={<AuthOrderChemist />} />

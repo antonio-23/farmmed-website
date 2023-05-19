@@ -3,6 +3,7 @@ import axios from 'axios';
 import { editProfile } from '../../../constants/formFields';
 import { Link } from 'react-router-dom';
 import { Button } from '../../../components/Button';
+import { SearchField } from '../../../components/SearchField';
 
 const fields = editProfile;
 let fieldsState = {};
@@ -97,7 +98,7 @@ export const Accounts = () => {
 
   return (
     <div className='font-Montserrat'>
-      <div className='p-10 flex flex-col items-center justify-center'>
+      {/* <div className='p-10 flex flex-col items-center justify-center'>
         <input
           type='search'
           name='searchField'
@@ -107,6 +108,9 @@ export const Accounts = () => {
           value={searchQuery}
           onChange={handleSearchInputChange}
         />
+      </div> */}
+      <div className='p-8'>
+        <SearchField value={searchQuery} onChange={handleSearchInputChange} />
       </div>
 
       <div className='lg:h-[26rem] 2xl:h-[40rem] overflow-auto'>
