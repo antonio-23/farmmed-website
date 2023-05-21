@@ -35,6 +35,13 @@ export const add_to_prescription = (req, res) => {
     })
 }
 
+export const search_5_drug = (req, res) => {
+    const q = "SELECT d.Identyfikator_Produktu_Leczniczego AS id, d.Nazwa_Produktu_Leczniczego AS name FROM farmmed.drugs d WHERE d.Rodzaj_preparatu = 'Ludzki' AND (d.Nazwa_Produktu_Leczniczego LIKE ? OR d.Nazwa_Produktu_Leczniczego LIKE ? OR d.Nazwa_Produktu_Leczniczego LIKE ?) LIMIT 5;";
+    db.query(q, [req.body.searchQuery + '%', '%' + req.body.searchQuery + '%', '%' + req.body.searchQuery], (err, data) =>{
+        if (err) return res.status(500).send(err);
+        else return res.status(200).send(data);
+    });
+};
 
 
 /*UPDATE farmmed.drugs SET Ilosc =  

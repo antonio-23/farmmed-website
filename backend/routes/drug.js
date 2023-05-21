@@ -1,5 +1,5 @@
 import express from 'express';
-import { all_drugs, search_drug, edit_drugs, add_to_prescription } from "../controllers/drug.js";
+import { all_drugs, search_drug, edit_drugs, add_to_prescription, search_5_drug } from "../controllers/drug.js";
 import { convertCsvToSql } from "../conventer/csv_to_sql.js"
 import multer from 'multer';
 
@@ -19,5 +19,6 @@ router.post('/update', upload.single('file'), (req, res) => {
        res.send('Przesłany plik CSV jest przetwarzany.');
     });
 router.post("/add", add_to_prescription);
+router.post("/search", search_5_drug);
 
 export default router;

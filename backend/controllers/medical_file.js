@@ -34,14 +34,6 @@ export const add_file = (req, res) => {
     })
 }
 
-export const edit_file = (req, res) => {
-    const q = '';
-    db.query(q, [], (err, data) =>{
-        if(err) return res.status(500).send(err);
-        else return res.status(200).send("Zmieniono wpis z kartoteki")
-    })
-}
-
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~ RECEPTY ~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 export const all_prescription = (req, res) => {
@@ -116,4 +108,38 @@ export const add_prescription = (req, res) => {
       return res.status(200).send({ id: insertedId });
     });
   };
-  
+
+
+export const add_drug = (req,res)=> {
+    const q = 'INSERT INTO farmmed.recepta_leki (id_recepty, id_leku, opakowanie, dawkowanie) VALUES (?, ?,?,?)';
+    db.query(q, [req.body.id_recepty,req.body.id_leku,req.body.opakowanie,req.body.id_dawkowanie, ], (err, data) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).send(err);
+        }
+        return res.status(200).send("dodano lek");
+      });
+}
+
+
+export const show_prescription = (req,res)=>{
+    const q = "SELECT d.Nazwa_Produktu_Leczniczego, r.opakowanie, r.dawkowanie FROM farmmed.recepta_leki r INNER JOIN farmmed.drugs d ON d.Identyfikator_Produktu_Leczniczego = r.id_leku WHERE id_recepty = ?"
+    db.query(q, [req.body.id_recepty], (err, data) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).send(err);
+        }
+        return res.status(200).send(data);
+      });
+}
+
+export const view_information = (req, res) =>{
+  const q = 'SELECT r.key, CONCAT(u.first_name, " ", u.last_name) AS name, u.PESEL FROM recepty r INNER JOIN user u ON u.id = r.id_user WHERE r.id = ?';
+  db.query(q, [req.body.id], (err,data)=>{
+    if (err) {
+      console.error(err);
+      return res.status(500).send(err);
+    }
+    return res.status(200).send(data);
+  });
+}

@@ -17,9 +17,17 @@ export const user = (req, res) => {
   });
 };
 
-export const search_user = (req, res) => {
+export const search_users = (req, res) => {
   const q = "SELECT u.id, CONCAT(u.first_name, ' ', u.last_name) name, r.name role, u.first_name, u.last_name, u.email FROM farmmed.user u INNER JOIN farmmed.roles r USING(id_role) WHERE CONCAT(u.first_name, ' ', u.last_name) LIKE ? ORDER BY u.id ASC LIMIT 100";
   db.query(q, [req.body.searchQuery + '%'], (err, data) => {
+    if (err) return res.status(500).send(err);
+    else return res.status(200).send(data);
+  });
+};
+/*doktor*/
+export const search_user = (req, res) => {
+  const q = "SELECT u.id, CONCAT(u.first_name, ' ', u.last_name) AS name, u.PESEL, u.date_of_birth FROM farmmed.user u WHERE u.id_role = 2 AND CONCAT(u.first_name, ' ', u.last_name) LIKE ? OR u.PESEL LIKE ? ORDER BY u.id ASC LIMIT 100;";
+  db.query(q, [req.body.searchQuery + '%', req.body.searchQuery + '%'], (err, data) => {
     if (err) return res.status(500).send(err);
     else return res.status(200).send(data);
   });
