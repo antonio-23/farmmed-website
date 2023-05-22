@@ -143,3 +143,36 @@ export const view_information = (req, res) =>{
     return res.status(200).send(data);
   });
 }
+
+export const find_users_prescription = (req,res)=>{
+  const q = 'SELECT r.id, r.key, CONCAT(u.first_name, " ", u.last_name) AS name, u.PESEL, r.Date FROM recepty r INNER JOIN user u ON u.id = r.id_user WHERE u.PESEL = ? AND (r.validity_date > (SELECT CURDATE())) AND ((SELECT count(*) FROM farmmed.recepta_leki l WHERE l.id_recepty = r.id) != 0) ORDER BY r.id DESC';
+  db.query(q, [req.body.searchQuery], (err,data)=>{
+    if (err) {
+      console.error(err);
+      return res.status(500).send(err);
+    }
+    return res.status(200).send(data);
+  })
+}
+
+export const implementation_of_the_prescription = (req,res)=>{
+  const q = "DELETE FROM farmmed.recepta_leki WHERE id = ?;"
+  db.query(q, [req.body.id], (err, data)=>{
+    if (err) {
+      console.error(err);
+      return res.status(500).send(err);
+    }
+    return res.status(200).send("Lek wydano");
+  })
+}
+
+export const view_drugs = () => {
+  const q = "SELECT r.id, d.Nazwa_Produktu_Leczniczego, d.moc, r.opakowanie, r.dawkowanie FROM farmmed.recepta_leki r RIGHT JOIN farmmed.drugs d ON r.id_leku = d.Identyfikator_Produktu_Leczniczego  WHERE id_recepty = ?";
+  db.query(q, [req.body.id_recepty], (err,data)=>{
+    if (err) {
+      console.error(err);
+      return res.status(500).send(err);
+    }
+    return res.status(200).send(data);
+  })
+}
