@@ -4,9 +4,8 @@ import { decrypt, encrypt } from "../middleware/hash.js";
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~ KARTOTEKA ~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 export const all_file = (req, res) => {
-
-    const user = decrypt(req.body.user);
-    const q =`SELECT 
+  const user = decrypt(req.body.user);
+  const q = `SELECT 
                 m.id, 
                 DATE_FORMAT(m.Date, "%Y-%m-%d") AS data_wizyty, 
                 m.cel_wizyty, 
