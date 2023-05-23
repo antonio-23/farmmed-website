@@ -452,3 +452,4 @@ export const AuthEditPassword = () => {
 
   return <EditPassword />;
 };
+
