@@ -29,6 +29,7 @@ import { OrderChemist } from './pages/dashboard/chemist/OrderChemist';
 import { DrugsChemist } from './pages/dashboard/chemist/DrugsChemist';
 import { PrescriptionChemist } from './pages/dashboard/chemist/PrescriptionChemist';
 import { Chemist } from './pages/dashboard/chemist/Chemist';
+import { EditDataChemist } from './pages/dashboard/chemist/EditDataChemist';
 // Components
 import Loader from './components/Loader';
 import { EditPassword } from './components/EditPassword';
@@ -63,7 +64,7 @@ function useAuth() {
   return [role, loaded];
 }
 
-const auth = (id) =>{
+const auth = (id) => {
   const [role, loaded] = useAuth();
 
   if (!loaded) {
@@ -74,7 +75,7 @@ const auth = (id) =>{
     window.location.href = '/login';
     return null;
   }
-}
+};
 
 export const AuthAdmin = () => {
   auth(1);
@@ -195,8 +196,21 @@ export const AuthPrescriptionChemist = () => {
   return <PrescriptionChemist />;
 };
 
-export const AuthEditPassword = () => {
+export const AuthEditDataChemist = () => {
   auth(4);
-  return <EditPassword />;
+  return <EditDataChemist />;
 };
 
+export const AuthEditPassword = () => {
+  const [role, loaded] = useAuth();
+
+  if (!loaded) {
+    return <Loader />;
+  }
+
+  if (role === null) {
+    window.location.href = '/login';
+    return null;
+  }
+  return <EditPassword />;
+};
