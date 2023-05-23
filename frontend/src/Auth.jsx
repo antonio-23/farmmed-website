@@ -44,7 +44,7 @@ function useAuth() {
       try {
         const user = localStorage.getItem('user');
         if (!user) {
-          navigate('/login');
+          setLoaded(true); // Ustawienie flagi loaded na true
           return;
         }
         const response = await axios.post('http://localhost:8800/api/auth/authorize', { user });
@@ -58,398 +58,145 @@ function useAuth() {
     };
 
     fetchData();
-  }, [navigate]);
+  }, []);
 
   return [role, loaded];
 }
 
-export const AuthAdmin = () => {
+const auth = (id) =>{
   const [role, loaded] = useAuth();
 
   if (!loaded) {
     return <Loader />;
   }
 
-  if (role !== 1) {
-    const navigate = useNavigate();
-    navigate('/login');
-    return;
+  if (role !== id) {
+    window.location.href = '/login';
+    return null;
   }
+}
 
+export const AuthAdmin = () => {
+  auth(1);
   return <Admin />;
 };
 
 export const AuthAddUser = () => {
-  const [role, loaded] = useAuth();
-
-  if (!loaded) {
-    return <Loader />;
-  }
-
-  if (role !== 1) {
-    const navigate = useNavigate();
-    navigate('/login');
-    return;
-  }
-
+  auth(1);
   return <AddUser />;
 };
 
 export const AuthAccounts = () => {
-  const [role, loaded] = useAuth();
-
-  if (!loaded) {
-    return <Loader />;
-  }
-
-  if (role !== 1) {
-    const navigate = useNavigate();
-    navigate('/login');
-    return;
-  }
-
+  auth(1);
   return <Accounts />;
 };
 
 export const AuthSchedule = () => {
-  const [role, loaded] = useAuth();
-
-  if (!loaded) {
-    return <Loader />;
-  }
-
-  if (role !== 1) {
-    const navigate = useNavigate();
-    navigate('/login');
-    return;
-  }
-
+  auth(1);
   return <Schedule />;
 };
 
 export const AuthDrugs = () => {
-  const [role, loaded] = useAuth();
-
-  if (!loaded) {
-    return <Loader />;
-  }
-
-  if (role !== 1) {
-    const navigate = useNavigate();
-    navigate('/login');
-    return;
-  }
-
+  auth(1);
   return <Drugs />;
 };
 
 export const AuthUser = () => {
-  const [role, loaded] = useAuth();
-
-  if (!loaded) {
-    return <Loader />;
-  }
-
-  if (role !== 2) {
-    const navigate = useNavigate();
-    navigate('/login');
-    return;
-  }
-
+  auth(2);
   return <User />;
 };
 
 export const AuthProfileUser = () => {
-  const [role, loaded] = useAuth();
-
-  if (!loaded) {
-    return <Loader />;
-  }
-
-  if (role !== 2) {
-    const navigate = useNavigate();
-    navigate('/login');
-    return;
-  }
-
+  auth(2);
   return <ProfileUser />;
 };
 
 export const AuthFiguresUser = () => {
-  const [role, loaded] = useAuth();
-
-  if (!loaded) {
-    return <Loader />;
-  }
-
-  if (role !== 2) {
-    const navigate = useNavigate();
-    navigate('/login');
-    return;
-  }
-
+  auth(2);
   return <FiguresUser />;
 };
 
 export const AuthPrescriptionUser = () => {
-  const [role, loaded] = useAuth();
-
-  if (!loaded) {
-    return <Loader />;
-  }
-
-  if (role !== 2) {
-    const navigate = useNavigate();
-    navigate('/login');
-    return;
-  }
-
+  auth(2);
   return <PrescriptionUser />;
 };
 
 export const AuthVisitUser = () => {
-  const [role, loaded] = useAuth();
-
-  if (!loaded) {
-    return <Loader />;
-  }
-
-  if (role !== 2) {
-    const navigate = useNavigate();
-    navigate('/login');
-    return;
-  }
-
+  auth(2);
   return <VisitUser />;
 };
 
 export const AuthEditDataUser = () => {
-  const [role, loaded] = useAuth();
-
-  if (!loaded) return <Loader />;
-
-  if (role !== 2) {
-    const navigate = useNavigate();
-    navigate('/login');
-    return;
-  }
-
+  auth(2);
   return <EditDataUser />;
 };
 
 export const AuthDoctor = () => {
-  const [role, loaded] = useAuth();
-
-  if (!loaded) {
-    return <Loader />;
-  }
-
-  if (role !== 3) {
-    const navigate = useNavigate();
-    navigate('/login');
-    return;
-  }
-
+  auth(3);
   return <Doctor />;
 };
 
 export const AuthProfileDoctor = () => {
-  const [role, loaded] = useAuth();
-
-  if (!loaded) {
-    return <Loader />;
-  }
-
-  if (role !== 3) {
-    const navigate = useNavigate();
-    navigate('/login');
-    return;
-  }
-
+  auth(3);
   return <ProfileDoctor />;
 };
 
 export const AuthFiguresDoctor = () => {
-  const [role, loaded] = useAuth();
-
-  if (!loaded) {
-    return <Loader />;
-  }
-  if (role !== 3) {
-    const navigate = useNavigate();
-    navigate('/login');
-    return;
-  }
-
+  auth(3);
   return <FiguresDoctor />;
 };
 
 export const AuthPrescriptionDoctor = () => {
-  const [role, loaded] = useAuth();
-
-  if (!loaded) {
-    return <Loader />;
-  }
-
-  if (role !== 3) {
-    const navigate = useNavigate();
-    navigate('/login');
-    return;
-  }
-
+  auth(3);
   return <PrescriptionDoctor />;
 };
 
 export const AuthScheduleDoctor = () => {
-  const [role, loaded] = useAuth();
-
-  if (!loaded) {
-    return <Loader />;
-  }
-
-  if (role !== 3) {
-    const navigate = useNavigate();
-    navigate('/login');
-    return;
-  }
-
+  auth(3);
   return <ScheduleDoctor />;
 };
 
 export const AuthEditDataDoctor = () => {
-  const [role, loaded] = useAuth();
-
-  if (!loaded) return <Loader />;
-
-  if (role !== 3) {
-    const navigate = useNavigate();
-    navigate('/login');
-    return;
-  }
-
+  auth(3);
   return <EditDataDoctor />;
 };
 export const AuthPrescriptionForm = () => {
-  const [role, loaded] = useAuth();
-
-  if (!loaded) return <Loader />;
-
-  if (role !== 3) {
-    const navigate = useNavigate();
-    navigate('/login');
-    return;
-  }
-
+  auth(3);
   return <PrescriptionForm />;
 };
 
 export const AuthFiguresForm = () => {
-  const [role, loaded] = useAuth();
-
-  if (!loaded) return <Loader />;
-
-  if (role !== 3) {
-    const navigate = useNavigate();
-    navigate('/login');
-    return;
-  }
-
+  auth(3);
   return <FiguresForm />;
 };
 
 export const AuthChemist = () => {
-  const [role, loaded] = useAuth();
-
-  if (!loaded) {
-    return <Loader />;
-  }
-
-  if (role !== 4) {
-    const navigate = useNavigate();
-    navigate('/login');
-    return;
-  }
-
+  auth(4);
   return <Chemist />;
 };
 
 export const AuthProfileChemist = () => {
-  const [role, loaded] = useAuth();
-
-  if (!loaded) {
-    return <Loader />;
-  }
-
-  if (role !== 4) {
-    const navigate = useNavigate();
-    navigate('/login');
-    return;
-  }
-
+  auth(4);
   return <ProfileChemist />;
 };
 
 export const AuthOrderChemist = () => {
-  const [role, loaded] = useAuth();
-
-  if (!loaded) {
-    return <Loader />;
-  }
-
-  if (role !== 4) {
-    const navigate = useNavigate();
-    navigate('/login');
-    return;
-  }
-
+  auth(4);
   return <OrderChemist />;
 };
 
 export const AuthDrugsChemist = () => {
-  const [role, loaded] = useAuth();
-
-  if (!loaded) {
-    return <Loader />;
-  }
-
-  if (role !== 4) {
-    const navigate = useNavigate();
-    navigate('/login');
-    return;
-  }
-
+  auth(4);
   return <DrugsChemist />;
 };
 
 export const AuthPrescriptionChemist = () => {
-  const [role, loaded] = useAuth();
-
-  if (!loaded) {
-    return <Loader />;
-  }
-
-  if (role !== 4) {
-    const navigate = useNavigate();
-    navigate('/login');
-    return;
-  }
-
+  auth(4);
   return <PrescriptionChemist />;
 };
 
 export const AuthEditPassword = () => {
-  const [role, loaded] = useAuth();
-
-  if (!loaded) {
-    return <Loader />;
-  }
-
-  if (role === null) {
-    const navigate = useNavigate();
-    navigate('/login');
-    return;
-  }
-
+  auth(4);
   return <EditPassword />;
 };
 
