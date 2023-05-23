@@ -36,5 +36,5 @@ app.use("/api/drug", drugRoutes)
 app.use("/api/auth", authRoutes)
 
 app.listen(8800, () => {
-    console.log("BACKEND working!\n                         >>>  ZAINSTALUJ  <<<\n                         npm install node-rsa");
+    console.log("BACKEND working!");
 }); 
