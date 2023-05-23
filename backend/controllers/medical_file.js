@@ -112,7 +112,7 @@ export const add_drug = (req, res) => {
 };
 
 export const show_prescription = (req, res) => {
-  const q = 'SELECT d.Nazwa_Produktu_Leczniczego, r.opakowanie, r.dawkowanie FROM farmmed.recepta_leki r INNER JOIN farmmed.drugs d ON d.Identyfikator_Produktu_Leczniczego = r.id_leku WHERE id_recepty = ?';
+  const q = 'SELECT r.id, d.Nazwa_Produktu_Leczniczego AS nazwa, r.opakowanie, r.dawkowanie FROM farmmed.recepta_leki r INNER JOIN farmmed.drugs d ON d.Identyfikator_Produktu_Leczniczego = r.id_leku WHERE id_recepty = ?';
   db.query(q, [req.body.id_recepty], (err, data) => {
     if (err) {
       console.error(err);

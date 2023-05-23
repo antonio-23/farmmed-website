@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SearchField } from '../../../components/SearchField';
@@ -9,9 +10,11 @@ const fixedInputClass = 'rounded-md appearance-none px-2 py-2 border border-gray
 export const PrescriptionForm = () => {
   const [info, setInfo] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [search, setSearch] = useState('');
   const [drugsList, setDrugList] = useState([]);
   const navigate = useNavigate();
   const [editState, setEditState] = useState([]);
+  const [prescritionList, setPrescritionList] = useState([]);
 
   useEffect(() => {
     console.log(localStorage.getItem('prescription'));
@@ -40,13 +43,41 @@ export const PrescriptionForm = () => {
     }
   }
 
+  async function selection_of_drugs() {
+    try {
+      const response = await axios.post('http://localhost:8800/api/drug/selection', { search }, { withCredentials: true });
+      const data = response.data;
+      setDrugList(data);
+      console.log(drugsList);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   useEffect(() => {
     fetchData();
   }, [searchQuery]);
 
+  useEffect(() => {
+    if(search.length){
+    selection_of_drugs();
+    }
+  }, [search]);
+
   const handleSearchInputChange = (e) => {
     setSearchQuery(e.target.value);
   };
+
+  async function display_drugs() {
+    try {
+      const response = await axios.post('http://localhost:8800/api/medical_file/show', { id_recepty: localStorage.getItem('prescription') }, { withCredentials: true });
+      const data = response.data;
+      setPrescritionList(data);
+      console.log(drugsList);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   const handleSubmitAdd = async () => {
     const updatedState = { ...editState, id_recepty: localStorage.getItem('prescription') };
@@ -55,13 +86,15 @@ export const PrescriptionForm = () => {
       setInfo(res.data);
       console.log(info);
       fetchData();
+      display_drugs(); 
     } catch (error) {
       console.error(error);
     }
   };
 
   const handleChange = (e) => {
-    setEditState({ ...editState, [e.target.name]: e.target.value });
+    setSearch(e.target.value)
+    setEditState({ ...editState, [e.target.id]: e.target.value });
     console.log(editState);
   };
 
@@ -85,18 +118,25 @@ export const PrescriptionForm = () => {
         </div>
       )}
 
-      <div className='grid grid-cols-3 grid-flow-cols gap-x-4 py-4 items-center border rounded-xl border-gray-300 shadow-md shadow-gray-200 bg-white hover:bg-violet-100'>
+        <div className='grid grid-cols-3 grid-flow-cols gap-x-4 py-4 items-center border rounded-xl border-gray-300 shadow-md shadow-gray-200 bg-white hover:bg-violet-100'>
         <span>Nazwa leku</span>
         <span>Dawkowanie</span>
         <span>Opakowanie</span>
-      </div>
+          {prescritionList.map((drug) => (
+            <React.Fragment key={drug.id}>
+              <span>{drug.nazwa}</span>
+              <span>{drug.dawkowanie}</span>
+              <span>{drug.opakowanie}</span>
+            </React.Fragment>
+          ))}
+        </div>
 
       <div className='rounded-lg p-6 border-gray-300 shadow-md shadow-gray-200 bg-white'>
         <SearchField value={searchQuery} onChange={handleSearchInputChange} />
         <div className='flex flex-col p-4 gap-y-2 mx-24 border rounded-xl my-4'>
           {drugsList.map((drug) => (
-            <button value={drug.id} name='id_leku' onClick={handleChange} className='hover:bg-violet-100 hover:rounded-xl active:bg-violet-100' key={drug.id}>
-              {drug.name ? drug.name : ''}
+            <button value={drug.id} id='id_leku' name={drug.name} onClick={handleChange} className='hover:bg-violet-100 hover:rounded-xl active:bg-violet-100' key={drug.id}>
+              {drug.name ? `${drug.name}, ${drug.moc}` : ''}
             </button>
           ))}
         </div>
