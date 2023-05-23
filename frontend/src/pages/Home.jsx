@@ -30,7 +30,7 @@ export const Home = () => {
             </button>
           </div>
           <div className='flex justify-center w-full'>
-            <img src={heroPicture} alt='hero picture' />
+            <img className='lg:w-[75%] 2xl:w-[90%]' src={heroPicture} alt='hero picture' />
           </div>
           <div className='md:col-start-1 col-end-3 flex justify-evenly h-auto py-8 md:min-w-[760px] bg-white rounded-3xl items-center flex-col md:flex-row shadow-xl'>
             {properties.map((value, index) => (

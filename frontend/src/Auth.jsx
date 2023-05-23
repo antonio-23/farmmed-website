@@ -32,6 +32,7 @@ import { Chemist } from './pages/dashboard/chemist/Chemist';
 // Components
 import Loader from './components/Loader';
 import { EditPassword } from './components/EditPassword';
+import { FiguresForm } from './pages/dashboard/doctor/FiguresForm';
 
 function useAuth() {
   const [role, setRole] = useState(null);
@@ -340,6 +341,20 @@ export const AuthPrescriptionForm = () => {
   }
 
   return <PrescriptionForm />;
+};
+
+export const AuthFiguresForm = () => {
+  const [role, loaded] = useAuth();
+
+  if (!loaded) return <Loader />;
+
+  if (role !== 3) {
+    const navigate = useNavigate();
+    navigate('/login');
+    return;
+  }
+
+  return <FiguresForm />;
 };
 
 export const AuthChemist = () => {
