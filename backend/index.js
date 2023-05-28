@@ -2,7 +2,6 @@ import express from 'express';
 const app = express()
 import userRoutes from './routes/user.js'
 import orderRoutes from './routes/order.js'
-import order_drugRoutes from './routes/order_drug.js'
 import medical_fileRoutes from './routes/medical_file.js'
 import drugRoutes from './routes/drug.js'
 import authRoutes from './routes/auth.js'
@@ -30,7 +29,6 @@ app.use((req, res, next) => {
 app.use("/api/users", usersRoutes)
 app.use("/api/user", userRoutes)
 app.use("/api/order", orderRoutes)
-app.use("/api/order_drug", order_drugRoutes)
 app.use("/api/medical_file", medical_fileRoutes)
 app.use("/api/drug", drugRoutes)
 app.use("/api/auth", authRoutes)
