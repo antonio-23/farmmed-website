@@ -159,9 +159,9 @@ export const check_prescription = (req, res) => {
   });
 };
 
-export const implementation_of_the_prescription = (req, res) => {
-  const q = 'DELETE FROM farmmed.recepta_leki WHERE id = ?;';
-  db.query(q, [req.body.id], (err, data) => {
+export const implementation_of_the_prescription = (req,res)=>{
+  const q = "UPDATE farmmed.recepta_leki SET status = 1 WHERE (id = ?)"
+  db.query(q, [req.body.id], (err, data)=>{
     if (err) {
       console.error(err);
       return res.status(500).send(err);
@@ -174,7 +174,7 @@ export const view_drugs = (req, res) => {
   const q = `SELECT r.id, d.Nazwa_Produktu_Leczniczego AS nazwa, d.moc, r.opakowanie, r.dawkowanie, (SELECT di.Ilosc FROM farmmed.drugs_ilosc di WHERE di.Identyfikator_Produktu_Leczniczego = d.Identyfikator_Produktu_Leczniczego) AS ilosc
   FROM farmmed.recepta_leki r 
   RIGHT JOIN farmmed.drugs d ON r.id_leku = d.Identyfikator_Produktu_Leczniczego 
-  WHERE id_recepty = ?`;
+  WHERE id_recepty = ? AND r.status = 0`;
   db.query(q, [req.body.id_recepty], (err, data) => {
     if (err) {
       console.error(err);
