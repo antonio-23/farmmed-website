@@ -37,7 +37,7 @@ export const ProfileDoctor = () => {
   }, []);
 
   return (
-    <main>
+    <main className='h-screen'>
       <span className='flex justify-center pt-8 pb-4 text-2xl font-semibold'>Twoje dane</span>
       <ProfileData first_name={userData[0].first_name} last_name={userData[0].last_name} email={userData[0].email} date={date} pesel={userData[0].PESEL} password={userData[0].password} />
       <Link className='grid col-span-2 justify-center mx-36' to='/doctor/editDataDoctor'>

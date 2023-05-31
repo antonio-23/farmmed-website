@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const SearchField = ({ value, onChange }) => {
+export const SearchField = ({ value, onChange, max }) => {
   return (
     <div className='flex flex-col items-center justify-center'>
       <input
@@ -11,6 +11,7 @@ export const SearchField = ({ value, onChange }) => {
         placeholder='Wyszukaj'
         value={value}
         onChange={onChange}
+        maxLength={max}
       />
     </div>
   );

@@ -98,17 +98,6 @@ export const Accounts = () => {
 
   return (
     <div className='font-Montserrat'>
-      {/* <div className='p-10 flex flex-col items-center justify-center'>
-        <input
-          type='search'
-          name='searchField'
-          id='searchField'
-          className='border rounded-lg border-gray-300 w-[50%] focus:outline-0 p-4 shadow-inner shadow-gray-200'
-          placeholder='Wyszukaj'
-          value={searchQuery}
-          onChange={handleSearchInputChange}
-        />
-      </div> */}
       <div className='p-8'>
         <SearchField value={searchQuery} onChange={handleSearchInputChange} />
       </div>

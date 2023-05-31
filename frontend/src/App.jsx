@@ -39,6 +39,9 @@ import {
   AuthPrescriptionForm,
   AuthFiguresForm,
   AuthEditDataChemist,
+  AuthPrescriptionChemistForm,
+  AuthOrderRealization,
+  AuthOrderPickUp,
 } from './Auth';
 
 const router = createBrowserRouter(
@@ -88,6 +91,9 @@ const router = createBrowserRouter(
         <Route path='editPassword' element={<AuthEditPassword />} />
         <Route path='editDataChemist' element={<AuthEditDataChemist />} />
         <Route path='editDataChemist/editPassword' element={<AuthEditPassword />} />
+        <Route path='prescriptionChemist/prescriptionChemistForm' element={<AuthPrescriptionChemistForm />} />
+        <Route path='orderChemist/orderRealization' element={<AuthOrderRealization />} />
+        <Route path='orderChemist/orderPickUp' element={<AuthOrderPickUp />} />
       </Route>
 
       <Route path='*' element={<NotFound />} />

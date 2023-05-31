@@ -29,13 +29,15 @@ export const EditPassword = () => {
   };
 
   return (
-    <div className='flex justify-center items-center px-4 pt-24 sm:px-6 lg:px-8'>
-      <form action='#' method='post' className='flex flex-col bg-ghostwithe bg-opacity-90 w-full max-w-md space-y-8 rounded-2xl'>
-        <input onChange={handleChange} id='password' type='password' placeholder='Aktualne hasło' className={fixedInputClass} />
-        <input onChange={handleChange} id='new_password' type='password' placeholder='Nowe hasło' className={fixedInputClass} />
-        {err && <p className='text-red-500'>{err}</p>}
-        <Button onClick={handleSubmit}>Zapisz</Button>
-      </form>
-    </div>
+    <main className='h-screen'>
+      <div className='flex justify-center items-center px-4 pt-24 sm:px-6 lg:px-8'>
+        <form action='#' method='post' className='flex flex-col bg-ghostwithe bg-opacity-90 w-full max-w-md space-y-8 rounded-2xl'>
+          <input onChange={handleChange} id='password' type='password' placeholder='Aktualne hasło' className={fixedInputClass} />
+          <input onChange={handleChange} id='new_password' type='password' placeholder='Nowe hasło' className={fixedInputClass} />
+          {err && <p className='text-red-500'>{err}</p>}
+          <Button onClick={handleSubmit}>Zapisz</Button>
+        </form>
+      </div>
+    </main>
   );
 };

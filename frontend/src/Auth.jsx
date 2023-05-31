@@ -30,6 +30,9 @@ import { DrugsChemist } from './pages/dashboard/chemist/DrugsChemist';
 import { PrescriptionChemist } from './pages/dashboard/chemist/PrescriptionChemist';
 import { Chemist } from './pages/dashboard/chemist/Chemist';
 import { EditDataChemist } from './pages/dashboard/chemist/EditDataChemist';
+import { PrescriptionChemistForm } from './pages/dashboard/chemist/PrescriptionChemistForm';
+import { OrderRealization } from './pages/dashboard/chemist/OrderRealization';
+import { OrderPickUp } from './pages/dashboard/chemist/OrderPickUp';
 // Components
 import Loader from './components/Loader';
 import { EditPassword } from './components/EditPassword';
@@ -199,6 +202,21 @@ export const AuthPrescriptionChemist = () => {
 export const AuthEditDataChemist = () => {
   auth(4);
   return <EditDataChemist />;
+};
+
+export const AuthPrescriptionChemistForm = () => {
+  auth(4);
+  return <PrescriptionChemistForm />;
+};
+
+export const AuthOrderRealization = () => {
+  auth(4);
+  return <OrderRealization />;
+};
+
+export const AuthOrderPickUp = () => {
+  auth(4);
+  return <OrderPickUp />;
 };
 
 export const AuthEditPassword = () => {
