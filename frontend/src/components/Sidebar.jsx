@@ -52,7 +52,7 @@ export const Sidebar = () => {
   };
 
   return (
-    <div className='font-Montserrat w-[300px] bg-gradient-to-b from-indigo-500  to-violet-500 h-screen '>
+    <div className='font-Montserrat w-[300px] bg-gradient-to-b from-indigo-500 to-violet-500 h-auto'>
       <div className='pt-10'>
         <h1 className='w-md text-2xl text-white pl-24'>
           <Link to='/'>FarMMed</Link>
@@ -68,7 +68,7 @@ export const Sidebar = () => {
           </button>
         ))}
       </div>
-      <div className='absolute bottom-14 left-0 pl-20'>
+      <div className='flex items-end justify-center pt-20'>
         <button className='border rounded-xl border-white hover:shadow-xl p-4 text-white font-bold' onClick={handleSubmit}>
           Wyloguj się
         </button>

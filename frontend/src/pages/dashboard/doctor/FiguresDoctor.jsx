@@ -12,7 +12,7 @@ export const FiguresDoctor = () => {
     localStorage.setItem('figures', id);
   };
 
-  async function fetchData() {
+  const fetchData = async () => {
     try {
       const response = await axios.post('http://localhost:8800/api/users/search', { searchQuery }, { withCredentials: true });
       const data = response.data;
@@ -21,7 +21,7 @@ export const FiguresDoctor = () => {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   useEffect(() => {
     fetchData();

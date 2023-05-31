@@ -91,15 +91,6 @@ export const Drugs = () => {
 
   return (
     <div className='font-Montserrat'>
-      {/* <input
-          type='search'
-          name='searchField'
-          id='searchField'
-          className='border rounded-lg w-[50%] focus:outline-0 p-4 border-gray-300 shadow-inner shadow-gray-200'
-          placeholder='Wyszukaj'
-          value={searchQuery}
-          onChange={handleSearchInputChange}
-        /> */}
       <div className='p-8'>
         <SearchField value={searchQuery} onChange={handleSearchInputChange} />
       </div>
@@ -142,7 +133,7 @@ export const Drugs = () => {
                 <p>{value.Opakowanie}</p>
 
                 {editRow[value.Identyfikator_Produktu_Leczniczego] ? (
-                  <input className='p-2 text-center w-16 rounded-lg' type='number' min={0} value={editDrug} onChange={handleEditInputChange} />
+                  <input className='mx-auto p-2 text-center w-16 rounded-lg' type='number' min={0} value={editDrug} onChange={handleEditInputChange} />
                 ) : (
                   <p>{value.Ilosc}</p>
                 )}

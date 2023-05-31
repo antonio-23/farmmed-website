@@ -43,7 +43,7 @@ export const EditData = ({ link }) => {
   };
 
   return (
-    <>
+    <main className='h-screen'>
       <div className='flex justify-center items-center px-4 pt-24 sm:px-6 lg:px-8'>
         <form action='' method='post' className='flex flex-col bg-ghostwithe bg-opacity-90 w-full max-w-md space-y-8 rounded-2xl'>
           <input id='first_name' name='first_name' autoComplete='name' type='name' placeholder={editState.first_name} onChange={handleChange} className={fixedInputClass} />
@@ -56,6 +56,6 @@ export const EditData = ({ link }) => {
       <Link to={link} className='flex justify-center py-8 text-violet-700'>
         Zmiana hasła
       </Link>
-    </>
+    </main>
   );
 };
