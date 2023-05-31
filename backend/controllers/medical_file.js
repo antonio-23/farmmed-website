@@ -134,7 +134,7 @@ export const view_information = (req, res) => {
 }
 
 export const find_users_prescription = (req,res)=>{
-  const q = 'SELECT r.id, r.key, CONCAT(u.first_name, " ", u.last_name) AS name, u.PESEL, r.Date FROM recepty r INNER JOIN user u ON u.id = r.id_user WHERE u.PESEL = ? AND (r.validity_date > (SELECT CURDATE())) AND ((SELECT count(*) FROM farmmed.recepta_leki l WHERE l.id_recepty = r.id) != 0) ORDER BY r.id DESC';
+  const q = 'SELECT r.id, r.key, CONCAT(u.first_name, " ", u.last_name) AS name, u.PESEL, r.Date FROM recepty r INNER JOIN user u ON u.id = r.id_user WHERE u.PESEL = ? AND (r.validity_date > (SELECT CURDATE())) AND ((SELECT count(*) FROM farmmed.recepta_leki l WHERE l.id_recepty = r.id and l.status=0) != 0) ORDER BY r.id DESC';
   db.query(q, [req.body.searchQuery], (err,data)=>{
     if (err) {
       console.error(err);
@@ -145,7 +145,7 @@ export const find_users_prescription = (req,res)=>{
 }
 
 export const implementation_of_the_prescription = (req,res)=>{
-  const q = "DELETE FROM farmmed.recepta_leki WHERE id = ?;"
+  const q = "UPDATE farmmed.recepta_leki SET status = 1 WHERE (id = ?)"
   db.query(q, [req.body.id], (err, data)=>{
     if (err) {
       console.error(err);
@@ -156,7 +156,7 @@ export const implementation_of_the_prescription = (req,res)=>{
 }
 
 export const view_drugs = () => {
-  const q = "SELECT r.id, d.Nazwa_Produktu_Leczniczego, d.moc, r.opakowanie, r.dawkowanie FROM farmmed.recepta_leki r RIGHT JOIN farmmed.drugs d ON r.id_leku = d.Identyfikator_Produktu_Leczniczego  WHERE id_recepty = ?";
+  const q = "SELECT r.id, d.Nazwa_Produktu_Leczniczego, d.moc, r.opakowanie, r.dawkowanie FROM farmmed.recepta_leki r RIGHT JOIN farmmed.drugs d ON r.id_leku = d.Identyfikator_Produktu_Leczniczego  WHERE id_recepty = ? AND r.status = 0";
   db.query(q, [req.body.id_recepty], (err,data)=>{
     if (err) {
       console.error(err);
