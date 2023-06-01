@@ -95,3 +95,12 @@ export const edit_user = (req, res) => {
     }
   });
 };
+
+export const view_doctor = (req, res) => {
+  const q =
+    "SELECT u.id, CONCAT(u.first_name, ' ', u.last_name) name, s.name AS spec FROM farmmed.user u INNER JOIN farmmed.specjalizacja s USING (id_spec) WHERE id_role = 3 ORDER BY u.id ASC";
+  db.query(q, [], (err, data) => {
+    if (err) return res.status(500).send(err);
+    else return res.status(200).send(data);
+  });
+};

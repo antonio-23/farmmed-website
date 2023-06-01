@@ -6,61 +6,61 @@ import { decrypt, encrypt } from '../middleware/hash.js';
 export const create_schudle = (req, res) => {
   const { startDate, endDate, startTime, endTime, doctorId, daysOfWeek } = req.body;
 
-  const [odRoku, odMiesiaca, odDnia] = startDate.split('-').map(Number);
-  const [doRoku, doMiesiaca, doDnia] = endDate.split('-').map(Number);
+  const [forYear, forMonth, forDay] = startDate.split('-').map(Number);
+  const [toYear, toMonth, toDay] = endDate.split('-').map(Number);
 
-  let aktualnaData = new Date(odRoku, odMiesiaca - 1, odDnia);
-  const koncowaData = new Date(doRoku, doMiesiaca - 1, doDnia);
+  let currentDate = new Date(forYear, forMonth - 1, forDay);
+  const end = new Date(toYear, toMonth - 1, toDay);
 
-  const Daty = [];
+  const Dates = [];
 
-  while (aktualnaData <= koncowaData) {
-    if (aktualnaData.getDay() === daysOfWeek) {
-      const rok = aktualnaData.getFullYear();
-      const miesiac = (aktualnaData.getMonth() + 1).toString().padStart(2, '0');
-      const dzien = aktualnaData.getDate().toString().padStart(2, '0');
-      Daty.push(`${rok}${miesiac}${dzien}`);
+  while (currentDate <= end) {
+    if (currentDate.getDay() === daysOfWeek) {
+      const year = currentDate.getFullYear();
+      const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+      const day = currentDate.getDate().toString().padStart(2, '0');
+      Dates.push(`${year}${month}${day}`);
     }
-    aktualnaData.setDate(aktualnaData.getDate() + 1);
+    currentDate.setDate(currentDate.getDate() + 1);
   }
 
-  const [poczatkowaGodzina, poczatkoweMinuty] = startTime.split(':').map(Number);
-  const [koncowaGodzina, koncoweMinuty] = endTime.split(':').map(Number);
+  const [initialHour, initialMinutes] = startTime.split(':').map(Number);
+  const [finalHour, finalMinutes] = endTime.split(':').map(Number);
 
-  const godziny = [];
+  const hours = [];
 
-  let aktualnaGodzina = poczatkowaGodzina;
-  let aktualneMinuty = poczatkoweMinuty;
+  let currentHours = initialHour;
+  let currentMinutes = initialMinutes;
 
-  while (aktualnaGodzina < koncowaGodzina || (aktualnaGodzina === koncowaGodzina && aktualneMinuty < koncoweMinuty)) {
-    const godzina = aktualnaGodzina.toString().padStart(2, '0');
-    const minuty = aktualneMinuty.toString().padStart(2, '0');
-    godziny.push(`${godzina}:${minuty}`);
+  while (currentHours < finalHour || (currentHours === finalHour && currentMinutes < finalMinutes)) {
+    const hour = currentHours.toString().padStart(2, '0');
+    const minutes = currentMinutes.toString().padStart(2, '0');
+    hours.push(`${hour}:${minutes}`);
 
-    aktualneMinuty += 20;
-    if (aktualneMinuty >= 60) {
-      aktualneMinuty -= 60;
-      aktualnaGodzina++;
+    currentMinutes += 20;
+    if (currentMinutes >= 60) {
+      currentMinutes -= 60;
+      currentHours++;
     }
   }
 
-  const wyniki = [];
+  const result = [];
 
   // Pobieranie danych asynchronicznie dla każdej daty
   const fetchData = async () => {
     try {
-      for (let d = 0; d < Daty.length; d++) {
+      for (let d = 0; d < Dates.length; d++) {
         const q = "SELECT * FROM farmmed.schudle WHERE date = ?";
         await new Promise((resolve, reject) => {
-          db.query(q, Daty[d], (err, data) => {
+          db.query(q, Dates[d], (err, data) => {
             if (err) {
               console.error(err);
               reject(err);
             } else {
               if (data.length === 0) {
-                for (let t = 0; t < godziny.length; t++) {
-                  const value = [doctorId, Daty[d], godziny[t]];
-                  wyniki.push(value);
+                for (let t = 0; t < hours.length; t++) {
+                  const value = [doctorId, Dates[d], hours[t]];
+                  result.push(value);
                 }
               }
               resolve();
@@ -75,11 +75,11 @@ export const create_schudle = (req, res) => {
   };
 
   const fetchData2 = async () => {
-    if (wyniki.length === 0) {
+    if (result.length === 0) {
       return res.status(200).send("Brak harmonogramu do dodania.");
     } else {
       const q = "INSERT INTO `farmmed`.`schudle` (`doctor_id`, `date`, `time`) VALUES ?";
-      db.query(q, [wyniki], (err, data) => {
+      db.query(q, [result], (err, data) => {
         if (err) {
           console.error(err);
           return res.status(500).send(err);
