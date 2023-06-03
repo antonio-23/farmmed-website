@@ -39,7 +39,7 @@ export const PrescriptionChemist = () => {
       console.error(error);
     }
   };
- 
+
   useEffect(() => {
     fetchData();
   }, [searchQuery]);
@@ -70,7 +70,7 @@ export const PrescriptionChemist = () => {
       <div className='p-8'>
         <SearchField max={'11'} value={searchQuery} onChange={handleSearchInputChange} />
       </div>
-      <div className='text-center space-y-4 mx-20 py-2 h-screen'>
+      <div className='text-center space-y-4 mx-20 py-2'>
         <div className='grid grid-cols-6 grid-flow-cols gap-x-4 py-2 items-center text-lg font-bold'>
           <span>Id</span>
           <span>Imię i nazwisko</span>

@@ -52,14 +52,15 @@ export const Sidebar = () => {
   };
 
   return (
-    <div className='font-Montserrat w-[300px] bg-gradient-to-b from-indigo-500 to-violet-500 h-auto'>
-      <div className='pt-10'>
-        <h1 className='w-md text-2xl text-white pl-24'>
+    <div className='grid grid-rows-3 2xl:grid-rows-5 grid-flow-row items-start bg-gradient-to-b from-indigo-500 to-violet-500 font-Montserrat h-auto'>
+      <header className='py-10 flex flex-col justify-center items-center'>
+        <h1 className='text-2xl text-white '>
           <Link to='/'>FarMMed</Link>
         </h1>
-        <hr className='w-48 h-1 mx-14 my-5 bg-gray-100 rounded md:my-10' />
-      </div>
-      <div className='flex flex-col gap-y-2'>
+        <hr className='w-48 h-1 mx-14 mt-8 bg-gray-100 rounded' />
+      </header>
+
+      <main className='flex flex-col gap-y-2'>
         {links.map((item, index) => (
           <button className='text-center p-4 rounded-xl text-white font-bold' key={index}>
             <NavLink to={item.path} className={({ isActive }) => (isActive ? 'bg-white rounded-xl p-4 text-violet-900 font-bold' : undefined)}>
@@ -67,12 +68,13 @@ export const Sidebar = () => {
             </NavLink>
           </button>
         ))}
-      </div>
-      <div className='flex items-end justify-center pt-20'>
+      </main>
+
+      <aside className='flex items-end justify-center pt-40'>
         <button className='border rounded-xl border-white hover:shadow-xl p-4 text-white font-bold' onClick={handleSubmit}>
           Wyloguj się
         </button>
-      </div>
+      </aside>
     </div>
   );
 };

@@ -22,7 +22,7 @@ export const Admin = () => {
     checkAuth();
   }); 
   return (
-    <div className='flex'>
+    <div className='flex h-screen bg-ghostwithe font-Montserrat'>
       <Sidebar />
       <MainPage />
     </div>

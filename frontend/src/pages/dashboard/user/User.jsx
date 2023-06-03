@@ -31,7 +31,7 @@ export const User = () => {
   }, []);
 
   return (
-    <div className='flex w-full bg-ghostwithe font-Montserrat'>
+    <div className='flex h-screen bg-ghostwithe font-Montserrat'>
       <Sidebar />
       <div className='w-full'>
         <HelloName name={name} />

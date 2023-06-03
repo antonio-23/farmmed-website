@@ -59,8 +59,8 @@ export const PrescriptionForm = () => {
   }, [searchQuery]);
 
   useEffect(() => {
-    if(search.length){
-    selection_of_drugs();
+    if (search.length) {
+      selection_of_drugs();
     }
   }, [search]);
 
@@ -86,14 +86,14 @@ export const PrescriptionForm = () => {
       setInfo(res.data);
       console.log(info);
       fetchData();
-      display_drugs(); 
+      display_drugs();
     } catch (error) {
       console.error(error);
     }
   };
 
   const handleChange = (e) => {
-    setSearch(e.target.value)
+    setSearch(e.target.value);
     setEditState({ ...editState, [e.target.id]: e.target.value });
     console.log(editState);
   };
@@ -118,18 +118,18 @@ export const PrescriptionForm = () => {
         </div>
       )}
 
-        <div className='grid grid-cols-3 grid-flow-cols gap-x-4 py-4 items-center border rounded-xl border-gray-300 shadow-md shadow-gray-200 bg-white hover:bg-violet-100'>
+      <div className='grid grid-cols-3 grid-flow-cols gap-x-4 py-4 items-center border rounded-xl border-gray-300 shadow-md shadow-gray-200 bg-white hover:bg-violet-100'>
         <span>Nazwa leku</span>
         <span>Dawkowanie</span>
         <span>Opakowanie</span>
-          {prescritionList.map((drug) => (
-            <React.Fragment key={drug.id}>
-              <span>{drug.nazwa}</span>
-              <span>{drug.dawkowanie}</span>
-              <span>{drug.opakowanie}</span>
-            </React.Fragment>
-          ))}
-        </div>
+        {prescritionList.map((drug) => (
+          <React.Fragment key={drug.id}>
+            <span>{drug.nazwa}</span>
+            <span>{drug.dawkowanie}</span>
+            <span>{drug.opakowanie}</span>
+          </React.Fragment>
+        ))}
+      </div>
 
       <div className='rounded-lg p-6 border-gray-300 shadow-md shadow-gray-200 bg-white'>
         <SearchField value={searchQuery} onChange={handleSearchInputChange} />

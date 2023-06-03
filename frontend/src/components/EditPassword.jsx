@@ -29,7 +29,7 @@ export const EditPassword = () => {
   };
 
   return (
-    <main className='h-screen'>
+    <main>
       <div className='flex justify-center items-center px-4 pt-24 sm:px-6 lg:px-8'>
         <form action='#' method='post' className='flex flex-col bg-ghostwithe bg-opacity-90 w-full max-w-md space-y-8 rounded-2xl'>
           <input onChange={handleChange} id='password' type='password' placeholder='Aktualne hasło' className={fixedInputClass} />
