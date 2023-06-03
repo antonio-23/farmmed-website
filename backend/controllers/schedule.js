@@ -3,7 +3,7 @@ import { decrypt, encrypt } from '../middleware/hash.js';
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~ Tworzenie harmonogramu przez admina ~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-export const create_schudle = (req, res) => {
+export const create_schedule = (req, res) => {
   const { startDate, endDate, startTime, endTime, doctorId, daysOfWeek } = req.body;
 
   const [forYear, forMonth, forDay] = startDate.split('-').map(Number);
@@ -50,7 +50,7 @@ export const create_schudle = (req, res) => {
   const fetchData = async () => {
     try {
       for (let d = 0; d < Dates.length; d++) {
-        const q = "SELECT * FROM farmmed.schudle WHERE date = ?";
+        const q = 'SELECT * FROM farmmed.schudle WHERE date = ?';
         await new Promise((resolve, reject) => {
           db.query(q, Dates[d], (err, data) => {
             if (err) {
@@ -76,15 +76,15 @@ export const create_schudle = (req, res) => {
 
   const fetchData2 = async () => {
     if (result.length === 0) {
-      return res.status(200).send("Brak harmonogramu do dodania.");
+      return res.status(200).send('Brak harmonogramu do dodania.');
     } else {
-      const q = "INSERT INTO `farmmed`.`schudle` (`doctor_id`, `date`, `time`) VALUES ?";
+      const q = 'INSERT INTO `farmmed`.`schudle` (`doctor_id`, `date`, `time`) VALUES ?';
       db.query(q, [result], (err, data) => {
         if (err) {
           console.error(err);
           return res.status(500).send(err);
         }
-        return res.status(200).send("Dodano harmonogram.");
+        return res.status(200).send('Dodano harmonogram.');
       });
     }
   };
@@ -94,25 +94,36 @@ export const create_schudle = (req, res) => {
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~ wyświetlanie wolnych terminów ~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-export const view_these_dates = (req, res) =>{
-  const q = "SELECT id, date, time FROM farmmed.schudle WHERE doctor_id = ? AND user_id IS NULL;"
+export const view_date_these_dates = (req, res) => {
+  const q = 'SELECT id, date, FROM farmmed.schudle WHERE doctor_id = ? AND user_id IS NULL;';
   db.query(q, [req.body.id], (err, data) => {
     if (err) {
       console.error(err);
       return res.status(500).send(err);
     }
-    return res.status(200).send(res.data);
+    return res.status(200).send(data);
   });
-}
+};
+
+export const view_time_these_dates = (req, res) => {
+  const q = 'SELECT id, time FROM farmmed.schudle WHERE doctor_id = ? AND date = ? AND user_id IS NULL;';
+  db.query(q, [req.body.id, req.body.date], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send(err);
+    }
+    return res.status(200).send(data);
+  });
+};
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~ wyświetlanie pacjentów do przyjęcia ~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-export const displaying_patients_for_admission = (req, res) =>{
+export const displaying_patients_for_admission = (req, res) => {
   const id = decrypt(req.body.user);
   const q = `SELECT CONCAT(u.first_name, ' ', u.last_name) AS name, s.time
   FROM farmmed.schudle s
   INNER JOIN farmmed.user u ON s.user_id = u.id
-  WHERE doctor_id = ? AND user_id IS NOT NULL AND s.date = CURDATE();`
+  WHERE doctor_id = ? AND user_id IS NOT NULL AND s.date = CURDATE();`;
   db.query(q, [user], (err, data) => {
     if (err) {
       console.error(err);
@@ -120,18 +131,18 @@ export const displaying_patients_for_admission = (req, res) =>{
     }
     return res.status(200).send(res.data);
   });
-}
+};
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~ rejestracja na wizytę ~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-export const registration_for_a_medical_visit = (req,res) =>{
+export const registration_for_a_medical_visit = (req, res) => {
   const id = decrypt(req.body.user);
-  const q = `UPDATE farmmed.schudle SET user_id = ? WHERE (id = ?);`
-  db.query(q, [id, req.body.id], (err,data) =>{
+  const q = `UPDATE farmmed.schudle SET user_id = ? WHERE (id = ?);`;
+  db.query(q, [id, req.body.id], (err, data) => {
     if (err) {
       console.error(err);
       return res.status(500).send(err);
     }
-    return res.status(200).send("Zarezerwowano wizytę");
+    return res.status(200).send('Zarezerwowano wizytę');
   });
-}
+};

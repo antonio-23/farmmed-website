@@ -129,54 +129,17 @@ export const Accounts = () => {
                       <input
                         value={editProfileData.first_name}
                         onChange={handleChange}
-                        labelText='Name'
-                        labelFor='name'
                         id='first_name'
                         name='first_name'
                         autoComplete='name'
-                        isRequired={true}
                         type='name'
                         className={fixedInputClass}
                         placeholder={editProfileData.first_name}
                       />
-                      <input
-                        value={editProfileData.last_name}
-                        onChange={handleChange}
-                        labelText='Last_name'
-                        labelFor='last_name'
-                        name='last_name'
-                        id='last_name'
-                        isRequired={true}
-                        type='name'
-                        className={fixedInputClass}
-                        placeholder={editProfileData.last_name}
-                      />
-                      <input
-                        value={editProfileData.email}
-                        onChange={handleChange}
-                        labelText='Email address'
-                        labelFor='email-addres'
-                        id='email'
-                        autoComplete='email'
-                        isRequired={true}
-                        type='email'
-                        className={fixedInputClass}
-                        placeholder={editProfileData.email}
-                      />
-                      <input
-                        value={editProfileData.spec}
-                        onChange={handleChange}
-                        labelText='Spec'
-                        labelFor='spec'
-                        autoComplete='spec'
-                        id='spec'
-                        isRequired={true}
-                        name='spec'
-                        type='name'
-                        className={fixedInputClass}
-                        placeholder={editProfileData.spec}
-                      />
-                      <select value={editProfileData.role} onChange={handleChange} name='rola' id='role' isRequired={true} className={fixedInputClass}>
+                      <input value={editProfileData.last_name} onChange={handleChange} name='last_name' id='last_name' type='name' className={fixedInputClass} placeholder={editProfileData.last_name} />
+                      <input value={editProfileData.email} onChange={handleChange} id='email' autoComplete='email' type='email' className={fixedInputClass} placeholder={editProfileData.email} />
+                      <input value={editProfileData.spec} onChange={handleChange} autoComplete='spec' id='spec' name='spec' type='name' className={fixedInputClass} placeholder={editProfileData.spec} />
+                      <select value={editProfileData.role} onChange={handleChange} name='rola' id='role' className={fixedInputClass}>
                         <option value='Admin'>Admin</option>
                         <option value='Doktor'>Doktor</option>
                         <option value='Aptekarz'>Aptekarz</option>

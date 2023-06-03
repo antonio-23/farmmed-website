@@ -1,30 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-// poniedziałek - 1
-// wtorek       - 2
-// środa        - 3
-// czwartek     - 4
-// piątek       - 5
-// sobota       - 6
-
 export const Schedule = () => {
   const [doctorList, setDoctorList] = useState([]);
   const [showRow, setShowRow] = useState({});
-  const [data, setData] = useState([])
+  const [data, setData] = useState([]);
+  const [days, setDays] = useState([
+    { day: 'Poniedziałki', id: 1 },
+    { day: 'Wtorki', id: 2 },
+    { day: 'Środy', id: 3 },
+    { day: 'Czwartki', id: 4 },
+    { day: 'Piątki', id: 5 },
+    { day: 'Soboty', id: 6 },
+  ]);
 
-  useEffect(()=>{
-    const showDoctors =async () => {
-      try{
-        const res = await axios.post("http://127.0.0.1:8800/api/users/view", { withCredentials: true });
+  useEffect(() => {
+    const showDoctors = async () => {
+      try {
+        const res = await axios.post('http://127.0.0.1:8800/api/users/view', { withCredentials: true });
         const data = res.data;
         setDoctorList(data);
-      }catch(error){
+      } catch (error) {
         console.error(error);
       }
-    }
+    };
     showDoctors();
-  }, [])
+  }, []);
 
   const handleClickDelete = async (e, id) => {
     e.preventDefault();
@@ -48,14 +49,14 @@ export const Schedule = () => {
     }
   };
 
-
   return (
     <>
       <div className='flex justify-around mx-10 pt-6 items-center text-center text-lg font-bold'>
         <p>Imię i nazwisko</p>
         <p>Spaecjalizacja</p>
       </div>
-      {/* <div className='lg:h-[35rem] 2xl:h-[60rem] w-full overflow-auto'>
+
+      <div className='lg:h-[35rem] 2xl:h-[60rem] w-full overflow-auto'>
         <div className='text-center py-4 mx-10'>
           {doctorList.map((value) => {
             return (
@@ -63,54 +64,50 @@ export const Schedule = () => {
                 <div className='grid grid-cols-2'>
                   <p>{value.name}</p>
                   <p>{value.spec}</p>
-                  <div className={showRow[value.id] ? 'py-4 justify-center items-center ' : 'hidden'}>
-                    <p className='border-b ml-4 py-1' >Data od:</p>
-                    <input type="date"/>
+                  <div className={showRow[value.id] ? 'flex flex-col py-4 justify-center items-center ' : 'hidden'}>
+                    <p className='font-bold py-1'>Data od:</p>
+                    <input type='date' className='p-2 rounded-lg' />
                   </div>
-                  <div className={showRow[value.id] ? 'py-4 justify-center items-center ' : 'hidden'}>
-                    <p className='border-b ml-4 py-1' >Data Do::</p>
-                    <input type="date"/>
+                  <div className={showRow[value.id] ? 'flex flex-col py-4 justify-center items-center ' : 'hidden'}>
+                    <p className='font-bold py-1'>Data Do:</p>
+                    <input type='date' className='p-2 rounded-lg' />
                   </div>
                 </div>
-                
+
                 <div className='grid grid-cols-4'>
-                <div className={showRow[value.id] ? 'py-4 justify-center items-center ' : 'hidden'}>
-                  <p className='border-b ml-4 py-1'>Dzień tygodnia</p>
-                  <p className='border-b ml-4 py-2'>Poniedziałki</p>
-                  <p className='border-b ml-4 py-2'>Wtorki</p>
-                  <p className='border-b ml-2 py-2'>Środy</p>
-                  <p className='border-b ml-4 py-2'>Czwartki</p>
-                  <p className='border-b ml-4 py-2'>Piątki</p>
-                  <p className='border-b ml-4 py-2'>Soboty</p>
+                  <div className={showRow[value.id] ? 'flex flex-col mt-6 justify-center items-center' : 'hidden'}>
+                    {days.map((day) => {
+                      return (
+                        <p key={day.id} className='font-bold p-2 my-2'>
+                          {day.day}
+                        </p>
+                      );
+                    })}
+                  </div>
+
+                  <div className={showRow[value.id] ? 'py-4 flex flex-col justify-center items-center ' : 'hidden'}>
+                    <p className='border-b ml-4 py-1'>Czas od:</p>
+                    {Object.keys(days).map((index) => (
+                      <input type='time' className='border-b ml-4 rounded-lg my-2 p-2' key={index} />
+                    ))}
+                  </div>
+
+                  <div className={showRow[value.id] ? 'flex flex-col py-4 justify-center items-center ' : 'hidden'}>
+                    <p className='border-b ml-4 py-1'>Czas Do:</p>
+                    {Object.keys(days).map((index) => (
+                      <input type='time' className='border-b ml-4 rounded-lg my-2 p-2' key={index} />
+                    ))}
+                  </div>
+
+                  <div className={showRow[value.id] ? 'flex flex-col mt-6 justify-center items-center ' : 'hidden'}>
+                    {Object.keys(days).map((index) => (
+                      <buton className='py-2 text-violet-600 my-2' key={index}>
+                        Zapisz
+                      </buton>
+                    ))}
+                  </div>
                 </div>
-                <div className={showRow[value.id] ? 'py-4 justify-center items-center ' : 'hidden'}>
-                  <p className='border-b ml-4 py-1'>Czas od:</p>
-                  <input type="time" className='border-b ml-4 py-2'/><br/>
-                  <input type="time" className='border-b ml-4 py-2'/><br/>
-                  <input type="time" className='border-b ml-4 py-2'/><br/>
-                  <input type="time" className='border-b ml-4 py-2'/><br/>
-                  <input type="time" className='border-b ml-4 py-2'/><br/>
-                  <input type="time" className='border-b ml-4 py-2'/><br/>
-                </div>
-                <div className={showRow[value.id] ? 'py-4 justify-center items-center ' : 'hidden'}>
-                  <p className='border-b ml-4 py-1'>Czas Do:</p>
-                  <input type="time" className='border-b ml-4 py-2'/><br/>
-                  <input type="time" className='border-b ml-4 py-2'/><br/>
-                  <input type="time" className='border-b ml-4 py-2'/><br/>
-                  <input type="time" className='border-b ml-4 py-2'/><br/>
-                  <input type="time" className='border-b ml-4 py-2'/><br/>
-                  <input type="time" className='border-b ml-4 py-2'/><br/>
-                </div>
-                <div className={showRow[value.id] ? 'py-4 justify-center items-center ' : 'hidden'}>
-                  <p className='border-b ml-4 py-1'> </p>
-                  <buton className='border-b ml-4 py-2 text-violet-600'>Zapisz</buton><br/>
-                  <buton className='border-b ml-4 py-2 text-violet-600'>Zapisz</buton><br/>
-                  <buton className='border-b ml-4 py-2 text-violet-600'>Zapisz</buton><br/>
-                  <buton className='border-b ml-4 py-2 text-violet-600'>Zapisz</buton><br/>
-                  <buton className='border-b ml-4 py-2 text-violet-600'>Zapisz</buton><br/>
-                  <buton className='border-b ml-4 py-2 text-violet-600'>Zapisz</buton><br/>
-                </div>
-              </div>
+
                 <div id={value.id} onClick={(e) => handleClick(e, value.id)} className='grid col-span-2 justify-center'>
                   {showRow[value.id] ? (
                     <div className='animate-bounce bg-ghostwithe p-1 rounded-2xl'>
@@ -130,7 +127,7 @@ export const Schedule = () => {
             );
           })}
         </div>
-      </div> */}
+      </div>
     </>
   );
 };
