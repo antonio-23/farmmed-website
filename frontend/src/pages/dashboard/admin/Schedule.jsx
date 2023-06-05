@@ -4,7 +4,7 @@ import axios from 'axios';
 export const Schedule = () => {
   const [doctorList, setDoctorList] = useState([]);
   const [showRow, setShowRow] = useState({});
-  const [data, setData] = useState([]);
+  const [data2, setData] = useState([]);
   const [days, setDays] = useState([
     { day: 'Poniedziałki', id: 1 },
     { day: 'Wtorki', id: 2 },
@@ -27,15 +27,36 @@ export const Schedule = () => {
     showDoctors();
   }, []);
 
-  const handleClickDelete = async (e, id) => {
+  const handleClickCreate = async (e) => {
     e.preventDefault();
+    console.log(data2);
+    console.log(e.target.id);
     try {
-      const res = await axios.post('http://127.0.0.1:8800/api/schulde/create', { data }, { withCredentials: true });
+      const res = await axios.post('http://127.0.0.1:8800/api/schedule/create',  data2 , { withCredentials: true });
       console.log(res.data);
-      fetchData();
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handleChangeStartDate = async (e) => {
+    e.preventDefault();
+    setData({ ...data2, ['startDate']: e.target.value });
+  };
+
+  const handleChangeEndDate = async (e) => {
+    e.preventDefault();
+    setData({ ...data2, ['endDate']: e.target.value });
+  };
+
+  const handleChangeStartTime = async (e) => {
+    e.preventDefault();
+    setData({ ...data2, ['startTime']: e.target.value });
+  };
+
+  const handleChangeEndTime = async (e) => {
+    e.preventDefault();
+    setData({ ...data2, ['endTime']: e.target.value, ['dayOfWeek']: e.target.id });
   };
 
   const handleClick = (e, id) => {
@@ -47,16 +68,16 @@ export const Schedule = () => {
     } else {
       setShowRow({ ...showRow, [id]: true });
     }
+    setData({ ['doctorId']: id });
   };
 
   return (
     <>
-      <div className='flex justify-around mx-10 pt-6 items-center text-center text-lg font-bold'>
-        <p>Imię i nazwisko</p>
-        <p>Spaecjalizacja</p>
-      </div>
-
-      <div className='lg:h-[35rem] 2xl:h-[60rem] w-full overflow-auto'>
+      <div className='lg:h-[44rem] 2xl:h-[60rem] w-full overflow-auto'>
+        <div className='flex justify-around mx-10 pt-6 items-center text-center text-lg font-bold'>
+          <p>Imię i nazwisko</p>
+          <p>Spaecjalizacja</p>
+        </div>
         <div className='text-center py-4 mx-10'>
           {doctorList.map((value) => {
             return (
@@ -66,11 +87,23 @@ export const Schedule = () => {
                   <p>{value.spec}</p>
                   <div className={showRow[value.id] ? 'flex flex-col py-4 justify-center items-center ' : 'hidden'}>
                     <p className='font-bold py-1'>Data od:</p>
-                    <input type='date' className='p-2 rounded-lg' />
+                    <input
+                      onChange={(e) => {
+                        handleChangeStartDate(e);
+                      }}
+                      type='date'
+                      className='p-2 rounded-lg'
+                    />
                   </div>
                   <div className={showRow[value.id] ? 'flex flex-col py-4 justify-center items-center ' : 'hidden'}>
                     <p className='font-bold py-1'>Data Do:</p>
-                    <input type='date' className='p-2 rounded-lg' />
+                    <input
+                      onChange={(e) => {
+                        handleChangeEndDate(e);
+                      }}
+                      type='date'
+                      className='p-2 rounded-lg'
+                    />
                   </div>
                 </div>
 
@@ -78,7 +111,7 @@ export const Schedule = () => {
                   <div className={showRow[value.id] ? 'flex flex-col mt-6 justify-center items-center' : 'hidden'}>
                     {days.map((day) => {
                       return (
-                        <p key={day.id} className='font-bold p-2 my-2'>
+                        <p key={day.id} id={day.id} className='font-bold p-2 my-2'>
                           {day.day}
                         </p>
                       );
@@ -88,22 +121,44 @@ export const Schedule = () => {
                   <div className={showRow[value.id] ? 'py-4 flex flex-col justify-center items-center ' : 'hidden'}>
                     <p className='border-b ml-4 py-1'>Czas od:</p>
                     {Object.keys(days).map((index) => (
-                      <input type='time' className='border-b ml-4 rounded-lg my-2 p-2' key={index} />
+                      <input
+                        onChange={(e) => {
+                          handleChangeStartTime(e);
+                        }}
+                        type='time'
+                        className='border-b ml-4 rounded-lg my-2 p-2'
+                        key={index}
+                      />
                     ))}
                   </div>
 
                   <div className={showRow[value.id] ? 'flex flex-col py-4 justify-center items-center ' : 'hidden'}>
                     <p className='border-b ml-4 py-1'>Czas Do:</p>
                     {Object.keys(days).map((index) => (
-                      <input type='time' className='border-b ml-4 rounded-lg my-2 p-2' key={index} />
+                      <input id={parseInt(index) + 1}
+                        onChange={(e) => {
+                          handleChangeEndTime(e);
+                        }}
+                        type='time'
+                        className='border-b ml-4 rounded-lg my-2 p-2'
+                        key={index}
+                      />
                     ))}
                   </div>
 
                   <div className={showRow[value.id] ? 'flex flex-col mt-6 justify-center items-center ' : 'hidden'}>
                     {Object.keys(days).map((index) => (
-                      <buton className='py-2 text-violet-600 my-2' key={index}>
+                      
+                      <button id={parseInt(index) + 1}
+                        onClick={(e) => {
+                          handleClickCreate(e);
+                        }}
+                        className='py-2 text-violet-600 my-2'
+                        key={index}
+                      >
                         Zapisz
-                      </buton>
+                      </button>
+                     
                     ))}
                   </div>
                 </div>
