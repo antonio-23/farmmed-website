@@ -4,8 +4,8 @@ import { decrypt, encrypt } from '../middleware/hash.js';
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~ Tworzenie harmonogramu przez admina ~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 export const create_schedule = (req, res) => {
-  const { startDate, endDate, startTime, endTime, doctorId, daysOfWeek } = req.body;
-
+  const { startDate, endDate, startTime, endTime, doctorId, dayOfWeek } = req.body;
+  let daysOfWeek = parseInt(dayOfWeek);
   const [forYear, forMonth, forDay] = startDate.split('-').map(Number);
   const [toYear, toMonth, toDay] = endDate.split('-').map(Number);
 
@@ -46,7 +46,7 @@ export const create_schedule = (req, res) => {
 
   const result = [];
 
-  // Pobieranie danych asynchronicznie dla każdej daty
+  // Pobieranie danych asynchronicznie dla kaÅ¼dej daty
   const fetchData = async () => {
     try {
       for (let d = 0; d < Dates.length; d++) {
@@ -95,7 +95,7 @@ export const create_schedule = (req, res) => {
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~ wyświetlanie wolnych terminów ~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 export const view_date_these_dates = (req, res) => {
-  const q = 'SELECT id, date, FROM farmmed.schudle WHERE doctor_id = ? AND user_id IS NULL;';
+  const q = 'SELECT DISTINCT DATE_ADD(date, INTERVAL 1 DAY) AS date FROM farmmed.schudle WHERE doctor_id = ? AND user_id IS NULL;';
   db.query(q, [req.body.id], (err, data) => {
     if (err) {
       console.error(err);
@@ -124,12 +124,12 @@ export const displaying_patients_for_admission = (req, res) => {
   FROM farmmed.schudle s
   INNER JOIN farmmed.user u ON s.user_id = u.id
   WHERE doctor_id = ? AND user_id IS NOT NULL AND s.date = CURDATE();`;
-  db.query(q, [user], (err, data) => {
+  db.query(q, [id], (err, data) => {
     if (err) {
       console.error(err);
       return res.status(500).send(err);
     }
-    return res.status(200).send(res.data);
+    return res.status(200).send(data);
   });
 };
 

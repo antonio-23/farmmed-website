@@ -7,7 +7,7 @@ import drugRoutes from './routes/drug.js'
 import authRoutes from './routes/auth.js'
 import cookieParser from "cookie-parser";
 import usersRoutes from './routes/users.js'
-import schudleRoutes from './routes/schudle.js'
+import scheduleRoutes from './routes/schedule.js'
 import cors from 'cors';
 
 app.use(cors({
@@ -33,7 +33,7 @@ app.use("/api/order", orderRoutes)
 app.use("/api/medical_file", medical_fileRoutes)
 app.use("/api/drug", drugRoutes)
 app.use("/api/auth", authRoutes)
-app.use("/api/schudle", schudleRoutes)
+app.use("/api/schedule", scheduleRoutes)
 
 app.listen(8800, () => {
     console.log("BACKEND working!");
