@@ -1,108 +1,108 @@
 # farmmed-website
 <p align="center">
-  Strona główna
+  <strong>Strona główna</strong>
 </p>
 <p align="center">
   <img src="gif/1.gif">
 </p>
 <p align="center">
-  Błędne logowanie
+  <strong>Błędne logowanie</strong>
 </p>
 <p align="center">
   <img src="gif/2.gif">
 </p>
 <p align="center">
-  Poprawne logowanie
+  <strong>Poprawne logowanie</strong>
 </p>
 <p align="center">
   <img src="gif/3.gif">
 </p>
 <p align="center">
-  Rejestracja pacjenta
+  <strong>Rejestracja pacjenta</strong>
 </p>
 <p align="center">
   <img src="gif/4.gif">
 </p>
 <p align="center">
-  Przeglądanie i edycja bazy z lekami
+  <strong>Przeglądanie i edycja bazy z lekami</strong>
 </p>
 <p align="center">
   <img src="gif/5.gif">
 </p>
 <p align="center">
-  Uaktualnianie bazy o najnowszy plik stworzony przez ministerstwo zdrowia
+  <strong>Uaktualnianie bazy o najnowszy plik stworzony przez ministerstwo zdrowia</strong>
 </p>
 <p align="center">
   <img src="gif/6.gif">
 </p>
 <p align="center">
-  Tworzenie harmonogramu lekarza przez administartora serwisu
+  <strong>Tworzenie harmonogramu lekarza przez administartora serwisu</strong>
 </p>
 <p align="center">
   <img src="gif/7.gif">
 </p>
 <p align="center">
-  Utworzone terminu przyjęć w bazie mysql
+  <strong>Utworzone terminu przyjęć w bazie mysql</strong>
 </p>
 <p align="center">
   <img src="gif/8.png">
 </p>
 <p align="center">
-  Zarządzanie użytkownikami
+  <strong>Zarządzanie użytkownikami</strong>
 </p>
 <p align="center">
   <img src="gif/9.gif">
 </p>
 <p align="center">
-  Przeglądanie kartotek z poziomu pacjenta
+  <strong>Przeglądanie kartotek z poziomu pacjenta</strong>
 </p>
 <p align="center">
   <img src="gif/10.gif">
 </p>
 <p align="center">
-  Wyświetlanie pacjentowi jego aktualnych recept
+  <strong>Wyświetlanie pacjentowi jego aktualnych recept</strong>
 </p>
 <p align="center">
   <img src="gif/11.gif">
 </p>
 <p align="center">
-  Rejestracja pacjenta na wizytę
+  <strong>Rejestracja pacjenta na wizytę</strong>
 </p>
 <p align="center">
   <img src="gif/12.gif">
 </p>
 <p align="center">
-  Zmiana danych pacjenta, lekarza, aptekarza z poziomu ich panelu
+  <strong>Zmiana danych pacjenta, lekarza, aptekarza z poziomu ich panelu</strong>
 </p>
 <p align="center">
   <img src="gif/13.gif">
 </p>
 <p align="center">
-  Podgląd pacjentów do przyjęcia w dniu dzisiejszym
+  <strong>Podgląd pacjentów do przyjęcia w dniu dzisiejszym</strong>
 </p>
 <p align="center">
   <img src="gif/14.gif">
 </p>
 <p align="center">
-  Dodanie wpisu do kartoteki pacjenta
+  <strong>Dodanie wpisu do kartoteki pacjenta</strong>
 </p>
 <p align="center">
   <img src="gif/15.gif">
 </p>
 <p align="center">
-  Wystawienie recepty pacjentowi
+  <strong>Wystawienie recepty pacjentowi</strong>
 </p>
 <p align="center">
   <img src="gif/16.gif">
 </p>
 <p align="center">
-  Realizacja recepty w aptece
+  <strong>Realizacja recepty w aptece</strong>
 </p>
 <p align="center">
   <img src="gif/17.gif">
 </p>
 <p align="center">
-  Cały film
+  <strong>Cały film</strong>
 <p align="center">
   <a href="https://youtu.be/Wl3RD-9mBJo">
     <img src="gif/Home.png">
