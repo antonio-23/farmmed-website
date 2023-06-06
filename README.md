@@ -1,37 +1,110 @@
 # farmmed-website
-## Strona główna
-![Tekst zastępczy](gif/1.gif)
-## Błędne logowanie
-![Tekst zastępczy](gif/2.gif)
-## Poprawne logowanie
-![Tekst zastępczy](gif/3.gif)
-## Rejestracja pacjenta
-![Tekst zastępczy](gif/4.gif)
-## Przeglądanie i edycja bazy z lekami
-![Tekst zastępczy](gif/5.gif)
-## Uaktualnianie bazy o najnowszy plik stworzony przez ministerstwo zdrowia
-![Tekst zastępczy](gif/6.gif)
-## Tworzenie harmonogramu lekarza przez administartora serwisu
-![Tekst zastępczy](gif/7.gif)
-## Utworzone terminu przyjęć w bazie mysql
-![Tekst zastępczy](gif/8.png)
-## Zarządzanie użytkownikami
-![Tekst zastępczy](gif/9.gif)
-## Przeglądanie kartotek z poziomu pacjenta
-![Tekst zastępczy](gif/10.gif)
-## Wyświetlanie pacjentowi jego aktualnych recept
-![Tekst zastępczy](gif/11.gif)
-## Rejestracja pacjenta na wizytę
-![Tekst zastępczy](gif/12.gif)
-## Zmiana danych pacjenta, lekarza, aptekarza z poziomu ich panelu
-![Tekst zastępczy](gif/13.gif)
-## Podgląd pacjentów do przyjęcia w dniu dzisiejszym
-![Tekst zastępczy](gif/14.gif)
-## Dodanie wpisu do kartoteki pacjenta
-![Tekst zastępczy](gif/15.gif)
-## Wystawienie recepty pacjentowi
-![Tekst zastępczy](gif/16.gif)
-## Realizacja recepty w aptece
-![Tekst zastępczy](gif/17.gif)
-## Cały film
-[![Tekst zastępczy](gif/Home.png)](https://youtu.be/Wl3RD-9mBJo)
+<p align="center">
+  Strona główna
+</p>
+<p align="center">
+  <img src="gif/1.gif">
+</p>
+<p align="center">
+  Błędne logowanie
+</p>
+<p align="center">
+  <img src="gif/2.gif">
+</p>
+<p align="center">
+  Poprawne logowanie
+</p>
+<p align="center">
+  <img src="gif/3.gif">
+</p>
+<p align="center">
+  Rejestracja pacjenta
+</p>
+<p align="center">
+  <img src="gif/4.gif">
+</p>
+<p align="center">
+  Przeglądanie i edycja bazy z lekami
+</p>
+<p align="center">
+  <img src="gif/5.gif">
+</p>
+<p align="center">
+  Uaktualnianie bazy o najnowszy plik stworzony przez ministerstwo zdrowia
+</p>
+<p align="center">
+  <img src="gif/6.gif">
+</p>
+<p align="center">
+  Tworzenie harmonogramu lekarza przez administartora serwisu
+</p>
+<p align="center">
+  <img src="gif/7.gif">
+</p>
+<p align="center">
+  Utworzone terminu przyjęć w bazie mysql
+</p>
+<p align="center">
+  <img src="gif/8.png">
+</p>
+<p align="center">
+  Zarządzanie użytkownikami
+</p>
+<p align="center">
+  <img src="gif/9.gif">
+</p>
+<p align="center">
+  Przeglądanie kartotek z poziomu pacjenta
+</p>
+<p align="center">
+  <img src="gif/10.gif">
+</p>
+<p align="center">
+  Wyświetlanie pacjentowi jego aktualnych recept
+</p>
+<p align="center">
+  <img src="gif/11.gif">
+</p>
+<p align="center">
+  Rejestracja pacjenta na wizytę
+</p>
+<p align="center">
+  <img src="gif/12.gif">
+</p>
+<p align="center">
+  Zmiana danych pacjenta, lekarza, aptekarza z poziomu ich panelu
+</p>
+<p align="center">
+  <img src="gif/13.gif">
+</p>
+<p align="center">
+  Podgląd pacjentów do przyjęcia w dniu dzisiejszym
+</p>
+<p align="center">
+  <img src="gif/14.gif">
+</p>
+<p align="center">
+  Dodanie wpisu do kartoteki pacjenta
+</p>
+<p align="center">
+  <img src="gif/15.gif">
+</p>
+<p align="center">
+  Wystawienie recepty pacjentowi
+</p>
+<p align="center">
+  <img src="gif/16.gif">
+</p>
+<p align="center">
+  Realizacja recepty w aptece
+</p>
+<p align="center">
+  <img src="gif/17.gif">
+</p>
+<p align="center">
+  Cały film
+<p align="center">
+  <a href="https://youtu.be/Wl3RD-9mBJo">
+    <img src="gif/Home.png">
+  </a>
+</p>
