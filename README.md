@@ -108,3 +108,12 @@
     <img src="gif/Home.png">
   </a>
 </p>
+<p align="center">
+  <a href="https://github.com/antonio-23/farmmed-website/archive/refs/heads/master.zip">Pobierz repozytorium</a>
+</p>
+<p align="center">
+  <a href="dokumentacja/Apteka_i_przychodnia__Dokumentacja_.pdf">Dokumentacja w PDF</a>
+</p>
+<p align="center">
+  <a href="https://www.overleaf.com/read/cddmsxdqbftk">Overleaf</a>
+</p>
