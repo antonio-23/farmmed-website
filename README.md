@@ -16,4 +16,4 @@
 ![Tekst zastępczy](gif/15.gif)
 ![Tekst zastępczy](gif/16.gif)
 ![Tekst zastępczy](gif/17.gif)
-![Tekst zastępczy](gif/FILM.mp4)
+[![Tekst zastępczy](gif/Home.png)](gif/FILM.mp4)
