@@ -1,0 +1,43 @@
+version: '3.9'
+
+services:
+  # ============================ ZAKOMENTUJ JEŚLI NIE CHCESZ TEGO KONTENERYZOWAĆ ==========================
+  backend:
+    container_name: backend-farmmed
+    build: ./backend
+    ports:
+      - '8800:8800'
+    environment:
+      - DATABASE_URL=mysql://root:password@db:3306/farmmed
+    depends_on:
+      - db
+
+  # ============================ ZAKOMENTUJ JEŚLI NIE CHCESZ TEGO KONTENERYZOWAĆ ==========================
+  frontend:
+    container_name: frontend-farmmed
+    build: ./frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - '5173:5173'
+    depends_on:
+      - backend
+
+  # ============================ ZAKOMENTUJ JEŚLI NIE CHCESZ TEGO KONTENERYZOWAĆ ==========================
+  db:
+    container_name: farmmed-db
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=farmmed
+    ports:
+      - '3306:3306'
+    volumes:
+      - db-data:/var/lib/mysql
+    restart: always
+
+volumes:
+  db-data:
